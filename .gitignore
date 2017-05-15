@@ -1,6 +1,6 @@
-/Cesium/
+/ThirdParty/
 /node_modules/
 /Models/
 /app/*.js
 /app/*.map
-/debug.txt
+/debug.log
