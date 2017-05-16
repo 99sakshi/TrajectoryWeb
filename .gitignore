@@ -3,4 +3,4 @@
 /Models/
 /app/*.js
 /app/*.map
-/debug.log
+*.log
