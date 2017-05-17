@@ -1,7 +1,8 @@
 {
   "name": "trajectory-project",
   "version": "1.0.0",
-  "scripts": {
+  "scripts": { 
+    "run": "node index.js",
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "lite": "lite-server",
     "tsc": "tsc",
@@ -9,8 +10,8 @@
   },
   "licenses": [
     {
-	  "Company": "Oponop Technologies",
-      "type": "Copyright 2017-2018",
+	    "Company": "Oponop Technologies",
+      "type": "Copyright 2017-2018"
     }
   ],
   "dependencies": {
