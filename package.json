@@ -2,7 +2,7 @@
   "name": "trajectory-project",
   "version": "1.0.0",
   "scripts": {
-    "run": "node index.js",
+    "run": "tsc && concurrently \"tsc -w\" \"node index.js\" ",
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "lite": "lite-server",
     "tsc": "tsc",
