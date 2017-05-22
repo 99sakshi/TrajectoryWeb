@@ -1,8 +1,10 @@
 declare var Cesium: any;
+
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
+import { StartService } from './start.service';
 
 @Component({
   selector: 'my-app',
@@ -12,6 +14,7 @@ import { ForwardController } from './forwardController';
      <button type="button" class="btn btn-danger" (click)="stopSimulation()">Stop</button>
      <div id="cesiumContainer"> </div>
      `,
+  providers: [ StartService ],
   styles:[`
       html, body, #cesiumContainer {
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
@@ -24,7 +27,7 @@ export class AppComponent {
       
       _simManager: SimManager;
 
-      constructor(_simManager: SimManager){
+      constructor(_simManager: SimManager,  private startService: StartService){
           this._simManager = _simManager;
       }
 
@@ -54,7 +57,12 @@ export class AppComponent {
       }
 
       startSimulation(){
-          this._simManager.start();
+        this.startService.startSimulation().subscribe( data => this.startSimulationReal(data) );
+      }
+
+      startSimulationReal(data) {
+        console.log(data);
+        this._simManager.start();
       }
 
       pauseSimulation(){
