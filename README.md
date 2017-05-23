@@ -6,11 +6,10 @@
 ### Getting Started
 
 * Install nodejs
-* Explore the project directory
 * Copy [Models](https://drive.google.com/drive/folders/0BwldDrXJR-avQTRSSWxBdVRKSHc?usp=sharing) to the directory
-* Explore the project directory in command line
-*  Then write   
+* Then write in the command line  
 	```
+	cd [Project Directory]
 	npm install
 	npm run-script run
 	```
