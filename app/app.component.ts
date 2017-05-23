@@ -57,14 +57,12 @@ export class AppComponent {
       }
 
       startSimulation(){
-        this.startService.startSimulation().subscribe( data => this.startSimulationReal(data) );
+        this.startService.startSimulation().subscribe( data =>  {
+                                                                    console.log(data);
+                                                                    this._simManager.start()
+                                                                });
       }
-
-      startSimulationReal(data) {
-        console.log(data);
-        this._simManager.start();
-      }
-
+      
       pauseSimulation(){
           this._simManager.pause();
       }
