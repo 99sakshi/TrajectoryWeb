@@ -37,16 +37,10 @@ export class AppComponent {
         var imageryLayers = viewer.imageryLayers;
         var myLayer = new Cesium.WebMapServiceImageryProvider({
             url: 'http://192.168.1.5:8181/geoserver/oponop/wms',
-            parameters : {
-                transparent : 'true',
-                tiled : 'true',
-                format : 'image/png',
-                maximumLevel : 3,
-                enablePickFeatures : false
-            },
             layers:'oponop:World'
         });
 
+        imageryLayers.removeAll();
         imageryLayers.addImageryProvider(myLayer);
 
         this._simManager.setCesiumViewer( viewer );
