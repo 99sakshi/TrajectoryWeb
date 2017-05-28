@@ -32,10 +32,28 @@ export class AppComponent {
       }
 
       ngOnInit(){
-          this._simManager.setCesiumViewer( new Cesium.Viewer('cesiumContainer') );
-          this.addEntityToManager();
-          this.addEntityToManager2();
-          //this.startSimulation();
+
+        var viewer =  new Cesium.Viewer('cesiumContainer');
+        var imageryLayers = viewer.imageryLayers;
+        var myLayer = new Cesium.WebMapServiceImageryProvider({
+            url: 'http://192.168.1.5:8181/geoserver/oponop/wms',
+            parameters : {
+                transparent : 'true',
+                tiled : 'true',
+                format : 'image/png',
+                maximumLevel : 3,
+                enablePickFeatures : false
+            },
+            layers:'oponop:World'
+        });
+
+        imageryLayers.addImageryProvider(myLayer);
+
+        this._simManager.setCesiumViewer( viewer );
+
+        this.addEntityToManager();
+        this.addEntityToManager2();
+        //this.startSimulation();
       }
 
       addEntityToManager(){
