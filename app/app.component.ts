@@ -5,6 +5,7 @@ import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
 import { StartService } from './start.service';
+import { LoadConfig } from './loadconfig.service';
 
 @Component({
   selector: 'my-app',
@@ -14,7 +15,7 @@ import { StartService } from './start.service';
      <button type="button" class="btn btn-danger" (click)="stopSimulation()">Stop</button>
      <div id="cesiumContainer"> </div>
      `,
-  providers: [ StartService ],
+  providers: [ StartService, LoadConfig ],
   styles:[`
       html, body, #cesiumContainer {
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
@@ -27,17 +28,28 @@ export class AppComponent {
       
       _simManager: SimManager;
 
-      constructor(_simManager: SimManager,  private startService: StartService){
+      config;
+
+      constructor(_simManager: SimManager,  private startService: StartService
+                                         ,  private loadConfig: LoadConfig ){
           this._simManager = _simManager;
       }
 
-      ngOnInit(){
+      ngOnInit() {
+
+        this.loadConfig.getConfig().subscribe( data =>  {
+                                                            this.config = data;
+                                                            this.init();
+                                                        } );
+      }
+
+      private init() {
 
         var viewer =  new Cesium.Viewer('cesiumContainer');
         var imageryLayers = viewer.imageryLayers;
         var myLayer = new Cesium.WebMapServiceImageryProvider({
-            url: 'http://192.168.1.5:8181/geoserver/oponop/wms',
-            layers:'oponop:World'
+            url: this.config.Geoserver[0].Url,
+            layers:this.config.Geoserver[1].Layer
         });
 
         imageryLayers.removeAll();
@@ -47,8 +59,8 @@ export class AppComponent {
 
         this.addEntityToManager();
         this.addEntityToManager2();
-        //this.startSimulation();
-      }
+
+      } 
 
       addEntityToManager(){
         var missile = new Missile;
