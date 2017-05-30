@@ -1,6 +1,7 @@
 {
-  "name": "trajectory-project",
+  "name": "trajectory-web",
   "version": "1.0.0",
+  "description": "Trajectory Web",
   "scripts": {
     "run": "tsc && concurrently \"tsc -w\" \"node index.js\" ",
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
@@ -8,12 +9,21 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hacknaman/TrajectoryWeb.git"
+  },
+  "author": "Naman Gupta",
   "licenses": [
     {
       "Company": "Oponop Technologies",
       "type": "Copyright 2017-2018"
     }
   ],
+  "bugs": {
+    "url": "https://github.com/hacknaman/TrajectoryWeb/issues"
+  },
+  "homepage": "https://github.com/hacknaman/TrajectoryWeb#readme",
   "dependencies": {
     "@angular/common": "~2.1.1",
     "@angular/compiler": "~2.1.1",
