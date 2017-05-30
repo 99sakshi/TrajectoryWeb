@@ -47,6 +47,7 @@ export class AppComponent {
 
         var viewer =  new Cesium.Viewer('cesiumContainer');
         var imageryLayers = viewer.imageryLayers;
+        
         var myLayer = new Cesium.WebMapServiceImageryProvider({
             url: this.config.Geoserver[0].Url,
             layers:this.config.Geoserver[1].Layer
@@ -84,7 +85,7 @@ export class AppComponent {
         this.startService.startSimulation().subscribe( data =>  {
                                                                     console.log(data);
                                                                     this._simManager.start()
-                                                                });
+                                                                } );
       }
       
       pauseSimulation(){
