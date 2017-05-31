@@ -2,16 +2,23 @@ import { Injectable }              from '@angular/core';
 import { Http, Response }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { LoadConfig } from './loadconfig.service';
+
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StartService {
-  private startUrl = '/start';  // URL to web API
-  constructor (private http: Http) {}
+
+  private serverUrl = 'http://localhost:3333';  // URL to web API
+  private startUrl = '/start';
+
+  constructor (private http: Http, private loadConfig: LoadConfig) {
+    this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
+  }
 
   startSimulation() {
-    return this.http.get(this.startUrl)
+    return this.http.get(this.serverUrl + this.startUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
