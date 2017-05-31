@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class LoadConfig {
@@ -11,17 +12,21 @@ export class LoadConfig {
   config;
 
   constructor (private http: Http) {
-
+      
   }
 
   getConfig() {
-    return this.http.get('config/config.json')
-                    .map(this.extractData)
-                    .catch(this.handleError);
+    if(this.config == null)
+      return this.http.get('config/config.json')
+                      .map(this.extractData)
+                      .catch(this.handleError);
+    else 
+      return Observable.of(this.config);
   }
 
   private extractData(res: Response) {
     let body = res.json();
+    this.config = body;
     return body || { };
   }
   
