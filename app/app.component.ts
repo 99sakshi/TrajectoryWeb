@@ -6,6 +6,7 @@ import { Missile } from './missile';
 import { ForwardController } from './forwardController';
 import { StartService } from './start.service';
 import { LoadConfig } from './loadconfig.service';
+import { TrajComponent } from './traj/traj.component';
 
 @Component({
   selector: 'my-app',
@@ -15,7 +16,7 @@ import { LoadConfig } from './loadconfig.service';
      <button type="button" class="btn btn-danger" (click)="stopSimulation()">Stop</button>
      <div id="cesiumContainer"> </div>
      `,
-  providers: [ StartService, LoadConfig ],
+
   styles:[`
       html, body, #cesiumContainer {
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
@@ -33,6 +34,10 @@ export class AppComponent {
       constructor(_simManager: SimManager,  private startService: StartService
                                          ,  private loadConfig: LoadConfig ){
           this._simManager = _simManager;
+
+          var traj = new TrajComponent();
+
+          console.log(traj.trajData);
       }
 
       ngOnInit() {
