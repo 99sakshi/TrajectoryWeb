@@ -47,10 +47,10 @@ export class AppComponent {
 
         var viewer =  new Cesium.Viewer('cesiumContainer');
         var imageryLayers = viewer.imageryLayers;
-        
+
         var myLayer = new Cesium.WebMapServiceImageryProvider({
-            url: this.config.Geoserver[0].Url,
-            layers:this.config.Geoserver[1].Layer
+            url: this.config.Geoserver.Url,
+            layers: this.config.Geoserver.Layers[0]
         });
 
         imageryLayers.removeAll();
