@@ -1,6 +1,6 @@
 // Simulation State
 
-import { EntityManager } from  './traj/entitymanager';
+import { CesiumManager } from  './traj/cesiummanager';
 
 enum State {
     Start,
@@ -14,21 +14,27 @@ export class SimManager {
     _time;
     _deltaTime;
     _State;
-
-    constructor() {
+    _CesiumMan;
+    
+    
+    constructor( ) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01; // in seconds
         this._entityMap = [];
         this._State = State.Stop;
     }
-
+    
     addEntity (entity) {
-        entity.setCEntity( this._cesiumViewer.entities.add( entity.getPara()) );
+        entity.setCEntity( this._CesiumMan._cesiumViewer.entities.add( entity.getPara()) );
         this._entityMap[entity._name] = entity;
     }
 
     removeEntity () {
 
+    }
+
+    setCesiumManager (cesiummanager) {
+        this._CesiumMan = cesiummanager;
     }
 
     start () {

@@ -11,7 +11,7 @@ const platform_browser_1 = require("@angular/platform-browser");
 const http_1 = require("@angular/http");
 const traj_component_1 = require("./traj.component");
 const loadconfig_service_1 = require("./loadconfig.service");
-const objectmanager_1 = require("./objectmanager");
+const cesiummanager_1 = require("./cesiummanager");
 let TrajModule = class TrajModule {
 };
 TrajModule = __decorate([
@@ -19,7 +19,7 @@ TrajModule = __decorate([
         imports: [platform_browser_1.BrowserModule, http_1.HttpModule, http_1.JsonpModule],
         declarations: [traj_component_1.TrajComponent],
         bootstrap: [traj_component_1.TrajComponent],
-        providers: [loadconfig_service_1.LoadConfig, objectmanager_1.ObjectManager],
+        providers: [loadconfig_service_1.LoadConfig, cesiummanager_1.CesiumManager],
     })
 ], TrajModule);
 exports.TrajModule = TrajModule;

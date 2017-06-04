@@ -11,15 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const loadconfig_service_1 = require("./loadconfig.service");
-let ObjectManager = class ObjectManager {
+let CesiumManager = class CesiumManager {
     constructor(loadConfig) {
         this.loadConfig = loadConfig;
         this.loadConfig.getConfig().subscribe(config => {
             this._config = config;
             this.init();
         });
-    }
-    ngOnInit() {
     }
     init() {
         var viewer = new Cesium.Viewer('cesiumContainer');
@@ -30,15 +28,16 @@ let ObjectManager = class ObjectManager {
         });
         imageryLayers.removeAll();
         imageryLayers.addImageryProvider(myLayer);
+        this._cesiumViewer = viewer;
     }
     addEntity() {
     }
     removeEntity() {
     }
 };
-ObjectManager = __decorate([
+CesiumManager = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [loadconfig_service_1.LoadConfig])
-], ObjectManager);
-exports.ObjectManager = ObjectManager;
-//# sourceMappingURL=objectmanager.js.map
+], CesiumManager);
+exports.CesiumManager = CesiumManager;
+//# sourceMappingURL=cesiummanager.js.map

@@ -7,6 +7,7 @@ import { ForwardController } from './forwardController';
 import { StartService } from './start.service';
 import { LoadConfig } from './traj/loadconfig.service';
 import { TrajComponent } from './traj/traj.component';
+import { CesiumManager } from  './traj/cesiummanager';
 
 @Component({
   selector: 'my-app',
@@ -28,12 +29,16 @@ import { TrajComponent } from './traj/traj.component';
 export class AppComponent { 
       
       _simManager: SimManager;
+      _cesiumManager: CesiumManager
 
       config;
 
-      constructor(_simManager: SimManager,  private startService: StartService
+      constructor(_simManager: SimManager, _cesiumManager: CesiumManager,
+                                            private startService: StartService
                                          ,  private loadConfig: LoadConfig ){
-          this._simManager = _simManager;
+          this._simManager = _simManager,
+          this._cesiumManager = _cesiumManager,
+          this._simManager.setCesiumManager(this._cesiumManager);
 
           var traj = new TrajComponent();
 
@@ -49,24 +54,9 @@ export class AppComponent {
       }
 
       private init() {
+        
+      }
 
-        var viewer =  new Cesium.Viewer('cesiumContainer');
-        var imageryLayers = viewer.imageryLayers;
-
-        var myLayer = new Cesium.WebMapServiceImageryProvider({
-            url: this.config.Geoserver.Url,
-            layers: this.config.Geoserver.Layers[0]
-        });
-
-        imageryLayers.removeAll();
-        imageryLayers.addImageryProvider(myLayer);
-
-        this._simManager.setCesiumViewer( viewer );
-
-        this.addEntityToManager();
-        this.addEntityToManager2();
-
-      } 
 
       addEntityToManager(){
         var missile = new Missile;
