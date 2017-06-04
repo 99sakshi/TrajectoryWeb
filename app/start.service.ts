@@ -2,7 +2,7 @@ import { Injectable }              from '@angular/core';
 import { Http, Response }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { LoadConfig } from './loadconfig.service';
+import { LoadConfig } from './traj/loadconfig.service';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';

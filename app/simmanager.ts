@@ -1,4 +1,7 @@
 // Simulation State
+
+import { EntityManager } from  './traj/entitymanager';
+
 enum State {
     Start,
     Stop,
@@ -6,8 +9,6 @@ enum State {
 }
 
 export class SimManager { 
-
-    _cesiumViewer;
     _entityMap;
     _interval;
     _time;
@@ -19,10 +20,6 @@ export class SimManager {
         this._deltaTime = 0.01; // in seconds
         this._entityMap = [];
         this._State = State.Stop;
-    }
-
-    setCesiumViewer (cesiumViewer){
-        this._cesiumViewer = cesiumViewer;
     }
 
     addEntity (entity) {
@@ -53,7 +50,9 @@ export class SimManager {
             }
             
             this._entityMap[entityName].tick( timeInfo );
-            setTimeout( () => {} ,0 ); // Wait for a while
+
+            // Wait for a while
+            setTimeout( () => {} ,0 ); 
         }
     }
 

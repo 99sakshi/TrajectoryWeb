@@ -5,7 +5,7 @@ import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
 import { StartService } from './start.service';
-import { LoadConfig } from './loadconfig.service';
+import { LoadConfig } from './traj/loadconfig.service';
 import { TrajComponent } from './traj/traj.component';
 
 @Component({
