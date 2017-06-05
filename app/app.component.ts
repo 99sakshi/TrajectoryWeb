@@ -53,8 +53,10 @@ export class AppComponent {
                                                         } );
       }
 
-      private init() {
-        
+        init() {
+          this.addEntityToManager();
+        this.addEntityToManager2();
+      
       }
 
 
@@ -62,11 +64,9 @@ export class AppComponent {
         var missile = new Missile;
         var controller = new ForwardController;
         missile._name = "TestMissile";
-
         controller.setPosition(missile._position);
-
         missile.setController(controller);
-        this._simManager.addEntity(missile);
+        this._simManager.addEntity(missile);  
       }
 
       addEntityToManager2(){
@@ -75,6 +75,7 @@ export class AppComponent {
         this._simManager.addEntity(missile);
         missile.setPosition(Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100));
       }
+
 
       startSimulation(){
         this.startService.startSimulation().subscribe( data =>  {

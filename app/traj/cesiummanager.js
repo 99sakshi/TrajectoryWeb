@@ -26,9 +26,9 @@ let CesiumManager = class CesiumManager {
             url: this._config.Geoserver.Url,
             layers: this._config.Geoserver.Layers[0]
         });
+        this._cesiumViewer = viewer;
         imageryLayers.removeAll();
         imageryLayers.addImageryProvider(myLayer);
-        this._cesiumViewer = viewer;
     }
     addEntity() {
     }
