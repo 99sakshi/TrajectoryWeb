@@ -5,7 +5,9 @@ import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
 import { StartService } from './start.service';
-import { LoadConfig } from './loadconfig.service';
+
+import { LoadConfig } from '../traj/loadconfig.service';
+import { CesiumManager } from  '../traj/cesiummanager';
 
 @Component({
   selector: 'my-app',
@@ -15,7 +17,7 @@ import { LoadConfig } from './loadconfig.service';
      <button type="button" class="btn btn-danger" (click)="stopSimulation()">Stop</button>
      <div id="cesiumContainer"> </div>
      `,
-  providers: [ StartService, LoadConfig ],
+
   styles:[`
       html, body, #cesiumContainer {
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
@@ -27,51 +29,39 @@ import { LoadConfig } from './loadconfig.service';
 export class AppComponent { 
       
       _simManager: SimManager;
+      _cesiumManager: CesiumManager
 
       config;
 
-      constructor(_simManager: SimManager,  private startService: StartService
+      constructor(_simManager: SimManager, _cesiumManager: CesiumManager,
+                                            private startService: StartService
                                          ,  private loadConfig: LoadConfig ){
-          this._simManager = _simManager;
+          this._simManager = _simManager,
+          this._cesiumManager = _cesiumManager,
+          this._simManager.setCesiumManager(this._cesiumManager);
       }
 
       ngOnInit() {
 
-        this.loadConfig.getConfig().subscribe( data =>  {
+          this.loadConfig.getConfig().subscribe( data =>  {
                                                             this.config = data;
                                                             this.init();
                                                         } );
       }
 
-      private init() {
+      init() {
+          this.addEntityToManager();
+          this.addEntityToManager2();
+      }
 
-        var viewer =  new Cesium.Viewer('cesiumContainer');
-        var imageryLayers = viewer.imageryLayers;
-
-        var myLayer = new Cesium.WebMapServiceImageryProvider({
-            url: this.config.Geoserver.Url,
-            layers: this.config.Geoserver.Layers[0]
-        });
-
-        imageryLayers.removeAll();
-        imageryLayers.addImageryProvider(myLayer);
-
-        this._simManager.setCesiumViewer( viewer );
-
-        this.addEntityToManager();
-        this.addEntityToManager2();
-
-      } 
 
       addEntityToManager(){
         var missile = new Missile;
         var controller = new ForwardController;
         missile._name = "TestMissile";
-
         controller.setPosition(missile._position);
-
         missile.setController(controller);
-        this._simManager.addEntity(missile);
+        this._simManager.addEntity(missile);  
       }
 
       addEntityToManager2(){
@@ -80,6 +70,7 @@ export class AppComponent {
         this._simManager.addEntity(missile);
         missile.setPosition(Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100));
       }
+
 
       startSimulation(){
         this.startService.startSimulation().subscribe( data =>  {
