@@ -1,5 +1,7 @@
 /node_modules/
 /Models/
-/app/*.js
-/app/*.map
+/src/traj/*.js
+/src/traj/*.map
+/src/app/*.js
+/src/app/*.map
 *.log
