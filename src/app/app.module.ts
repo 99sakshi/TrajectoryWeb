@@ -7,13 +7,13 @@ import { AppComponent }             from './app.component';
 import { SimManager }               from './simmanager';
 import { Missile }                  from './missile';
 import { ForwardController }        from './forwardController';
-import { StartService }             from './start.service';
+
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule, TrajModule ],
   declarations: [ AppComponent ],
   bootstrap:    [ AppComponent ],
-  providers:    [ SimManager, Missile, ForwardController, StartService ],
+  providers:    [ SimManager, Missile, ForwardController ],
 })
 
 export class AppModule { }

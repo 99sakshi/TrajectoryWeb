@@ -4,17 +4,21 @@ import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
-import { StartService } from './start.service';
 
+import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { CesiumManager } from  '../traj/cesiummanager';
 
 @Component({
   selector: 'my-app',
   template: `
-     <button type="button" class="btn btn-success" (click)="startSimulation()">Start</button>
-     <button type="button" class="btn btn-warning" (click)="pauseSimulation()">Pause</button>
-     <button type="button" class="btn btn-danger" (click)="stopSimulation()">Stop</button>
+     Test Buttons ->
+     <button type="button" class="btn btn-success btn-xs" (click)="startSimulation()">Start</button>
+     <button type="button" class="btn btn-warning btn-xs" (click)="pauseSimulation()">Pause</button>
+     <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
+     <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
+     <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
+     
      <div id="cesiumContainer"> </div>
      `,
 
@@ -85,6 +89,14 @@ export class AppComponent {
 
       stopSimulation(){
           this._simManager.stop();
+      }
+
+      addData() {
+
+      }
+
+      getData() {
+
       }
 
 }
