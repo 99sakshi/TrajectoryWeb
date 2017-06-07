@@ -1,6 +1,6 @@
 // Simulation State
 
-import { CesiumManager } from  './traj/cesiummanager';
+import { CesiumManager } from  '../traj/cesiummanager';
 
 enum State {
     Start,

@@ -2,34 +2,36 @@ import { Injectable }              from '@angular/core';
 import { Http, Response }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { LoadConfig } from './traj/loadconfig.service';
-
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 
 @Injectable()
-export class StartService {
+export class LoadConfig {
 
-  private serverUrl = 'http://localhost:3333';  // URL to web API
-  private startUrl = '/start';
+  config;
 
-  constructor (private http: Http, private loadConfig: LoadConfig) {
-    this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
+  constructor (private http: Http) {
+      
   }
 
-  startSimulation() {
-    return this.http.get(this.serverUrl + this.startUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+  getConfig() {
+    if(this.config == null)
+      return this.http.get('config/config.json')
+                      .map(this.extractData)
+                      .catch(this.handleError);
+    else 
+      return Observable.of(this.config);
   }
 
   private extractData(res: Response) {
     let body = res.json();
-    return body.data || { };
+    this.config = body;
+    return body || { };
   }
   
   private handleError (error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
+
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
@@ -41,4 +43,5 @@ export class StartService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
+
 }

@@ -5,8 +5,9 @@ import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
 import { StartService } from './start.service';
-import { LoadConfig } from './traj/loadconfig.service';
-import { CesiumManager } from  './traj/cesiummanager';
+
+import { LoadConfig } from '../traj/loadconfig.service';
+import { CesiumManager } from  '../traj/cesiummanager';
 
 @Component({
   selector: 'my-app',
