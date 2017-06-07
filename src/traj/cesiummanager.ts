@@ -22,6 +22,7 @@ export class CesiumManager{
         var viewer =  new Cesium.Viewer('cesiumContainer');
         viewer.bottomContainer.innerHTML = "";
         viewer.animation.container.innerHTML = "";
+        viewer.timeline.container.innerHTML = "";
 
         if(this._config.UseLocalGeoserver)
         {
@@ -35,7 +36,7 @@ export class CesiumManager{
           imageryLayers.removeAll();
           imageryLayers.addImageryProvider(myLayer);  
         } else {  
-          
+
           var terrainProvider = new Cesium.CesiumTerrainProvider({
               url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles'
           });
