@@ -6,7 +6,6 @@ import { Missile } from './missile';
 import { ForwardController } from './forwardController';
 import { StartService } from './start.service';
 import { LoadConfig } from './traj/loadconfig.service';
-import { TrajComponent } from './traj/traj.component';
 import { CesiumManager } from  './traj/cesiummanager';
 
 @Component({
@@ -39,24 +38,19 @@ export class AppComponent {
           this._simManager = _simManager,
           this._cesiumManager = _cesiumManager,
           this._simManager.setCesiumManager(this._cesiumManager);
-
-          var traj = new TrajComponent();
-
-          console.log(traj.trajData);
       }
 
       ngOnInit() {
 
-        this.loadConfig.getConfig().subscribe( data =>  {
+          this.loadConfig.getConfig().subscribe( data =>  {
                                                             this.config = data;
                                                             this.init();
                                                         } );
       }
 
-        init() {
+      init() {
           this.addEntityToManager();
-        this.addEntityToManager2();
-      
+          this.addEntityToManager2();
       }
 
 
