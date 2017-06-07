@@ -20,6 +20,8 @@ export class CesiumManager{
     
      private init () {
         var viewer =  new Cesium.Viewer('cesiumContainer');
+        viewer.bottomContainer.innerHTML = "";
+        viewer.animation.container.innerHTML = "";
 
         if(this._config.UseLocalGeoserver)
         {
