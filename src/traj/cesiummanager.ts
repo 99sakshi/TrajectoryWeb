@@ -34,8 +34,15 @@ export class CesiumManager{
           
           imageryLayers.removeAll();
           imageryLayers.addImageryProvider(myLayer);  
-        }
-        
+        } else {  
+          
+          var terrainProvider = new Cesium.CesiumTerrainProvider({
+              url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles'
+          });
+
+          viewer.terrainProvider = terrainProvider;
+      }
+
         this._cesiumViewer = viewer;
       }
 
