@@ -14,8 +14,7 @@ export class SimManager {
     _time;
     _deltaTime;
     _State;
-    _CesiumMan;
-    
+    _CesiumManager;
     
     constructor( ) {
         this._time = 0; // in seconds
@@ -25,7 +24,7 @@ export class SimManager {
     }
     
     addEntity (entity) {
-        entity.setCEntity( this._CesiumMan._cesiumViewer.entities.add( entity.getPara()) );
+        entity.setCEntity( this._CesiumManager.addEntity(entity) );
         this._entityMap[entity._name] = entity;
     }
 
@@ -34,7 +33,7 @@ export class SimManager {
     }
 
     setCesiumManager (cesiummanager) {
-        this._CesiumMan = cesiummanager;
+        this._CesiumManager = cesiummanager;
     }
 
     start () {

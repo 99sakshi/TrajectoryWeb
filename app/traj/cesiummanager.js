@@ -21,18 +21,22 @@ let CesiumManager = class CesiumManager {
     }
     init() {
         var viewer = new Cesium.Viewer('cesiumContainer');
-        var imageryLayers = viewer.imageryLayers;
-        var myLayer = new Cesium.WebMapServiceImageryProvider({
-            url: this._config.Geoserver.Url,
-            layers: this._config.Geoserver.Layers[0]
-        });
+        if (this._config.UseLocalGeoserver) {
+            var imageryLayers = viewer.imageryLayers;
+            var myLayer = new Cesium.WebMapServiceImageryProvider({
+                url: this._config.Geoserver.Url,
+                layers: this._config.Geoserver.Layers[0]
+            });
+            imageryLayers.removeAll();
+            imageryLayers.addImageryProvider(myLayer);
+        }
         this._cesiumViewer = viewer;
-        imageryLayers.removeAll();
-        imageryLayers.addImageryProvider(myLayer);
     }
-    addEntity() {
+    addEntity(entity) {
+        var retEntity = this._cesiumViewer.entities.add(entity.getPara());
+        return retEntity;
     }
-    removeEntity() {
+    removeEntity(entity) {
     }
 };
 CesiumManager = __decorate([
