@@ -5,7 +5,23 @@ import { HttpModule, JsonpModule }  from '@angular/http';
 import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { StartService }             from './start.service';
-
+/**
+ *
+ * @ngdoc module
+ * @name @NgModule
+ *
+ * @requires NgModule                
+ * @requires BrowserModule             
+ * @requires HttpModule, JsonpModule   
+ * @requires LoadConfig              
+ * @requires CesiumManager            
+ * @requires StartService    
+ *
+ * @description
+ *
+ * This is the trajectory module. It includes all of our components for the trajectory feature.
+ * It's providers are LoadConfig, CesiumManager, StartService
+ **/
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
