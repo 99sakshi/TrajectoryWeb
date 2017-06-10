@@ -29,7 +29,7 @@ export class Missile{
         this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
         this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
 
-        this._para = {
+        this._para = {    //defining parameters of the current object
             name : name,
             position : this._position,
             orientation : this._orientation,
@@ -145,9 +145,9 @@ export class Missile{
 
             this._Controller.tick(timeInfo);
 
-            this.setPosition(this._Controller._position);
-            this.setOrientation(this._Controller._orientation);
-          //  console.log(time);
+            this.setPosition(this._Controller._position); //sets position for every point 
+            this.setOrientation(this._Controller._orientation); //sets orientation for every point
+          
       }
 
 }

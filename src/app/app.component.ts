@@ -34,12 +34,12 @@ import { CesiumManager } from  '../traj/cesiummanager';
      <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
      <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
      
-     <div id="cesiumContainer"> </div>
+     <div id="cesiumContainer"> </div> //divides the page into sections
      `,
 
   styles:[`
       html, body, #cesiumContainer {
-      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; //sets dimensions of the page
      }
     `
   ]
