@@ -8,6 +8,7 @@ import { ForwardController } from './forwardController';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { CesiumManager } from  '../traj/cesiummanager';
+import {newObject} from './newobject'
 
 @Component({
   selector: 'my-app',
@@ -56,6 +57,8 @@ export class AppComponent {
       init() {
           this.addEntityToManager();
           this.addEntityToManager2();
+          this.addEntityToManager33();
+
       }
 
 
@@ -74,6 +77,15 @@ export class AppComponent {
         this._simManager.addEntity(missile);
         missile.setPosition(Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100));
       }
+      addEntityToManager33(){
+        var no = new newObject;
+        var controller = new ForwardController;
+        no._name = "TestMissile";
+        controller.setPosition(no._position);
+        no.setController(controller);
+        this._simManager.addEntity(no);  
+      }
+       
 
 
       startSimulation(){
