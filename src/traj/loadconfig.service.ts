@@ -25,6 +25,7 @@ import 'rxjs/add/observable/of';
  * @name @Injectable#decorator
  */
 @Injectable()
+// methods etc. omitted
 export class LoadConfig {
 
   config;
@@ -78,14 +79,15 @@ export class LoadConfig {
  * @return {Observable.throw(errMsg)} It  re-throw an observable from a catch function
  */
   private handleError (error: Response | any) {
-
+ // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
+    // Normally errors come in as response objects
     if (error instanceof Response) {
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
-      errMsg = error.message ? error.message : error.toString();
+      errMsg = error.message ? error.message : error.toString();// A generic error fallback
     }
     console.error(errMsg);
     return Observable.throw(errMsg);

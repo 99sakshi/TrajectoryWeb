@@ -80,7 +80,7 @@ export class SimManager {
                 deltaTime : parseFloat( this._deltaTime.toFixed(2) )
             }
             
-            this._entityMap[entityName].tick( timeInfo );
+            this._entityMap[entityName].tick( timeInfo );//setting the position and orientation of the current entitythis._entityMap[entityName].tick( timeInfo )
 
             // Wait for a while
             setTimeout( () => {} ,0 ); 
@@ -94,7 +94,7 @@ export class SimManager {
     stop () {
         if(this._State == State.Stop)
             return;
-        clearInterval(this._interval);
+        clearInterval(this._interval);// When you want to cancel it
         this._time = 0;
         this.tick();
         this._State = State.Stop;

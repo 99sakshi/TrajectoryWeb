@@ -7,6 +7,7 @@ import { LoadConfig } from './loadconfig.service';
  */
 
 @Injectable()
+// methods etc. omitted
 export class CesiumManager{ 
       
       private _cesiumViewer;
@@ -33,7 +34,7 @@ export class CesiumManager{
  */
     
      private init () {
-        var viewer =  new Cesium.Viewer('cesiumContainer');
+        var viewer =  new Cesium.Viewer('cesiumContainer');//Initialize the viewer widget with several custom options and mixins.
         viewer.bottomContainer.innerHTML = "";
         viewer.animation.container.innerHTML = "";
         viewer.timeline.container.innerHTML = "";
@@ -42,15 +43,15 @@ export class CesiumManager{
         {
           var imageryLayers = viewer.imageryLayers;
           
-          var myLayer = new Cesium.WebMapServiceImageryProvider({
+          var myLayer = new Cesium.WebMapServiceImageryProvider({// to include in the WMS URL to obtain images
               url: this._config.Geoserver.Url,
-              layers: this._config.Geoserver.Layers[0]
+              layers: this._config.Geoserver.Layers[0]//the index to retrieve
           });
           
           imageryLayers.removeAll();
-          imageryLayers.addImageryProvider(myLayer);  
+          imageryLayers.addImageryProvider(myLayer);  //the imagery provider to create a new layer 
         } else {  
-
+          //Use standard Cesium terrain
           var terrainProvider = new Cesium.CesiumTerrainProvider({
               url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles'
           });

@@ -5,13 +5,8 @@
  *
  * @description Provides HTTP methods for our firebase connection.
  *
- * ## Lorem Ipsum 1
- * Aenean ornare odio elit, eget facilisis ipsum molestie ac. Nam bibendum a nibh ut ullamcorper.
- * Donec non felis gravida, rutrum ante mattis, sagittis urna. Sed quam quam, facilisis vel cursus at.
- *
- * ## Lorem Ipsum 2
- * Aenean ornare odio elit, eget facilisis ipsum molestie ac. Nam bibendum a nibh ut ullamcorper.
- * Donec non felis gravida, rutrum ante mattis, sagittis urna. Sed quam quam, facilisis vel cursus at.
+ * ## Instead of copying and pasting the same code over and over, you'll create a single reusable data service and inject it into the components that need it.
+ * Using a separate service keeps components lean and focused on supporting the view, and makes it easy to unit-test components with a mock service.
  */
 import { Injectable }              from '@angular/core';
 import { Http, Response }          from '@angular/http';
@@ -26,6 +21,7 @@ import 'rxjs/add/operator/map';
  * @name @Injectable#decorator
  */
 @Injectable()
+ // methods etc. omitted
 export class StartService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
@@ -67,15 +63,16 @@ export class StartService {
  *
  * @return {Observable.throw(errMsg)} It  re-throw an observable from a catch function
  */
-  private handleError (error: Response | any) {
+  private handleError (error: Response | any) {// helper function for Error Handling
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
+    // Normally errors come in as response objects
     if (error instanceof Response) {
       const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
+      const err = body.error || JSON.stringify(body);// Wrong Error Object 
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
-      errMsg = error.message ? error.message : error.toString();
+      errMsg = error.message ? error.message : error.toString();// A generic error fallback
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
