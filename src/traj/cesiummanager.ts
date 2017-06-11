@@ -59,7 +59,13 @@ export class CesiumManager{
             viewer.terrainProvider = terrainProvider;
         }
 
-          this._cesiumViewer = viewer;
+        if(this._config.ShowMoon)
+        {
+            var scene = viewer.scene;
+            scene.moon = new Cesium.Moon();
+        }
+        
+        this._cesiumViewer = viewer;
       }
 
 
