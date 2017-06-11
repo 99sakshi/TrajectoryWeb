@@ -1,3 +1,21 @@
+/**
+ *
+ * @ngdoc module
+ * @name @NgModule
+ *
+ * @requires NgModule                
+ * @requires BrowserModule             
+ * @requires HttpModule, JsonpModule   
+ * @requires LoadConfig              
+ * @requires CesiumManager            
+ * @requires StartService    
+ *
+ * @description
+ *
+ * This is the trajectory module. It includes all of our components for the trajectory feature.
+ * It's providers are LoadConfig, CesiumManager, StartService
+ **/
+
 import { NgModule }                 from '@angular/core';
 import { BrowserModule }            from '@angular/platform-browser';
 import { HttpModule, JsonpModule }  from '@angular/http';
