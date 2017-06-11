@@ -1,9 +1,11 @@
 {
-	"EngineUrl": "http://localhost:3333",
+	"Test": true,
+	"ShowMoon": true,
 	"UseLocalGeoserver": true,
 	"Geoserver": {
 		"Url": "http://192.168.1.5:8181/geoserver/oponop/wms",
 		"Layers": ["oponop:World"]
 	},
+	"EngineUrl": "http://localhost:3333",
 	"Other": "Other"
 }

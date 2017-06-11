@@ -30,13 +30,15 @@ import { CesiumManager } from  '../traj/cesiummanager';
 @Component({
   selector: 'my-app',
   template: `
-     Test Buttons ->
-     <button type="button" class="btn btn-success btn-xs" (click)="startSimulation()">Start</button>
-     <button type="button" class="btn btn-warning btn-xs" (click)="pauseSimulation()">Pause</button>
-     <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
-     <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
-     <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
-     
+     <div *ngIf="test">
+      Test Buttons ->
+      <button type="button" class="btn btn-success btn-xs" (click)="startSimulation()">Start</button>
+      <button type="button" class="btn btn-warning btn-xs" (click)="pauseSimulation()">Pause</button>
+      <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
+      <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
+      <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
+     </div>
+
      <div id="cesiumContainer"> </div>
      `,
 
@@ -52,10 +54,10 @@ import { CesiumManager } from  '../traj/cesiummanager';
 export class AppComponent { 
       
       _simManager: SimManager;
-      _cesiumManager: CesiumManager
+      _cesiumManager: CesiumManager;
 
       config;
-
+      test;
 
     /**
      * @ngdoc method
@@ -75,6 +77,8 @@ export class AppComponent {
           this._simManager = _simManager,
           this._cesiumManager = _cesiumManager,
           this._simManager.setCesiumManager(this._cesiumManager);
+
+          this.test = false;
       }
 
 
@@ -90,7 +94,7 @@ export class AppComponent {
           this.loadConfig.getConfig().subscribe( data =>  {
                                                             this.config = data;
                                                             this.init();
-                                                        } );
+                                                          } );
       }
 
 
@@ -101,6 +105,8 @@ export class AppComponent {
      * This method Adds test entities to scene
      */
       init() {
+
+          this.test = this.config.Test;
 
           var PosCalifornia =  Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
           var PosOregon =  Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
