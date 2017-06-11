@@ -3,10 +3,11 @@
  * @name start.service
  * @module traj.module
  *
- * @description Provides HTTP methods for our firebase connection.
+ * @description sends start request to backend server
  *
- * ## Instead of copying and pasting the same code over and over, you'll create a single reusable data service and inject it into the components that need it.
- * Using a separate service keeps components lean and focused on supporting the view, and makes it easy to unit-test components with a mock service.
+ * ## Instead of copying and pasting the same code over and over, you'll create a single reusable data service 
+ * and inject it into the components that need it.Using a separate service keeps components lean and focused on 
+ * supporting the view, and makes it easy to unit-test components with a mock service.
  */
 import { Injectable }              from '@angular/core';
 import { Http, Response }          from '@angular/http';
@@ -16,12 +17,9 @@ import { LoadConfig } from '../traj/loadconfig.service';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-/**
- * @ngdoc method
- * @name @Injectable#decorator
- */
+
+
 @Injectable()
- // methods etc. omitted
 export class StartService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
@@ -34,34 +32,34 @@ export class StartService {
  * @ngdoc method
  * @name startSimulation#It start simulation
  *
- * @return {.catch(this.handleError)} It returns the error in the current object
+ * @return {.catch(this.handleError)} OK code or error if fails
  */
   startSimulation() {
     return this.http.get(this.serverUrl + this.startUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+
 /**
  * @ngdoc method
- * @name extractData#It extract data
+ * @name extractData#extracts the data
  *
- * @param {res} event Receive the emitted Response
- * It extracts the data
+ * @param {res} event Receives the Response event
  *
- * @return {body.data} It returns the data of the body and a promise
+ * @return {body} It returns the content of JSON
  */
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };
   }
-  /**
+  
+ /**
  * @ngdoc method
- * @name handleError#It handles the error
+ * @name  handleError#handles the error
  *
- * @param {error} event Receive the emitted Response
- * It handles the error
+ * @param {error} event is error event
  *
- * @return {Observable.throw(errMsg)} It  re-throw an observable from a catch function
+ * @return {Observable.throw(errMsg)} throws error message
  */
   private handleError (error: Response | any) {// helper function for Error Handling
     // In a real world app, you might use a remote logging infrastructure

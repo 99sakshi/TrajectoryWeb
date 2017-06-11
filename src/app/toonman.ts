@@ -1,5 +1,5 @@
 declare var Cesium: any;
-export class newObject{ 
+export class ToonMan{ 
       _name;
       _position; 
       _orientation;
@@ -11,10 +11,7 @@ export class newObject{
 
       constructor() {
 
-       
-
-
-this._name = "TestMissile";
+        this._name = "ToonMan";
         this._position = new Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
         var heading = 0;
         var pitch = 0;
@@ -36,6 +33,10 @@ this._name = "TestMissile";
         }
 
         this._Controller = null;
+      }
+
+      setName (name) {
+            this._name = name;
       }
 
       // This is called by sim manager

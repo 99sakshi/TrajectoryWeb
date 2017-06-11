@@ -34,6 +34,10 @@ export class Missile{
         this._Controller = null;
       }
 
+      setName (name) {
+            this._name = name;
+      }
+
       // This is called by sim manager
       setCEntity(entity) {
             this._CEntity = entity;

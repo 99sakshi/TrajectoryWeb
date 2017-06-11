@@ -4,11 +4,12 @@ import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
+import { ToonMan } from './toonman'
 
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { CesiumManager } from  '../traj/cesiummanager';
-import {newObject} from './newobject'
+
 
 @Component({
   selector: 'my-app',
@@ -55,35 +56,40 @@ export class AppComponent {
       }
 
       init() {
-          this.addEntityToManager();
-          this.addEntityToManager2();
-          this.addEntityToManager33();
+
+          var PosCalifornia =  Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
+          var PosOregon =  Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
+          var PosMumbai =  Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
+
+          var controller = new ForwardController;
+          controller.setPosition( PosCalifornia );
+
+          this.addMissileToManager("TestMissileCali", PosCalifornia, controller);
+          this.addMissileToManager("TestMissileOre", PosOregon, null);
+          this.addManToManager("TestMan", PosMumbai);
 
       }
 
 
-      addEntityToManager(){
+      addMissileToManager(name, position, controller ){
         var missile = new Missile;
-        var controller = new ForwardController;
-        missile._name = "TestMissile";
-        controller.setPosition(missile._position);
-        missile.setController(controller);
-        this._simManager.addEntity(missile);  
+        missile.setName(name);
+
+        // Entity has to be added to the manager before position set 
+        this._simManager.addEntity(missile); 
+
+        missile.setPosition(position);
+        missile.setController(controller); 
       }
 
-      addEntityToManager2(){
-        var missile = new Missile;
-        missile._name = "TestMissile2";
-        this._simManager.addEntity(missile);
-        missile.setPosition(Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100));
-      }
-      addEntityToManager33(){
-        var no = new newObject;
+      addManToManager(name , position ){
+        var man = new ToonMan;
         var controller = new ForwardController;
-        no._name = "TestMissile";
-        controller.setPosition(no._position);
-        no.setController(controller);
-        this._simManager.addEntity(no);  
+        man.setName(name);
+        controller.setPosition(position);
+        man.setController(controller);
+        this._simManager.addEntity(man);  
+        man.setPosition(position);
       }
        
 

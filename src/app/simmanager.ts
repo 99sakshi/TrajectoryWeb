@@ -15,49 +15,55 @@ export class SimManager {
     _deltaTime;
     _State;
     _CesiumManager;
+
    /**
- * @ngdoc method
- * @name constructor#Initializes
- *It initializes _time,_deltaTime,_entityMap,_State of the current object
- */
+     * @ngdoc method
+     * @name constructor#Initializes
+     * It initializes _time, _deltaTime, _entityMap,  _State to stop
+     */
     constructor( ) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01; // in seconds
         this._entityMap = [];
         this._State = State.Stop;
     }
+
+
     /**
- * @ngdoc method
- * @name addEntity#It adds the entity
- *
- * @param {entity} event Receive the emitted entity
- * It adds the entity
- */
+     * @ngdoc method
+     * @name addEntity # It adds the entity and puts it in entity map
+     *
+     * @param {entity} entity to be added
+     */
     addEntity (entity) {
         entity.setCEntity( this._CesiumManager.addEntity(entity) );
         this._entityMap[entity._name] = entity;
     }
-/**
- * @ngdoc method
- * @name removeEntity#It removes the entity
- */
+
+    
+    /**
+     * @ngdoc method
+     * @name removeEntity # It removes the entity
+     */
     removeEntity () {
 
     }
- /**
- * @ngdoc method
- * @name setCesiumManager#sets the CesiumManager
- *It initializes _CesiumManager of the current object
- */
 
+
+    /**
+     * @ngdoc method
+     * @name setCesiumManager#sets the CesiumManager
+     * It initializes _CesiumManager 
+     */
     setCesiumManager (cesiummanager) {
         this._CesiumManager = cesiummanager;
     }
-/**
- * @ngdoc method
- * @name start#sets the interval and state
- *It initializes _interval,_State of the current object
- */
+
+    /**
+     * @ngdoc method
+     * @name start # Starts the simulation 
+     * Calls tick function routine
+     */
     start () {
         if(this._State == State.Start)
             return;
@@ -67,11 +73,13 @@ export class SimManager {
                                             },  1000 * this._deltaTime); // to convert in milli seconds
         this._State = State.Start;
     }
-/**
- * @ngdoc method
- * @name tick#sets the time and deltaTime
- *It sets setTimeout to zero 
- */
+
+
+    /**
+     * @ngdoc method
+     * @name tick # Calls tick function on every Entity 
+     * pushs next tick call at back of the event queue
+     */
     tick () {
         for(var entityName in this._entityMap)
         {
@@ -86,11 +94,12 @@ export class SimManager {
             setTimeout( () => {} ,0 ); 
         }
     }
-/**
- * @ngdoc method
- * @name stop#sets current state to stop
- *It initializes _time,_State of the current object
- */
+
+    /**
+     * @ngdoc method
+     * @name stop # Stop the simulation
+     * Also, sets time to zero
+     */
     stop () {
         if(this._State == State.Stop)
             return;
@@ -99,11 +108,12 @@ export class SimManager {
         this.tick();
         this._State = State.Stop;
     }
-/**
- * @ngdoc method
- * @name pause#sets the current state to pause
- *It sets _State of the current object
- */
+
+    /**
+     * @ngdoc method
+     * @name pause # pause the simulation
+     * 
+     */
     pause (){
         if(this._State == State.Pause)
             return;

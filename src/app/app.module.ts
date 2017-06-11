@@ -5,15 +5,13 @@ import { TrajModule }               from '../traj/traj.module';
 
 import { AppComponent }             from './app.component';
 import { SimManager }               from './simmanager';
-import { Missile }                  from './missile';
-import { ForwardController }        from './forwardController';
 
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule, TrajModule ],
   declarations: [ AppComponent ],
   bootstrap:    [ AppComponent ],
-  providers:    [ SimManager, Missile, ForwardController ],
+  providers:    [ SimManager ],
 })
 
 export class AppModule { }
