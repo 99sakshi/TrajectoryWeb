@@ -20,10 +20,12 @@ import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
+import { ToonMan } from './toonman'
 
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { CesiumManager } from  '../traj/cesiummanager';
+
 
 @Component({
   selector: 'my-app',
@@ -96,43 +98,62 @@ export class AppComponent {
      * @ngdoc method
      * @name init # Adds entity to scene
      *
-     * This method Adds entity to scene
+     * This method Adds test entities to scene
      */
       init() {
-          this.addEntityToManager();
-          this.addEntityToManager2();
+
+          var PosCalifornia =  Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
+          var PosOregon =  Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
+          var PosMumbai =  Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
+
+          var controller = new ForwardController;
+          controller.setPosition( PosCalifornia );
+
+          this.addMissileToManager("TestMissileCali", PosCalifornia, controller);
+          this.addMissileToManager("TestMissileOre", PosOregon, null);
+          this.addManToManager("TestMan", PosMumbai);
+
       }
 
 
     /**
      * @ngdoc method
-     * @name addEntityToManager # CreatesANewEntity
+     * @name addMissileToManager # add Missile to SimManager
      * This method creates object of Missile class and ForwardController class.
-     * It sets missile._name, position and controller.
-     * It also adds an entity to object of current class.
+     * It sets missile's name, position and controller.
+     * It also adds an entity to sim manager.
      */
-      addEntityToManager(){
+      addMissileToManager(name, position, controller ){
+
         var missile = new Missile;
-        var controller = new ForwardController;
-        missile._name = "TestMissile";
-        controller.setPosition(missile._position);
-        missile.setController(controller);
-        this._simManager.addEntity(missile);  
+        missile.setName(name);
+
+        // Entity has to be added to the manager before position set 
+        this._simManager.addEntity(missile); 
+
+        missile.setPosition(position);
+        missile.setController(controller); 
       }
+
 
     /**
      * @ngdoc method
-     * @name addEntityToManager2#CreatesANewEntity
-     * This method creates object of Missile class.
-     * It sets missile._name and position.
-     * It also adds an entity to object of current class.
+     * @name addManToManager # adds Man to SimManager
+     * This method creates object of ToonMan class.
+     * It sets man's name, position and forward controller
+     * and adds it to the sim manager
      */
-      addEntityToManager2(){
-        var missile = new Missile;
-        missile._name = "TestMissile2";
-        this._simManager.addEntity(missile);
-        missile.setPosition(Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100));
+      addManToManager(name , position ){
+        var man = new ToonMan;
+        var controller = new ForwardController;
+        man.setName(name);
+        controller.setPosition(position);
+        man.setController(controller);
+        this._simManager.addEntity(man);  
+        man.setPosition(position);
+
       }
+
 
 
     /**

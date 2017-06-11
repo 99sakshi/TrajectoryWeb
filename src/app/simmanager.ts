@@ -15,27 +15,55 @@ export class SimManager {
     _deltaTime;
     _State;
     _CesiumManager;
-    
+
+   /**
+     * @ngdoc method
+     * @name constructor#Initializes
+     * It initializes _time, _deltaTime, _entityMap,  _State to stop
+     */
     constructor( ) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01; // in seconds
         this._entityMap = [];
         this._State = State.Stop;
     }
-    
+
+
+    /**
+     * @ngdoc method
+     * @name addEntity # It adds the entity and puts it in entity map
+     *
+     * @param {entity} entity to be added
+     */
     addEntity (entity) {
         entity.setCEntity( this._CesiumManager.addEntity(entity) );
         this._entityMap[entity._name] = entity;
     }
 
+    
+    /**
+     * @ngdoc method
+     * @name removeEntity # It removes the entity
+     */
     removeEntity () {
 
     }
 
+
+    /**
+     * @ngdoc method
+     * @name setCesiumManager#sets the CesiumManager
+     * It initializes _CesiumManager 
+     */
     setCesiumManager (cesiummanager) {
         this._CesiumManager = cesiummanager;
     }
 
+    /**
+     * @ngdoc method
+     * @name start # Starts the simulation 
+     * Calls tick function routine
+     */
     start () {
         if(this._State == State.Start)
             return;
@@ -46,6 +74,12 @@ export class SimManager {
         this._State = State.Start;
     }
 
+
+    /**
+     * @ngdoc method
+     * @name tick # Calls tick function on every Entity 
+     * pushs next tick call at back of the event queue
+     */
     tick () {
         for(var entityName in this._entityMap)
         {
@@ -54,22 +88,32 @@ export class SimManager {
                 deltaTime : parseFloat( this._deltaTime.toFixed(2) )
             }
             
-            this._entityMap[entityName].tick( timeInfo );
+            this._entityMap[entityName].tick( timeInfo );//setting the position and orientation of the current entitythis._entityMap[entityName].tick( timeInfo )
 
             // Wait for a while
             setTimeout( () => {} ,0 ); 
         }
     }
 
+    /**
+     * @ngdoc method
+     * @name stop # Stop the simulation
+     * Also, sets time to zero
+     */
     stop () {
         if(this._State == State.Stop)
             return;
-        clearInterval(this._interval);
+        clearInterval(this._interval);// When you want to cancel it
         this._time = 0;
         this.tick();
         this._State = State.Stop;
     }
 
+    /**
+     * @ngdoc method
+     * @name pause # pause the simulation
+     * 
+     */
     pause (){
         if(this._State == State.Pause)
             return;

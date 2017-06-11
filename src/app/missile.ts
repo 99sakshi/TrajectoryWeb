@@ -29,7 +29,8 @@ export class Missile{
         this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
         this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
 
-        this._para = {    //defining parameters of the current object
+        //defining parameters of the current object
+        this._para = {    
             name : name,
             position : this._position,
             orientation : this._orientation,
@@ -42,6 +43,20 @@ export class Missile{
 
         this._Controller = null;
       }
+
+
+      /**
+       * @ngdoc method
+       * @name setName # Sets Name
+       *
+       * @param {name} name of Entity 
+       * sets the missile name.
+       *
+       */
+      setName (name) {
+            this._name = name;
+      }
+      
 
       /**
        * @ngdoc method
