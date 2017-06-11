@@ -8,16 +8,16 @@ export class Missile{
       _para;
       _CEntity;  // Cesium Entity
       _Controller;
-/**
- * @ngdoc method
- * @name Constructor#initializeVariables
- *
- * It initializes parameters of current object of Missile class.
- * It sets _name, _position, _orientation, _hpr, _modulUrl and _Controller of the current object.
- * It also declares and initializes heading, pitch and roll variables. 
- *
- * @return {method} ContactService returns the updateContact method and a promise
- */
+
+      /**
+       * @ngdoc method
+       * @name Constructor # initializes Variables
+       *
+       * It initializes parameters of current object of Missile class.
+       * It sets _name, _position, _orientation, _hpr, _modulUrl and _Controller of the current object.
+       * It also declares and initializes heading, pitch and roll variables. 
+       *
+       */
       constructor() {
 
         this._name = "TestMissile";
@@ -42,111 +42,118 @@ export class Missile{
 
         this._Controller = null;
       }
-/**
- * @ngdoc method
- * @name setCEntity#setsEntity
- *
- * @param {entity} event Receive the entity
- * Updates the _CEntity field of current object.
- *
- */
-      // This is called by sim manager
+
+      /**
+       * @ngdoc method
+       * @name setCEntity # Sets Entity
+       *
+       * @param {entity} entity of cesium 
+       * sets the cesium Entity of missile.
+       * It's called by sim manager
+       *
+       */
       setCEntity(entity) {
             this._CEntity = entity;
       }
-/**
- * @ngdoc method
- * @name setController#setsController
- *
- * @param {controller} event Receive the controller
- * Updates the _Controller field of current object.
- *
- */
-     
+
+
+      /**
+       * @ngdoc method
+       * @name setController # Sets Controller
+       *
+       * @param {controller} controller of the missile
+       * Updates the Controller of the missile
+       *
+       */
       setController(controller) {
             this._Controller = controller;
       }
-/**
- * @ngdoc method
- * @name setModeUrl#setsModelUrl
- *
- * @param {url} event Receive the url
- * Updates the _modelUrl field of current object.
- *
- */
-     
+
+
+      /**
+       * @ngdoc method
+       * @name setModeUrl # sets Model's Url
+       *
+       * @param {url} url of model to be added
+       * Updates the model's Url of missile
+       *
+       */
       setModelUrl(url) {
             this._modelUrl = url;
       }
-/**
- * @ngdoc method
- * @name setPosition#setsPosition
- *
- * @param {position} event Receive the position
- * Updates the _position and _CEntity.position fields of current object.
- *
- */
-     
+
+
+      /**
+       * @ngdoc method
+       * @name setPosition # sets Position
+       *
+       * @param {position} position of entity
+       * Updates the position and cesium's position of missile
+       *
+       */
       setPosition(position) {
             this._position = position;
             this._CEntity.position = this._position;
       }
-/**
- * @ngdoc method
- * @name setHPR#setsHpr
- *
- * @param {hpr} event Receive the hpr
- * Updates the _hpr field of current object.
- *
- */
-     
+
+
+      /**
+       * @ngdoc method
+       * @name setHPR # sets Heading Pitch Roll
+       *
+       * @param {hpr} hpr of entity
+       * Updates the Heading Pitch Roll.
+       *
+       */ 
       setHPR(hpr) {
             this._hpr = hpr;
       }
-/**
- * @ngdoc method
- * @name setOrientation#setsOrientation
- *
- * @param {orientation} event Receive the orientation
- * Updates the _orientation and _CEntity.orientation fields of current object.
- *
- */
-     
+
+
+      /**
+       * @ngdoc method
+       * @name setOrientation # Sets Orientation
+       *
+       * @param {orientation} orientation of the entity
+       * Updates the orientation and cesium Entity's orientation 
+       *
+       */
       setOrientation(orientation) {
             this._orientation = orientation;
             this._CEntity.orientation = this._orientation;
       }
-/**
- * @ngdoc method
- * @name getPara#returnParameter
- *
- * 
- * Returns the _para field of current object.
- *
- */
-     
+
+
+      /**
+       * @ngdoc method
+       * @name getPara # Returns Parameter
+       * @return {parameter} parameter of missile.
+       *
+       */
       getPara(){
             return this._para;
       }
-/**
- * @ngdoc method
- * @name tick#setsPositionAndOrientation
- *
- * @param {timeInfo} event Receive the timeInfo
- * If _Controller field of current object is null, it Returns.
- * Updates the _Controller field of current object.
- * Invokes setPosition and setOrientation methods for current object.
- *
- */
-     
+
+
+      /**
+       * @ngdoc method
+       * @name tick # sets Position and Orientation
+       *
+       * @param {timeInfo} timeInfo time info of simulation
+       * updates position and orientation of missile if 
+       * contoler is set
+       */
       tick(timeInfo) {
             if(this._Controller == null) 
                   return;
 
+            // Updates the controller 
             this._Controller.tick(timeInfo);
 
-            this.setPosition(this._Controller._position); //sets position for every point 
-            this.setOrientation(this._Controller._orientation); //sets orientation for every point
+            //sets position for every point 
+            this.setPosition(this._Controller._position); 
+            //sets orientation for every point
+            this.setOrientation(this._Controller._orientation); 
           
       }
 
