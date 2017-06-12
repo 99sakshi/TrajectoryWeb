@@ -25,6 +25,7 @@ import { ToonMan } from './toonman'
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { CesiumManager } from  '../traj/cesiummanager';
+import {TestdbService} from '../traj/testdb.service'
 
 
 @Component({
@@ -71,7 +72,7 @@ export class AppComponent {
      */
       constructor(_simManager: SimManager, _cesiumManager: CesiumManager,
                                             private startService: StartService
-                                         ,  private loadConfig: LoadConfig ){
+                                         ,  private loadConfig: LoadConfig , private testdbService : TestdbService){
           this._simManager = _simManager,
           this._cesiumManager = _cesiumManager,
           this._simManager.setCesiumManager(this._cesiumManager);
@@ -195,6 +196,10 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
+         this.testdbService.startSimulation().subscribe( data =>  {
+                                                                    console.log(data);
+                                                                    this._simManager.start()
+                                                                } );
 
       }
 
