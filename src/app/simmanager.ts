@@ -1,5 +1,5 @@
 // Simulation State
-
+import { Injectable } from '@angular/core';
 import { ObjectManager } from  '../traj/objectmanager';
 
 enum State {
@@ -8,20 +8,20 @@ enum State {
     Pause
 }
 
+@Injectable()
 export class SimManager { 
     _entityMap;
     _interval;
     _time;
     _deltaTime;
     _State;
-    _ObjectManager;
 
    /**
      * @ngdoc method
      * @name constructor#Initializes
      * It initializes _time, _deltaTime, _entityMap,  _State to stop
      */
-    constructor( ) {
+    constructor( private objectmanager: ObjectManager) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01; // in seconds
         this._entityMap = [];
@@ -36,7 +36,7 @@ export class SimManager {
      * @param {entity} entity to be added
      */
     addEntity (entity) {
-        entity.setCEntity( this._ObjectManager.addEntity(entity) );
+        entity.setCEntity( this.objectmanager.addEntity(entity) );
         this._entityMap[entity._name] = entity;
     }
 
@@ -49,15 +49,6 @@ export class SimManager {
 
     }
 
-
-    /**
-     * @ngdoc method
-     * @name setCesiumManager#sets the CesiumManager
-     * It initializes _CesiumManager 
-     */
-    setObjectManager (objectmanager) {
-        this._ObjectManager = objectmanager;
-    }
 
     /**
      * @ngdoc method

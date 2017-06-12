@@ -24,7 +24,6 @@ import { UpController } from './upcontroller';
 
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { CesiumManager } from  '../traj/cesiummanager';
 
 
 @Component({
@@ -54,7 +53,6 @@ import { CesiumManager } from  '../traj/cesiummanager';
 export class AppComponent { 
       
       _simManager: SimManager;
-      _cesiumManager: CesiumManager;
 
       config;
       test;
@@ -64,21 +62,16 @@ export class AppComponent {
      * @name constructorr#Initialize Variables
      *
      * @param {_simanager} _simanager Injectable member
-     * @param {_cesiumManager} _cesiumManager Injectable member
      * @param {startService} startService Injectable member
      * @param {loadConfig} loadConfig Injectable member
      * 
      * It initializes the variables of AppComponent. 
      *
      */
-      constructor(_simManager: SimManager, _cesiumManager: CesiumManager,
-                                            private startService: StartService
-                                         ,  private loadConfig: LoadConfig ){
+      constructor(_simManager: SimManager, private startService: StartService,
+                                           private loadConfig: LoadConfig ){
           this._simManager = _simManager,
-          this._cesiumManager = _cesiumManager,
-          this._simManager.setObjectManager(this._cesiumManager);
           this.test = false;
-
       }
 
 
@@ -149,8 +142,6 @@ export class AppComponent {
         appEntity.setController(controller); 
 
       }
-
-
 
 
     /**

@@ -73,13 +73,12 @@ export class CesiumManager{
        * @ngdoc method
        * @name addEntity#adds an entity
        *
-       * @param {entity} entity to be added
-       * Adds the new entity
-       *
+       * @param {entityParameters} Parameters of the entity that needs to be added
+       * 
        * @return {retEntity} retEntity cesium generated entity
        */
-      addEntity(entity) {
-        var retEntity = this._cesiumViewer.entities.add( entity.getPara());
+      addEntity(entityParameters) {
+        var retEntity = this._cesiumViewer.entities.add( entityParameters );
         return retEntity;
       }
 

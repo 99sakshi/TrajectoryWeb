@@ -1,20 +1,20 @@
-declare var Object: any;
-import { Injectable } from '@angular/core'
-import { LoadConfig } from './loadconfig.service'
+import { Injectable } from '@angular/core';
+import { LoadConfig } from './loadconfig.service';
 import { CesiumManager} from './cesiummanager';
 
  /**
  * @ngdoc method
- * @name ObjectManager # Injectable calls that manages all the operations of cesium
+ * @name ObjectManager # 
  */
 @Injectable()
 export class ObjectManager{ 
       
       private _objectViewer;
       private _config;
-      private _cesiumManager;
 
+      constructor (private _cesiumManager: CesiumManager) {
 
+      }
 
      /**
        * @ngdoc method
@@ -26,8 +26,9 @@ export class ObjectManager{
        * @return {retEntity} retEntity cesium generated entity
        */
       addEntity(entity) {
-     var rEntity= this._cesiumManager.add(entity);
-     return rEntity;
+            // This manager should also store the object somewhere
+            var rEntity= this._cesiumManager.addEntity(entity.getPara());
+            return rEntity;
       }
 
 
