@@ -74,7 +74,7 @@ export class AppComponent {
                                          ,  private loadConfig: LoadConfig ){
           this._simManager = _simManager,
           this._cesiumManager = _cesiumManager,
-          this._simManager.setCesiumManager(this._cesiumManager);
+          this._simManager.setObjectManager(this._cesiumManager);
       }
 
 
