@@ -21,6 +21,7 @@ import { SimManager } from './simmanager';
 import { Missile } from './missile';
 import { ForwardController } from './forwardController';
 import { ToonMan } from './toonman'
+import { Aircraft } from './aircraft'
 
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
@@ -108,16 +109,18 @@ export class AppComponent {
 
           this.test = this.config.Test;
 
-          var PosCalifornia =  Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
-          var PosOregon =  Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
-          var PosMumbai =  Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
+          var PosCalifornia = Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
+          var PosOregon = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
+          var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
+          var PosEurope = Cesium.Cartesian3.fromDegrees(-111.0744619, 44.0503706, 100);
 
           var controller = new ForwardController;
           controller.setPosition( PosCalifornia );
 
-          this.addMissileToManager("TestMissileCali", PosCalifornia, controller);
           this.addMissileToManager("TestMissileOre", PosOregon, null);
+          this.addMissileToManager("TestMissileCali", PosCalifornia, controller);
           this.addManToManager("TestMan", PosMumbai);
+          this.addAircraftToManager("TestAircraft", PosEurope);
 
       }
 
@@ -149,7 +152,7 @@ export class AppComponent {
      * It sets man's name, position and forward controller
      * and adds it to the sim manager
      */
-      addManToManager(name , position ){
+      addManToManager( name, position ){
         var man = new ToonMan;
         var controller = new ForwardController;
         man.setName(name);
@@ -157,6 +160,24 @@ export class AppComponent {
         man.setController(controller);
         this._simManager.addEntity(man);  
         man.setPosition(position);
+
+      }
+
+      /**
+     * @ngdoc method
+     * @name addManToManager # adds Man to SimManager
+     * This method creates object of ToonMan class.
+     * It sets man's name, position and forward controller
+     * and adds it to the sim manager
+     */
+      addAircraftToManager( name, position ){
+        var aircraft = new Aircraft;
+        var controller = new ForwardController;
+        aircraft.setName(name);
+        controller.setPosition(position);
+        aircraft.setController(controller);
+        this._simManager.addEntity(aircraft);  
+        aircraft.setPosition(position);
 
       }
 
