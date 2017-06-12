@@ -21,8 +21,6 @@ import { SimManager } from './simmanager';
 import { AppEntity } from './appentity';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
-import { ToonMan } from './toonman'
-import { Aircraft } from './aircraft'
 
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
