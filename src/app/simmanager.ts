@@ -1,6 +1,6 @@
 // Simulation State
 
-import { CesiumManager } from  '../traj/cesiummanager';
+import { ObjectManager } from  '../traj/objectmanager';
 
 enum State {
     Start,
@@ -14,7 +14,7 @@ export class SimManager {
     _time;
     _deltaTime;
     _State;
-    _CesiumManager;
+    _ObjectManager;
 
    /**
      * @ngdoc method
@@ -36,7 +36,7 @@ export class SimManager {
      * @param {entity} entity to be added
      */
     addEntity (entity) {
-        entity.setCEntity( this._CesiumManager.addEntity(entity) );
+        entity.setCEntity( this._ObjectManager.addEntity(entity) );
         this._entityMap[entity._name] = entity;
     }
 
@@ -55,8 +55,8 @@ export class SimManager {
      * @name setCesiumManager#sets the CesiumManager
      * It initializes _CesiumManager 
      */
-    setCesiumManager (cesiummanager) {
-        this._CesiumManager = cesiummanager;
+    setObjectManager (objectmanager) {
+        this._ObjectManager = objectmanager;
     }
 
     /**
