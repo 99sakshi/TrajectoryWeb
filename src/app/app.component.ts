@@ -18,8 +18,9 @@ declare var Cesium: any;
 
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
-import { Missile } from './missile';
+import { AppEntity } from './appentity';
 import { ForwardController } from './forwardController';
+import { UpController } from './upcontroller';
 import { ToonMan } from './toonman'
 import { Aircraft } from './aircraft'
 
@@ -109,77 +110,48 @@ export class AppComponent {
 
           this.test = this.config.Test;
 
-          var PosCalifornia = Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
-          var PosOregon = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
-          var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
-          var PosEurope = Cesium.Cartesian3.fromDegrees(-111.0744619, 44.0503706, 100);
+          var PosOregon = Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
+          var PosCalifornia = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
+          var PosNavada = Cesium.Cartesian3.fromDegrees(-111.0744619, 44.0503706, 100);
 
-          var controller = new ForwardController;
-          controller.setPosition( PosCalifornia );
+          var modelBalloon = "../Models/CesiumBalloon/CesiumBalloon.glb";
+          var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
+          var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
-          this.addMissileToManager("TestMissileOre", PosOregon, null);
-          this.addMissileToManager("TestMissileCali", PosCalifornia, controller);
-          this.addManToManager("TestMan", PosMumbai);
-          this.addAircraftToManager("TestAircraft", PosEurope);
+          var fwdcontroller = new ForwardController;
+          fwdcontroller.setPosition( PosNavada );
+
+          var upcontroller = new UpController;
+          upcontroller.setPosition( PosCalifornia );
+
+          this.addAppEntityToManager("ToomManOre", PosOregon, modelToonMan, null);
+          this.addAppEntityToManager("BalloonCali", PosCalifornia, modelBalloon, upcontroller);
+          this.addAppEntityToManager("AircraftNavada", PosNavada, modelAircraft, fwdcontroller);
 
       }
 
 
     /**
      * @ngdoc method
-     * @name addMissileToManager # add Missile to SimManager
-     * This method creates object of Missile class and ForwardController class.
-     * It sets missile's name, position and controller.
+     * @name addAppEntityToManager # adds AppEntity to SimManager
+     * This method creates object of AppEntity class and ForwardController class.
+     * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      */
-      addMissileToManager(name, position, controller ){
+      addAppEntityToManager(name, position, modelUrl, controller ){
 
-        var missile = new Missile;
-        missile.setName(name);
+        var appEntity = new AppEntity;
+        appEntity.setName(name);
+        appEntity.setModelUrl(modelUrl); 
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(missile); 
+        this._simManager.addEntity(appEntity); 
 
-        missile.setPosition(position);
-        missile.setController(controller); 
-      }
-
-
-    /**
-     * @ngdoc method
-     * @name addManToManager # adds Man to SimManager
-     * This method creates object of ToonMan class.
-     * It sets man's name, position and forward controller
-     * and adds it to the sim manager
-     */
-      addManToManager( name, position ){
-        var man = new ToonMan;
-        var controller = new ForwardController;
-        man.setName(name);
-        controller.setPosition(position);
-        man.setController(controller);
-        this._simManager.addEntity(man);  
-        man.setPosition(position);
+        appEntity.setPosition(position);
+        appEntity.setController(controller); 
 
       }
 
-      /**
-     * @ngdoc method
-     * @name addManToManager # adds Man to SimManager
-     * This method creates object of ToonMan class.
-     * It sets man's name, position and forward controller
-     * and adds it to the sim manager
-     */
-      addAircraftToManager( name, position ){
-        var aircraft = new Aircraft;
-        var controller = new ForwardController;
-        aircraft.setName(name);
-        controller.setPosition(position);
-        aircraft.setController(controller);
-        this._simManager.addEntity(aircraft);  
-        aircraft.setPosition(position);
-
-      }
 
 
 

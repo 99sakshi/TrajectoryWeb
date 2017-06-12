@@ -1,5 +1,5 @@
 declare var Cesium: any;
-export class Missile{ 
+export class AppEntity{ 
       _name;
       _position; 
       _orientation;
@@ -13,14 +13,14 @@ export class Missile{
        * @ngdoc method
        * @name Constructor # initializes Variables
        *
-       * It initializes parameters of current object of Missile class.
+       * It initializes parameters of current object of AppEntity class.
        * It sets _name, _position, _orientation, _hpr, _modulUrl and _Controller of the current object.
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
       constructor() {
 
-        this._name = "TestMissile";
+        this._name = "TestAppEntity";
         this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
         var heading = 0;
         var pitch = 0;
@@ -50,7 +50,7 @@ export class Missile{
        * @name setName # Sets Name
        *
        * @param {name} name of Entity 
-       * sets the missile name.
+       * sets the AppEntity name.
        *
        */
       setName (name) {
@@ -63,7 +63,7 @@ export class Missile{
        * @name setCEntity # Sets Entity
        *
        * @param {entity} entity of cesium 
-       * sets the cesium Entity of missile.
+       * sets the cesium Entity of AppEntity.
        * It's called by sim manager
        *
        */
@@ -76,8 +76,8 @@ export class Missile{
        * @ngdoc method
        * @name setController # Sets Controller
        *
-       * @param {controller} controller of the missile
-       * Updates the Controller of the missile
+       * @param {controller} controller of the AppEntity
+       * Updates the Controller of the AppEntity
        *
        */
       setController(controller) {
@@ -90,11 +90,12 @@ export class Missile{
        * @name setModeUrl # sets Model's Url
        *
        * @param {url} url of model to be added
-       * Updates the model's Url of missile
+       * Updates the model's Url of AppEntity
        *
        */
       setModelUrl(url) {
             this._modelUrl = url;
+            this._para.model.uri = url;
       }
 
 
@@ -103,7 +104,7 @@ export class Missile{
        * @name setPosition # sets Position
        *
        * @param {position} position of entity
-       * Updates the position and cesium's position of missile
+       * Updates the position and cesium's position of AppEntity
        *
        */
       setPosition(position) {
@@ -142,7 +143,7 @@ export class Missile{
       /**
        * @ngdoc method
        * @name getPara # Returns Parameter
-       * @return {parameter} parameter of missile.
+       * @return {parameter} parameter of AppEntity.
        *
        */
       getPara(){
@@ -155,7 +156,7 @@ export class Missile{
        * @name tick # sets Position and Orientation
        *
        * @param {timeInfo} timeInfo time info of simulation
-       * updates position and orientation of missile if 
+       * updates position and orientation of AppEntity if 
        * contoler is set
        */
       tick(timeInfo) {
