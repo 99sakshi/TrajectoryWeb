@@ -23,12 +23,13 @@ import { HttpModule, JsonpModule }  from '@angular/http';
 import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { StartService }             from './start.service';
+import {TestdbService}              from './testdb.service';
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
-  providers:    [ LoadConfig, CesiumManager, StartService ],
+  providers:    [ LoadConfig, CesiumManager, StartService, TestdbService],
 })
 
 export class TrajModule { }
