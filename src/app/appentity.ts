@@ -28,6 +28,7 @@ export class AppEntity{
         this._hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
         this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
         this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
+        this._CEntity = null;
 
         //defining parameters of the current object
         this._para = {    
@@ -109,7 +110,9 @@ export class AppEntity{
        */
       setPosition(position) {
             this._position = position;
-            this._CEntity.position = this._position;
+            this._para.position = position;
+            if(this._CEntity != null)
+                  this._CEntity.position = this._position;
       }
 
 
@@ -136,7 +139,9 @@ export class AppEntity{
        */
       setOrientation(orientation) {
             this._orientation = orientation;
-            this._CEntity.orientation = this._orientation;
+            this._para.orientation = orientation;
+            if(this._CEntity != null)
+                  this._CEntity.orientation = this._orientation;
       }
 
 

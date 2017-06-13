@@ -101,23 +101,23 @@ export class AppComponent {
 
           this.test = this.config.Test;
 
-          var PosOregon = Cesium.Cartesian3.fromDegrees(-120.0744619, 48.0503706, 100);
-          var PosCalifornia = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
-          var PosNavada = Cesium.Cartesian3.fromDegrees(-111.0744619, 44.0503706, 100);
+          var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
+          var PosDelhi = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
+          var PosKolkatta = Cesium.Cartesian3.fromDegrees(77.1025, 28.7041, 100);
 
           var modelBalloon = "../Models/CesiumBalloon/CesiumBalloon.glb";
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
           var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
           var fwdcontroller = new ForwardController;
-          fwdcontroller.setPosition( PosNavada );
+          fwdcontroller.setPosition( PosKolkatta );
 
           var upcontroller = new UpController;
-          upcontroller.setPosition( PosCalifornia );
+          upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager("ToomManOre", PosOregon, modelToonMan, null);
-          this.addAppEntityToManager("BalloonCali", PosCalifornia, modelBalloon, upcontroller);
-          this.addAppEntityToManager("AircraftNavada", PosNavada, modelAircraft, fwdcontroller);
+          this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
+          this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -134,11 +134,14 @@ export class AppComponent {
         var appEntity = new AppEntity;
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
+        appEntity.setPosition(position);
+        var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        appEntity.setOrientation(orientation);
 
         // Entity has to be added to the manager before position set 
         this._simManager.addEntity(appEntity); 
 
-        appEntity.setPosition(position);
         appEntity.setController(controller); 
 
       }
