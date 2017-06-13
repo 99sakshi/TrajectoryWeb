@@ -34,23 +34,31 @@ export class CesiumManager{
        * Also sets the imagary and terrain data 
        */
       private init () {
-          var viewer =  new Cesium.Viewer('cesiumContainer');//Initialize the viewer widget with several custom options and mixins.
-          viewer.bottomContainer.innerHTML = "";
-          viewer.animation.container.innerHTML = "";
-          viewer.timeline.container.innerHTML = "";
 
-          if(this._config.UseLocalGeoserver)
-          {
+        // show India when app fires up
+        var rectangle = Cesium.Rectangle.fromDegrees(68.0, 7.0, 89.0, 35.0);
+        Cesium.Camera.DEFAULT_VIEW_FACTOR = 1.0;
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+
+        var viewer =  new Cesium.Viewer('cesiumContainer');//Initialize the viewer widget with several custom options and mixins.
+        viewer.bottomContainer.innerHTML = "";
+        viewer.animation.container.innerHTML = "";
+        viewer.timeline.container.innerHTML = "";
+
+        if(this._config.UseLocalGeoserver)
+        {
             var imageryLayers = viewer.imageryLayers;
-            
-            var myLayer = new Cesium.WebMapServiceImageryProvider({// to include in the WMS URL to obtain images
+            // to include in the WMS URL to obtain images
+            var myLayer = new Cesium.WebMapServiceImageryProvider({
                 url: this._config.Geoserver.Url,
                 layers: this._config.Geoserver.Layers[0]//the index to retrieve
             });
-            
+
             imageryLayers.removeAll();
-            imageryLayers.addImageryProvider(myLayer);  //the imagery provider to create a new layer 
-          } else {  
+            //the imagery provider to create a new layer 
+            imageryLayers.addImageryProvider(myLayer);  
+        } else {  
+
             //Use standard Cesium terrain
             var terrainProvider = new Cesium.CesiumTerrainProvider({
                 url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles'
