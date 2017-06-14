@@ -7,7 +7,9 @@
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "lite": "lite-server",
     "tsc": "tsc",
-    "tsc:w": "tsc -w"
+    "tsc:w": "tsc -w",
+	"docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/",
+	"typedoc": "typedoc"
   },
   "repository": {
     "type": "git",
