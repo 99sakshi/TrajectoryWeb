@@ -25,6 +25,9 @@ import { UpController } from './upcontroller';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 
+import { CesiumManager } from  '../traj/cesiummanager';
+import { TestdbService } from '../traj/testdb.service'
+
 
 @Component({
   selector: 'my-app',
@@ -68,8 +71,10 @@ export class AppComponent {
      * It initializes the variables of AppComponent. 
      *
      */
-      constructor(_simManager: SimManager, private startService: StartService,
-                                           private loadConfig: LoadConfig ){
+      constructor(_simManager: SimManager,
+                  private startService: StartService,
+                  private loadConfig: LoadConfig ,
+                  private testdbService : TestdbService){
           this._simManager = _simManager,
           this.test = false;
       }
@@ -186,6 +191,9 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
+         this.testdbService.startSimulation().subscribe( data =>  {
+                                                                    console.log(data);
+                                                                } );
 
       }
 
