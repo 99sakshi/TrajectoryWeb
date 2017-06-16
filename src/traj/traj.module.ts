@@ -25,12 +25,13 @@ import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
 import { TestdbService }            from './testdb.service';
+import { GetdataService }            from './getdata.service';
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
-  providers:    [ LoadConfig, StartService, TestdbService,
+  providers:    [ LoadConfig, StartService, TestdbService, GetdataService,
                   ObjectManager, CesiumManager ],
 })
 
