@@ -24,9 +24,10 @@ import { UpController } from './upcontroller';
 
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-
 import { CesiumManager } from  '../traj/cesiummanager';
-import { TestdbService } from '../traj/testdb.service'
+import {TestdbService} from '../traj/testdb.service';
+import {GetdataService} from '../traj/getdata.service'
+
 
 
 @Component({
@@ -74,7 +75,8 @@ export class AppComponent {
       constructor(_simManager: SimManager,
                   private startService: StartService,
                   private loadConfig: LoadConfig ,
-                  private testdbService : TestdbService){
+                  private testdbService : TestdbService ,
+                  private getdataService : GetdataService){
           this._simManager = _simManager,
           this.test = false;
       }
@@ -204,7 +206,9 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-
+          this.getdataService.getsData().subscribe( data =>  {
+                                                                    console.log(data);
+                                                                } );
       }
 
 }
