@@ -26,13 +26,15 @@ import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
 import { TestdbService }            from './testdb.service';
 import { GetdataService }            from './getdata.service';
+import { MongoManager }            from './mongomanager';
+
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
   providers:    [ LoadConfig, StartService, TestdbService, GetdataService,
-                  ObjectManager, CesiumManager ],
+                  ObjectManager, CesiumManager, MongoManager ],
 })
 
 export class TrajModule { }
