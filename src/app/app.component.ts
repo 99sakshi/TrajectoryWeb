@@ -57,7 +57,6 @@ import {GetdataService} from '../traj/getdata.service'
 export class AppComponent { 
       
       _simManager: SimManager;
-      _mongoman: MongoManager;
 
       config;
       test;
@@ -73,7 +72,7 @@ export class AppComponent {
      * It initializes the variables of AppComponent. 
      *
      */
-      constructor(_simManager: SimManager,
+      constructor(_simManager: SimManager, private _mongoman: MongoManager,
                   private startService: StartService,
                   private loadConfig: LoadConfig ,
                  ){
@@ -192,7 +191,8 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-     this. _mongoman.addData1();
+          this. _mongoman.addData1();
+     
 
       }
 
