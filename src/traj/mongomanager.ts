@@ -26,11 +26,11 @@ export class MongoManager{
      * @name addData # Adds Data
      * This method adds the data to the database.
      */
-     public addData1() {
+     public addData1(entity) {
          
-         this.testdbService.testDB().subscribe( data =>  {
-                                                                console.log(data);
-                                                                } );
+      var dbEntity =  this.testdbService.testDB().subscribe( data =>  { console.log(data); } );
+      return dbEntity;                                                         
+                                                               
       }
 
 
@@ -40,9 +40,9 @@ export class MongoManager{
      * This method retrieves the data from the database.
      */
     public  getData1() {
-          this.getdataService.getsData().subscribe( data =>  {
-                                                                    console.log(data);
-                                                                } );
+      var getEntity =   this.getdataService.getsData().subscribe( data =>  {console.log(data);} );
+      return getEntity;                                                        
+                                                                
       }
 
 
