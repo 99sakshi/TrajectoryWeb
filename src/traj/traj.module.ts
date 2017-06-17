@@ -9,7 +9,10 @@
  * @requires LoadConfig              
  * @requires CesiumManager            
  * @requires StartService    
- *
+ * @requires TestdbService
+ * @requires GetdataService
+ * @requires MongoManager
+ * @requires ObjectManager
  * @description
  *
  * This is the trajectory module. It includes all of our components for the trajectory feature.
