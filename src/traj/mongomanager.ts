@@ -9,7 +9,7 @@ import {GetdataService} from './getdata.service';
  */
 @Injectable()
 export class MongoManager{ 
-    private mongoViewer; 
+    
       /**
        * @ngdoc method
        * @name Constructor# initializing
@@ -26,11 +26,11 @@ export class MongoManager{
      * @name addData # Adds Data
      * This method adds the data to the database.
      */
-      addData1() {
-         this.testdbService.startSimulation().subscribe( data =>  {
-                                                                    console.log(data);
+     public addData1() {
+         
+         this.testdbService.testDB().subscribe( data =>  {
+                                                                console.log(data);
                                                                 } );
-
       }
 
 
@@ -39,7 +39,7 @@ export class MongoManager{
      * @name getData # Fetches Data
      * This method retrieves the data from the database.
      */
-      getData1() {
+    public  getData1() {
           this.getdataService.getsData().subscribe( data =>  {
                                                                     console.log(data);
                                                                 } );
