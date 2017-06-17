@@ -39,7 +39,8 @@ export class  TestdbService{
  *
  * @return {.catch(this.handleError)} It returns the error in the current object
  */
-  startSimulation() {
+  testDB() {
+    console.log("Working");
     return this.http.get(this.serverUrl + this.startUrl)//get() method to fetch data from server
                     .map(this.extractData)
                     .catch(this.handleError);
