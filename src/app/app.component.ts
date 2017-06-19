@@ -15,7 +15,6 @@
  **/
 
 declare var Cesium: any;
-var appEntity;
 
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
@@ -134,7 +133,7 @@ export class AppComponent {
      */
       addAppEntityToManager(name, position, modelUrl, controller ){
 
-        appEntity = new AppEntity;
+        var appEntity = new AppEntity;
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
         appEntity.setPosition(position);
@@ -188,7 +187,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-          this. _mongoman.addData(appEntity);
+          this._mongoman.addData("test");
       }
 
 

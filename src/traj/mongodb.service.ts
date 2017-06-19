@@ -24,7 +24,7 @@ export class MongoDBService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
   private getDataUrl = '/getdata';
-  private testDBUrl = '/testdb';
+  private putDataUrl = '/putdata';
 
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
@@ -32,11 +32,11 @@ export class MongoDBService {
 
 /**
  * @ngdoc method
- * @name startSimulation#It start simulation
+ * @name getsData#It gets data in mongoDB
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  getsData() {
+  getData() {
     return this.http.get(this.serverUrl + this.getDataUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
@@ -44,12 +44,12 @@ export class MongoDBService {
 
   /**
  * @ngdoc method
- * @name startSimulation#It start simulation
+ * @name putData#It puts data in mongoDB
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  testDBData() {
-    return this.http.get(this.serverUrl + this.testDBUrl)
+  putData() {
+    return this.http.get(this.serverUrl + this.putDataUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
