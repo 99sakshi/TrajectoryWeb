@@ -15,7 +15,7 @@ export class ObjectManager{
       private _config;
 
       constructor (private _cesiumManager: CesiumManager,
-      private _mongoManager: MongoManager) {
+                   private _mongoManager: MongoManager) {
 
       }
 
@@ -31,20 +31,12 @@ export class ObjectManager{
       addEntity(entity) {
             // This manager should also store the object somewhere
             var rEntity= this._cesiumManager.addEntity(entity.getPara());
+
+            // Add entity to DB
+            this._mongoManager.addData(entity);
             return rEntity;
       }
 
-       addData1(entity) {
-            // This manager should also store the object somewhere
-            var dbEntity= this._mongoManager.addData1(entity);
-            return dbEntity;
-      }
-       
-        getData1() {
-            // This manager should also store the object somewhere
-            var dbEntity= this._mongoManager.getData1();
-            return dbEntity;
-      }
       /**
        * @ngdoc method
        * @name removeEntity#removes an entity from the scene

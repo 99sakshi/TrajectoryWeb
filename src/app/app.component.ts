@@ -22,14 +22,9 @@ import { SimManager } from './simmanager';
 import { AppEntity } from './appentity';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
-import { MongoManager } from  '../traj/mongomanager';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { CesiumManager } from  '../traj/cesiummanager';
-import {TestdbService} from '../traj/testdb.service';
-import {GetdataService} from '../traj/getdata.service'
-
-
+import { MongoManager } from  '../traj/mongomanager';
 
 @Component({
   selector: 'my-app',
@@ -76,7 +71,8 @@ export class AppComponent {
       constructor(_simManager: SimManager, private _mongoman: MongoManager,
                   private startService: StartService,
                   private loadConfig: LoadConfig ,
-                 ){
+                 )
+      {
           this._simManager = _simManager,
           this.test = false;
       }
@@ -186,15 +182,13 @@ export class AppComponent {
           this._simManager.stop();
       }
 
-/**
+    /**
      * @ngdoc method
      * @name addData # Adds Data
      * This method adds the data to the database.
      */
       addData() {
-          this. _mongoman.addData1(appEntity);
-     
-
+          this. _mongoman.addData(appEntity);
       }
 
 
@@ -204,7 +198,7 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-          this._mongoman.getData1();
+          this._mongoman.getData();
       }
 
 

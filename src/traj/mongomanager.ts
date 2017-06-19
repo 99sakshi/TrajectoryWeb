@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service'
-import {TestdbService} from './testdb.service'
-import {GetdataService} from './getdata.service';
+import {MongoDBService} from './mongodb.service'
 
  /**
  * @ngdoc method
@@ -15,20 +14,19 @@ export class MongoManager{
        * @name Constructor# initializing
        *
        */
-      constructor ( private testdbService : TestdbService ,
-                  private getdataService : GetdataService)
-                {
+      constructor ( private mongoDBService : MongoDBService)
+      {
       
-           
       }  
-  /**
+
+   /**
      * @ngdoc method
      * @name addData # Adds Data
      * This method adds the data to the database.
      */
-     public addData1(entity) {
+     public addData(entity) {
          
-      var dbEntity =  this.testdbService.testDB().subscribe( data =>  { console.log(data); } );
+      var dbEntity =  this.mongoDBService.testDBData().subscribe( data =>  { console.log(data); } );
       return dbEntity;                                                         
                                                                
       }
@@ -39,13 +37,10 @@ export class MongoManager{
      * @name getData # Fetches Data
      * This method retrieves the data from the database.
      */
-    public  getData1() {
-      var getEntity =   this.getdataService.getsData().subscribe( data =>  {console.log(data);} );
-      return getEntity;                                                        
-                                                                
-      }
-
-
+    public  getData() {
+      var getEntity =   this.mongoDBService.getsData().subscribe( data =>  {console.log(data);} );
+      return getEntity;                                                                                                            
+    }
 
 };
 

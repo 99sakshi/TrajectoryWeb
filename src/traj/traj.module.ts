@@ -9,8 +9,7 @@
  * @requires LoadConfig              
  * @requires CesiumManager            
  * @requires StartService    
- * @requires TestdbService
- * @requires GetdataService
+ * @requires MongoDBService
  * @requires MongoManager
  * @requires ObjectManager
  * @description
@@ -27,8 +26,7 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
-import { TestdbService }            from './testdb.service';
-import { GetdataService }            from './getdata.service';
+import { MongoDBService }            from './mongodb.service';
 import { MongoManager }            from './mongomanager';
 
 
@@ -36,7 +34,7 @@ import { MongoManager }            from './mongomanager';
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
-  providers:    [ LoadConfig, StartService, TestdbService, GetdataService,
+  providers:    [ LoadConfig, StartService, MongoDBService,
                   ObjectManager, CesiumManager, MongoManager ],
 })
 

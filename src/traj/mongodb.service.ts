@@ -20,14 +20,16 @@ import 'rxjs/add/operator/map';
 
 
 @Injectable()
-export class GetdataService {
+export class MongoDBService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
-  private startUrl = '/getdata';
+  private getDataUrl = '/getdata';
+  private testDBUrl = '/testdb';
 
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
   }
+
 /**
  * @ngdoc method
  * @name startSimulation#It start simulation
@@ -35,7 +37,19 @@ export class GetdataService {
  * @return {.catch(this.handleError)} OK code or error if fails
  */
   getsData() {
-    return this.http.get(this.serverUrl + this.startUrl)
+    return this.http.get(this.serverUrl + this.getDataUrl)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  /**
+ * @ngdoc method
+ * @name startSimulation#It start simulation
+ *
+ * @return {.catch(this.handleError)} OK code or error if fails
+ */
+  testDBData() {
+    return this.http.get(this.serverUrl + this.testDBUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
