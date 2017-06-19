@@ -26,7 +26,7 @@ export class MongoManager{
      */
      public addData(entity) {
          
-      var dbEntity =  this.mongoDBService.testDBData().subscribe( data =>  { console.log(data); } );
+      var dbEntity =  this.mongoDBService.putData().subscribe( data =>  { console.log(data); } );
       return dbEntity;                                                         
                                                                
       }
@@ -38,7 +38,7 @@ export class MongoManager{
      * This method retrieves the data from the database.
      */
     public  getData() {
-      var getEntity =   this.mongoDBService.getsData().subscribe( data =>  {console.log(data);} );
+      var getEntity =   this.mongoDBService.getData().subscribe( data =>  {console.log(data);} );
       return getEntity;                                                                                                            
     }
 
