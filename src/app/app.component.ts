@@ -15,20 +15,16 @@
  **/
 
 declare var Cesium: any;
+var appEntity;
 
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { AppEntity } from './appentity';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
-
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { CesiumManager } from  '../traj/cesiummanager';
-import {TestdbService} from '../traj/testdb.service';
-import {GetdataService} from '../traj/getdata.service'
-
-
+import { MongoManager } from  '../traj/mongomanager';
 
 @Component({
   selector: 'my-app',
@@ -72,11 +68,11 @@ export class AppComponent {
      * It initializes the variables of AppComponent. 
      *
      */
-      constructor(_simManager: SimManager,
+      constructor(_simManager: SimManager, private _mongoman: MongoManager,
                   private startService: StartService,
                   private loadConfig: LoadConfig ,
-                  private testdbService : TestdbService ,
-                  private getdataService : GetdataService){
+                 )
+      {
           this._simManager = _simManager,
           this.test = false;
       }
@@ -138,7 +134,7 @@ export class AppComponent {
      */
       addAppEntityToManager(name, position, modelUrl, controller ){
 
-        var appEntity = new AppEntity;
+        appEntity = new AppEntity;
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
         appEntity.setPosition(position);
@@ -186,17 +182,13 @@ export class AppComponent {
           this._simManager.stop();
       }
 
-
     /**
      * @ngdoc method
      * @name addData # Adds Data
      * This method adds the data to the database.
      */
       addData() {
-         this.testdbService.startSimulation().subscribe( data =>  {
-                                                                    console.log(data);
-                                                                } );
-
+          this. _mongoman.addData(appEntity);
       }
 
 
@@ -206,9 +198,9 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-          this.getdataService.getsData().subscribe( data =>  {
-                                                                    console.log(data);
-                                                                } );
+          this._mongoman.getData();
       }
 
-}
+
+
+};

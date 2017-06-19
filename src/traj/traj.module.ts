@@ -9,7 +9,9 @@
  * @requires LoadConfig              
  * @requires CesiumManager            
  * @requires StartService    
- *
+ * @requires MongoDBService
+ * @requires MongoManager
+ * @requires ObjectManager
  * @description
  *
  * This is the trajectory module. It includes all of our components for the trajectory feature.
@@ -24,15 +26,16 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
-import { TestdbService }            from './testdb.service';
-import { GetdataService }            from './getdata.service';
+import { MongoDBService }            from './mongodb.service';
+import { MongoManager }            from './mongomanager';
+
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
-  providers:    [ LoadConfig, StartService, TestdbService, GetdataService,
-                  ObjectManager, CesiumManager ],
+  providers:    [ LoadConfig, StartService, MongoDBService,
+                  ObjectManager, CesiumManager, MongoManager ],
 })
 
 export class TrajModule { }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LoadConfig } from './loadconfig.service';
 import { CesiumManager} from './cesiummanager';
+import { MongoManager} from './mongomanager';
+
 
  /**
  * @ngdoc method
@@ -12,7 +14,8 @@ export class ObjectManager{
       private _objectViewer;
       private _config;
 
-      constructor (private _cesiumManager: CesiumManager) {
+      constructor (private _cesiumManager: CesiumManager,
+                   private _mongoManager: MongoManager) {
 
       }
 
@@ -28,9 +31,11 @@ export class ObjectManager{
       addEntity(entity) {
             // This manager should also store the object somewhere
             var rEntity= this._cesiumManager.addEntity(entity.getPara());
+
+            // Add entity to DB
+            this._mongoManager.addData(entity);
             return rEntity;
       }
-
 
       /**
        * @ngdoc method
