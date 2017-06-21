@@ -10,7 +10,9 @@
  * supporting the view, and makes it easy to unit-test components with a mock service.
  */
 import { Injectable }              from '@angular/core';
-import { Http, Response }          from '@angular/http';
+import { Http, Response, 
+  Headers, RequestOptions }          from '@angular/http';
+
 
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
@@ -49,7 +51,11 @@ export class MongoDBService {
  * @return {.catch(this.handleError)} OK code or error if fails
  */
   putData() {
-    return this.http.get(this.serverUrl + this.putDataUrl)
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    var number = 1;
+    return this.http.put(this.serverUrl + this.putDataUrl, {number}, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
