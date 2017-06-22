@@ -1,5 +1,5 @@
 declare var Cesium: any;
-export class AppEntity{ 
+export class TEntity{ 
       _name;
       _position; 
       _orientation;
