@@ -18,9 +18,10 @@ declare var Cesium: any;
 
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
-import { TEntity } from './TEntity';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
+
+import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { MongoManager } from  '../traj/mongomanager';

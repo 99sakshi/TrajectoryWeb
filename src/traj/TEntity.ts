@@ -53,7 +53,7 @@ export class TEntity {
        */
       constructor() {
 
-        this._name = "TestAppEntity";
+        this._name = "TestTEntity";
         this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
         var heading = 0;
         var pitch = 0;

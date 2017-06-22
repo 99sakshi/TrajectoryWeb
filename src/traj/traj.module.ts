@@ -26,8 +26,8 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
-import { MongoDBService }            from './mongodb.service';
-import { MongoManager }            from './mongomanager';
+import { MongoDBService }           from './mongodb.service';
+import { MongoManager }             from './mongomanager';
 
 
 @NgModule({
