@@ -18,9 +18,10 @@ declare var Cesium: any;
 
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
-import { AppEntity } from './appentity';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
+
+import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { MongoManager } from  '../traj/mongomanager';
@@ -73,9 +74,9 @@ export class AppComponent {
                  )
       {
           this._simManager = _simManager,
-          this.test = false;
+          this.test=false
       }
-
+                                           
 
     /**
      * @ngdoc method
@@ -133,7 +134,7 @@ export class AppComponent {
      */
       addAppEntityToManager(name, position, modelUrl, controller ){
 
-        var appEntity = new AppEntity;
+        var appEntity = new TEntity;
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
         appEntity.setPosition(position);
