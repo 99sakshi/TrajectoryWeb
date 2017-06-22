@@ -16,11 +16,13 @@ import { Http, Response,
 
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
+import { SimManager } from '../app/simmanager';
+
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-
+ 
 @Injectable()
 export class MongoDBService {
 
@@ -50,15 +52,21 @@ export class MongoDBService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  putData() {
+  putData(entity) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
+   // let body = JSON.stringify(entity);
+    let x = { "classifications": [ 
+                      { "type1" : entity} 
+                      ] 
+        }
 
-    var number = 1;
-    return this.http.put(this.serverUrl + this.putDataUrl, {number}, options)
+ 
+    return this.http.put(this.serverUrl + this.putDataUrl, JSON.stringify(x), options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+  
 
 /**
  * @ngdoc method
