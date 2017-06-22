@@ -32,7 +32,7 @@ declare var Cesium: any;
   providers:    [ LoadConfig, StartService, ObjectManager, CesiumManager ]
 })
 export class TEntity {
-  
+       _id;
       _name;
       _position; 
       _orientation;
@@ -89,6 +89,17 @@ export class TEntity {
        */
       setName (name) {
             this._name = name;
+      }
+       /**
+       * @ngdoc method
+       * @name setId # Sets id
+       *
+       * @param {id} id of Entity 
+       * sets the AppEntity name.
+       *
+       */
+       setId (id) {
+            this._id = id;
       }
       
 
