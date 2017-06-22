@@ -118,9 +118,9 @@ export class AppComponent {
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
-          this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+          this.addAppEntityToManager(1,"ToomManDelhi", PosDelhi, modelToonMan, null);
+          this.addAppEntityToManager(2,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          this.addAppEntityToManager(3,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -132,9 +132,10 @@ export class AppComponent {
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      */
-      addAppEntityToManager(name, position, modelUrl, controller ){
+      addAppEntityToManager(id,name, position, modelUrl, controller ){
 
         var appEntity = new TEntity;
+        appEntity.setId(id);
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
         appEntity.setPosition(position);
