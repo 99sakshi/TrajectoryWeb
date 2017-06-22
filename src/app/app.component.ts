@@ -23,7 +23,7 @@ import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-
+import { MongoManager } from  '../traj/mongomanager';
 
 @Component({
   selector: 'my-app',
@@ -67,8 +67,11 @@ export class AppComponent {
      * It initializes the variables of AppComponent. 
      *
      */
-      constructor(_simManager: SimManager, private startService: StartService,
-                                           private loadConfig: LoadConfig ){
+      constructor(_simManager: SimManager, private _mongoman: MongoManager,
+                  private startService: StartService,
+                  private loadConfig: LoadConfig ,
+                 )
+      {
           this._simManager = _simManager,
           this.test=false
       }
@@ -178,14 +181,13 @@ export class AppComponent {
           this._simManager.stop();
       }
 
-
     /**
      * @ngdoc method
      * @name addData # Adds Data
      * This method adds the data to the database.
      */
       addData() {
-
+          this._mongoman.addData("test");
       }
 
 
@@ -195,7 +197,9 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-
+          this._mongoman.getData();
       }
 
-}
+
+
+};
