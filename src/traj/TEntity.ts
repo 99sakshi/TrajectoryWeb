@@ -84,7 +84,7 @@ export class TEntity {
        * @name setName # Sets Name
        *
        * @param {name} name of Entity 
-       * sets the AppEntity name.
+       * sets the TEntity name.
        *
        */
       setName (name) {
@@ -95,7 +95,7 @@ export class TEntity {
        * @name setId # Sets id
        *
        * @param {id} id of Entity 
-       * sets the AppEntity name.
+       * sets the TEntity id.
        *
        */
        setId (id) {
@@ -108,7 +108,7 @@ export class TEntity {
        * @name setCEntity # Sets Entity
        *
        * @param {entity} entity of cesium 
-       * sets the cesium Entity of AppEntity.
+       * sets the cesium Entity of TEntity.
        * It's called by sim manager
        *
        */
@@ -135,7 +135,7 @@ export class TEntity {
        * @name setModeUrl # sets Model's Url
        *
        * @param {url} url of model to be added
-       * Updates the model's Url of AppEntity
+       * Updates the model's Url of TEntity
        *
        */
       setModelUrl(url) {
@@ -205,7 +205,7 @@ export class TEntity {
        * @name tick # sets Position and Orientation
        *
        * @param {timeInfo} timeInfo time info of simulation
-       * updates position and orientation of AppEntity if 
+       * updates position and orientation of TEntity if 
        * contoler is set
        */
       tick(timeInfo) {
