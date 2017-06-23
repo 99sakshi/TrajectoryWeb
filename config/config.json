@@ -1,7 +1,7 @@
 {
 	"Test": true,
 	"ShowMoon": true,
-	"UseLocalGeoserver": false,
+	"UseLocalGeoserver": true,
 	"Geoserver": {
 		"Url": "http://192.168.1.5:8181/geoserver/oponop/wms",
 		"Layers": ["oponop:World"]
