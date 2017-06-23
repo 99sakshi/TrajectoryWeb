@@ -19,13 +19,14 @@ declare var Cesium: any;
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
-import { UpController } from './upcontroller';
 
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { MongoManager } from  '../traj/mongomanager';
-
+import { CesiumManager } from  '../traj/cesiummanager';
+import { GetEntityBackEnd } from '../traj/getentitybackend.service';
+//import { GetRequest} from '../traj/getRequest';
 @Component({
   selector: 'my-app',
   template: `
@@ -38,7 +39,10 @@ import { MongoManager } from  '../traj/mongomanager';
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
      </div>
 
-     <div id="cesiumContainer"> </div>
+    <div id="cesiumContainer" src="Geoserver.Url" (mousemove)="onHover($event)">
+    <h3> (X,Y) ----  Radius  ----  Area</h3>
+     <h4>({{x}},{{y}}) ---- {{r}} ---- {{area}}</h4>
+     </div>
      `,
 
   styles:[`
@@ -53,10 +57,15 @@ import { MongoManager } from  '../traj/mongomanager';
 export class AppComponent { 
       
       _simManager: SimManager;
+      getEntity: GetEntityBackEnd;
+    
 
       config;
       test;
-
+      x=0;
+      y=0;
+      r=0;
+      area=0;
     /**
      * @ngdoc method
      * @name constructorr#Initialize Variables
@@ -70,11 +79,13 @@ export class AppComponent {
      */
       constructor(_simManager: SimManager, private _mongoman: MongoManager,
                   private startService: StartService,
-                  private loadConfig: LoadConfig ,
+                  private loadConfig: LoadConfig 
+              
                  )
       {
           this._simManager = _simManager,
           this.test=false
+        
       }
                                            
 
@@ -114,12 +125,10 @@ export class AppComponent {
 
           var fwdcontroller = new ForwardController;
           fwdcontroller.setPosition( PosKolkatta );
-
-          var upcontroller = new UpController;
-          upcontroller.setPosition( PosMumbai );
+    
 
           this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
-          this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, null);
           this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
@@ -156,6 +165,7 @@ export class AppComponent {
      * This method starts the movement of Entities
      */
     startSimulation(){
+      alert('Start Button Clicked!');
         this.startService.startSimulation().subscribe( data =>  {
                                                                     console.log(data);
                                                                     this._simManager.start()
@@ -201,6 +211,14 @@ export class AppComponent {
           this._mongoman.getData();
       }
 
-
+onHover($event)
+    {
+        this.x=$event.screenX;
+        this.y=$event.screenY; 
+        this.r=Math.sqrt((this.x*this.x)+(this.y*this.y));
+        this.area=(Math.PI*this.r*this.r);
+        //this.getEntity.sendCoordinates(this.x,this.y);
+    
+    }
 
 };
