@@ -15,7 +15,7 @@
  **/
 
 declare var Cesium: any;
-
+var x=1;
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
@@ -77,7 +77,6 @@ export class AppComponent {
           this.test=false
       }
                                            
-
     /**
      * @ngdoc method
      * @name ngOnInit#Initializes Config
@@ -92,8 +91,6 @@ export class AppComponent {
                                                             this.init();
                                                           } );
       }
-
-
     /**
      * @ngdoc method
      * @name init # Adds entity to scene
@@ -103,6 +100,7 @@ export class AppComponent {
       init() {
 
           this.test = this.config.Test;
+
 
           var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
           var PosDelhi = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
@@ -118,9 +116,9 @@ export class AppComponent {
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager(1,"ToomManDelhi", PosDelhi, modelToonMan, null);
-          this.addAppEntityToManager(2,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          this.addAppEntityToManager(3,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+          this.addAppEntityToManager(x++,"ToomManDelhi", PosDelhi, modelToonMan, null);
+          this.addAppEntityToManager(x++,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          this.addAppEntityToManager(x++,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -189,7 +187,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-          this._mongoman.addData("test");
+          this._mongoman.addData(x);
       }
 
 
