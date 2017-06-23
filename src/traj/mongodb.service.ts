@@ -11,13 +11,11 @@
  */
 import { Injectable }              from '@angular/core';
 import { Http, Response, 
-  Headers, RequestOptions }          from '@angular/http';
+         Headers, RequestOptions }          from '@angular/http';
 
 
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { SimManager } from '../app/simmanager';
-
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -55,14 +53,9 @@ export class MongoDBService {
   putData(entity) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-   // let body = JSON.stringify(entity);
-    let x = { "classifications": [ 
-                      { "type1" : entity} 
-                      ] 
-        }
-
+    let data = { "TEntity": entity };
  
-    return this.http.put(this.serverUrl + this.putDataUrl, JSON.stringify(x), options)
+    return this.http.put(this.serverUrl + this.putDataUrl, JSON.stringify(data), options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
