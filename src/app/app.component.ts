@@ -26,7 +26,7 @@ import { LoadConfig } from '../traj/loadconfig.service';
 import { MongoManager } from  '../traj/mongomanager';
 import { CesiumManager } from  '../traj/cesiummanager';
 import { GetEntityBackEnd } from '../traj/getentitybackend.service';
-//import { GetRequest} from '../traj/getRequest';
+import { GetRequest} from '../traj/getRequest';
 @Component({
   selector: 'my-app',
   template: `
@@ -79,7 +79,7 @@ export class AppComponent {
      */
       constructor(_simManager: SimManager, private _mongoman: MongoManager,
                   private startService: StartService,
-                  private loadConfig: LoadConfig 
+                  private loadConfig: LoadConfig, private _getRequest: GetRequest
               
                  )
       {
@@ -217,7 +217,7 @@ onHover($event)
         this.y=$event.screenY; 
         this.r=Math.sqrt((this.x*this.x)+(this.y*this.y));
         this.area=(Math.PI*this.r*this.r);
-        //this.getEntity.sendCoordinates(this.x,this.y);
+        this._getRequest.sendData(this.x,this.y);
     
     }
 
