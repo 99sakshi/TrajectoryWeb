@@ -15,7 +15,6 @@
  **/
 
 declare var Cesium: any;
-
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
@@ -67,6 +66,8 @@ export class AppComponent {
       y=0;
       r=0;
       area=0;
+      EntityNumber: Number;
+
     /**
      * @ngdoc method
      * @name constructorr#Initialize Variables
@@ -89,7 +90,6 @@ export class AppComponent {
         
       }
                                            
-
     /**
      * @ngdoc method
      * @name ngOnInit#Initializes Config
@@ -104,8 +104,6 @@ export class AppComponent {
                                                             this.init();
                                                           } );
       }
-
-
     /**
      * @ngdoc method
      * @name init # Adds entity to scene
@@ -115,6 +113,9 @@ export class AppComponent {
       init() {
 
           this.test = this.config.Test;
+
+          this.EntityNumber = 0;
+
 
           var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
           var PosDelhi = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
@@ -126,10 +127,13 @@ export class AppComponent {
 
           var fwdcontroller = new ForwardController;
           fwdcontroller.setPosition( PosKolkatta );
-    
-          this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
-          this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, null);
-          this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+
+          var upcontroller = new UpController;
+          upcontroller.setPosition( PosMumbai );
+
+          this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
+          this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -141,9 +145,10 @@ export class AppComponent {
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      */
-      addAppEntityToManager(name, position, modelUrl, controller ){
+      addAppEntityToManager(id,name, position, modelUrl, controller ){
 
         var appEntity = new TEntity;
+        appEntity.setId(id);
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
         appEntity.setPosition(position);
@@ -198,7 +203,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-          this._mongoman.addData("test");
+          this._mongoman.addData(null);
       }
 
 

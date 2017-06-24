@@ -11,7 +11,7 @@
  */
 import { Injectable }              from '@angular/core';
 import { Http, Response, 
-  Headers, RequestOptions }          from '@angular/http';
+         Headers, RequestOptions }          from '@angular/http';
 
 
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +20,7 @@ import { LoadConfig } from '../traj/loadconfig.service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-
+ 
 @Injectable()
 export class MongoDBService {
 
@@ -73,15 +73,16 @@ export class MongoDBService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  putData() {
+  putData(entity) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-
-    var number = 1;
-    return this.http.put(this.serverUrl + this.putDataUrl, {number}, options)
+    let data = { "TEntity": entity };
+ 
+    return this.http.put(this.serverUrl + this.putDataUrl, JSON.stringify(data), options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+  
 
 /**
  * @ngdoc method

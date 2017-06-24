@@ -26,7 +26,7 @@ export class MongoManager{
      */
      public addData(entity) {
          
-      var dbEntity =  this.mongoDBService.putData().subscribe( data =>  { console.log(data); } );
+      var dbEntity =  this.mongoDBService.putData(entity).subscribe( data =>  { console.log(data); } );
       return dbEntity;                                                         
                                                                
       }
