@@ -28,14 +28,15 @@ import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
 import { MongoDBService }           from './mongodb.service';
 import { MongoManager }             from './mongomanager';
-
+import { GetRequest}                from './getRequest';
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
   providers:    [ LoadConfig, StartService, MongoDBService,
-                  ObjectManager, CesiumManager, MongoManager ],
+                  ObjectManager, CesiumManager, MongoManager,
+                  GetRequest],
 })
 
 export class TrajModule { }
