@@ -29,7 +29,7 @@ import { StartService }             from './start.service';
 import { MongoDBService }           from './mongodb.service';
 import { MongoManager }             from './mongomanager';
 import { GetEntityBackEnd}          from './getEntitybackend.service';
-//import { GetRequest}                from './getRequest';
+import { GetRequest}                from './getRequest';
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
@@ -38,7 +38,7 @@ import { GetEntityBackEnd}          from './getEntitybackend.service';
   providers:    [ LoadConfig, StartService, MongoDBService,
                   ObjectManager, CesiumManager, MongoManager,
                   GetEntityBackEnd
-                  //,GetRequest
+                  ,GetRequest
                    ],
 })
 

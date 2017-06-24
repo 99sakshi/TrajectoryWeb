@@ -12,8 +12,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class GetEntityBackEnd {
 
-  private serverUrl = "http://localhost:3333";  // URL to web API
-  private entityUrl = "/getentity";
+  private serverUrl = 'http://localhost:3333';  // URL to web API
+  private entityUrl = '/getentity';
 
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
@@ -24,19 +24,18 @@ export class GetEntityBackEnd {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  public sendCoordinates(x,y) {
+  sendCoordinates(x,y) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    /*let a={
-      "classifications":[
+    let a={
+      "Coordinates":[
         {
-          "type1" :x,y
-        },{"type2" : y,x}
+          X : x,
+          Y: y,
+        }
       ]
-    }*/
-    var number=1;
-   // return
-    this.http.put(this.serverUrl + this.entityUrl, {number}, options)
+    }
+   return this.http.put(this.serverUrl + this.entityUrl,JSON.stringify(a), options)
                     .map(this.extractData)
                     .catch(this.handleError)
   }
