@@ -18,6 +18,7 @@ declare var Cesium: any;
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
+import { UpController } from './upcontroller';
 
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
@@ -57,7 +58,6 @@ import { GetRequest} from '../traj/getRequest';
 export class AppComponent { 
       
       _simManager: SimManager;
-      getEntity: GetEntityBackEnd;
 
       config;
       test;
@@ -170,7 +170,7 @@ export class AppComponent {
      * This method starts the movement of Entities
      */
     startSimulation(){
-      alert('Start Button Clicked!');
+       // alert('Start Button Clicked!');
         this.startService.startSimulation().subscribe( data =>  {
                                                                     console.log(data);
                                                                     this._simManager.start()
