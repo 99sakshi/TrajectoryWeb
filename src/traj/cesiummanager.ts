@@ -12,6 +12,8 @@ export class CesiumManager{
       private _cesiumViewer;
       private _config;
 
+      private _mouseEndCallback;
+
       /**
        * @ngdoc method
        * @name Constructor# loads and set config file
@@ -25,6 +27,13 @@ export class CesiumManager{
                                                             this._config = config; 
                                                             this.init(); 
                                                   } );  
+
+           this._mouseEndCallback = function() {
+                var extents = this._cesiumViewer.camera.computeViewRectangle();
+                console.log(extents);
+
+                //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
+           };
       }
 
 
@@ -72,7 +81,8 @@ export class CesiumManager{
             var scene = viewer.scene;
             scene.moon = new Cesium.Moon();
         }
-        
+
+        viewer.camera.moveEnd.addEventListener( this._mouseEndCallback , this);
         this._cesiumViewer = viewer;
       }
 
