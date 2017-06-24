@@ -37,11 +37,12 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
+      <h3> (X,Y) ----  Radius  ----  Area</h3>
+      <h4>({{x}},{{y}}) ---- {{r}} ---- {{area}}</h4>
      </div>
 
-    <div id="cesiumContainer" src="Geoserver.Url" (mousemove)="onHover($event)">
-    <h3> (X,Y) ----  Radius  ----  Area</h3>
-     <h4>({{x}},{{y}}) ---- {{r}} ---- {{area}}</h4>
+     <div id="cesiumContainer" (mousemove)="onHover($event)" >
+       
      </div>
      `,
 
@@ -62,6 +63,7 @@ export class AppComponent {
 
       config;
       test;
+       
       x=0;
       y=0;
       r=0;
@@ -84,7 +86,7 @@ export class AppComponent {
                  )
       {
           this._simManager = _simManager,
-          this.test=false
+          this.test=false;
         
       }
                                            
@@ -126,7 +128,6 @@ export class AppComponent {
           var fwdcontroller = new ForwardController;
           fwdcontroller.setPosition( PosKolkatta );
     
-
           this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
           this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, null);
           this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
@@ -211,14 +212,13 @@ export class AppComponent {
           this._mongoman.getData();
       }
 
-onHover($event)
-    {
-        this.x=$event.screenX;
-        this.y=$event.screenY; 
-        this.r=Math.sqrt((this.x*this.x)+(this.y*this.y));
-        this.area=(Math.PI*this.r*this.r);
-        this._getRequest.sendData(this.x,this.y);
-    
-    }
+      onHover($event)
+      {
+          this.x=$event.screenX;
+          this.y=$event.screenY; 
+          this.r=Math.sqrt((this.x*this.x)+(this.y*this.y));
+          this.area=(Math.PI*this.r*this.r);
+          this._getRequest.sendData(this.x,this.y);
+      }
 
 };
