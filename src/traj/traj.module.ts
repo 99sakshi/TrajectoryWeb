@@ -28,7 +28,6 @@ import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
 import { MongoDBService }           from './mongodb.service';
 import { MongoManager }             from './mongomanager';
-import { GetEntityBackEnd}          from './getEntitybackend.service';
 import { GetRequest}                from './getRequest';
 
 @NgModule({
@@ -37,9 +36,7 @@ import { GetRequest}                from './getRequest';
   bootstrap:    [  ],
   providers:    [ LoadConfig, StartService, MongoDBService,
                   ObjectManager, CesiumManager, MongoManager,
-                  GetEntityBackEnd
-                  ,GetRequest
-                   ],
+                  GetRequest],
 })
 
 export class TrajModule { }

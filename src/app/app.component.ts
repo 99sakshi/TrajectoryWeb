@@ -24,9 +24,9 @@ import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { MongoManager } from  '../traj/mongomanager';
-import { CesiumManager } from  '../traj/cesiummanager';
-import { GetEntityBackEnd } from '../traj/getentitybackend.service';
+
 import { GetRequest} from '../traj/getRequest';
+
 @Component({
   selector: 'my-app',
   template: `
@@ -59,7 +59,6 @@ export class AppComponent {
       
       _simManager: SimManager;
       getEntity: GetEntityBackEnd;
-    
 
       config;
       test;
