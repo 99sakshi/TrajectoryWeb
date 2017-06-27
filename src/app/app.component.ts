@@ -66,7 +66,7 @@ export class AppComponent {
       y=0;
       r=0;
       area=0;
-      EntityNumber: Number;
+      EntityNumber;
 
     /**
      * @ngdoc method
@@ -115,7 +115,6 @@ export class AppComponent {
           this.test = this.config.Test;
 
           this.EntityNumber = 0;
-
 
           var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
           var PosDelhi = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
