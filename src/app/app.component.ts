@@ -58,6 +58,8 @@ import { GetRequest} from '../traj/getRequest';
 export class AppComponent { 
       
       _simManager: SimManager;
+      rEntity;
+      receivedEntity;
 
       config;
       test;
@@ -130,9 +132,9 @@ export class AppComponent {
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
-          this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+          this.addAppEntityToManager(this.rEntity.TEntity._id ,this.rEntity.TEntity._name,this.rEntity.TEntity._position, this.rEntity.TEntity._modelUrl,this.rEntity.TEntity._Controller);
+        //  this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          //this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -212,7 +214,8 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-          this._mongoman.getData();
+          this.receivedEntity=this._mongoman.getData();
+          this.rEntity=JSON.parse(this.receivedEntity);
       }
 
       onHover($event)
