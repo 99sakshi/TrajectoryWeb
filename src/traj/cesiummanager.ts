@@ -1,7 +1,12 @@
 declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
-
+/*var viewer = new Cesium.Viewer('cesiumContainer', {
+      imageryProvider : new Cesium.createOpenStreetMapImageryProvider({
+          url : 'http://tile.stamen.com/watercolor/'
+      }),
+      baseLayerPicker : false
+    });*/
  /**
  * @ngdoc method
  * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -27,34 +32,56 @@ export class CesiumManager{
                                                             this._config = config; 
                                                             this.init(); 
                                                   } );  
-
+          function toDegrees(radians) {
+                    var pi = Math.PI;
+                    return (radians * (180/pi));
+                    }
           this._mouseEndCallback = function() {
                 var extents = this._cesiumViewer.camera.computeViewRectangle()
-                console.log(extents)
-                console.log("extents.x");
+                console.log(extents);
+                console.log(  [toDegrees(extents)]);
+                   
+               
                 // link: https://cesiumjs.org/Cesium/Build/Documentation/Camera.html,https://cesiumjs.org/Cesium/Build/Documentation/Cartesian3.html
 
                 //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
            };
-       /*    function getExtentView() {
-    var cl2 = new Cesium.Cartesian2(0, 0);
-    var leftTop = viewer.scene.camera.pickEllipsoid(cl2, ellipsoid);
+   
+      
+      
 
-    cr2 = new Cesium.Cartesian2(viewer.scene.canvas.width, viewer.scene.canvas.height);
-    var rightDown = viewer.scene.camera.pickEllipsoid(cr2, ellipsoid);
+ /*  var dataSource = Cesium.GeoJsonDataSource.load('../data/mDataSource.json').then(function(data)  {
 
-    if (leftTop != null && rightDown != null) {
-        leftTop = ellipsoid.cartesianToCartographic(leftTop);
-        rightDown = ellipsoid.cartesianToCartographic(rightDown);
-        return new Cesium.Rectangle(leftTop.longitude, rightDown.latitude, rightDown.longitude, leftTop.latitude);
-    } else {//The sky is visible in 3D
-        console.log("Sky is visible");
-        return null;
-    }
-}*/
+      viewer.dataSources.add(data);
+      viewer.zoomTo(data);
 
+      var entities = data.entities.values;
+      var colorHash = {};
+
+      for (var i = 0; i < entities.length; i++) {
+
+      var entity = entities[i];
+      var name = entity.name;
+      var color = colorHash[name];
+
+      if (!color) {
+          color = Cesium.Color.fromRandom({
+              alpha : 1.0
+          });
+
+          colorHash[name] = color;
       }
 
+      entity.polygon.material = '../data/img/myMaterial.png';
+      entity.polygon.extrudedHeight = 10;
+  }
+
+    var mEntity = viewer.dataSources.get(0).entities.getById("mId");
+    mEntity.polygon.extrudedHeight = 0;
+    mEntity.polygon.height = 10;
+    mEntity.polygon.material = '../data/img/myMaterial.png';
+  });*/
+      }
 
       /**
        * @ngdoc method
