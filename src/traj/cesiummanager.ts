@@ -1,8 +1,13 @@
 declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
-
-    var CesiumMath ;
+ /**
+     * Math functions.
+     *
+     * @exports CesiumMath
+     */
+ //var CesiumMath={};   
+    
  /**
  * @ngdoc method
  * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -27,29 +32,20 @@ export class CesiumManager{
            this.loadConfig.getConfig().subscribe(    config => {
                                                             this._config = config; 
                                                             this.init();  } );  
-       CesiumMath.toDegrees = function(radians) {
-        //>>includeStart('debug', pragmas.debug);
-        if (!defined(radians)) {
-            throw new DeveloperError('degrees is required.');
-        }
-        //>>includeEnd('debug');
-        return radians * CesiumMath.DEGREES_PER_RADIAN;
-    };                                   
+     
+        /* Cesium.CesiumMath.toDegrees = function(radians) {
+          var pi = Math.PI;
+          return (radians * (180/pi));
+    };*/
          
           this._mouseEndCallback = function() {
                 var extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(extents);
-                  extents.west = Math.min(extents.longitude, extents.longitude);
-                  extents.east = Math.max(extents.longitude, extents.longitude);
-                  extents.south = Math.min(extents.latitude, extents.latitude);
-                  extents.north = Math.max(extents.latitude, extents.latitude);
-                  console.log( Cesium.CesiumMath.toDegrees(extents.west));
-                  console.log(Cesium.CesiumMath.toDegrees(extents.east));
-                  console.log(Cesium.CesiumMath.toDegrees(extents.south));
-                  console.log(Cesium.CesiumMath.toDegrees(extents.north));
-                  
-            
-               
+                 var x1 = (extents.west*(180/(Math.PI)));
+                // var y1 = Cesium.CesiumMath.toDegrees(extents.south);
+               //  var x2 = Cesium.CesiumMath.toDegrees(extents.east);
+                 //var y2 = Cesium.CesiumMath.toDegrees(extents.north); 
+                 console.log(x1);
                 //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
            };
    
