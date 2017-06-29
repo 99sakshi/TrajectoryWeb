@@ -51,17 +51,19 @@ export class TEntity {
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
-      constructor() {
+      constructor(data) {
 
-        this._name = "TestTEntity";
-        this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
+        this._name = data.TEntity._name;
+        this._position = data.TEntity._position;
         var heading = 0;
         var pitch = 0;
         var roll = 0;
-        this._hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-        this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
-        this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
+        this._hpr =data.TEntity._hpr;
+      //  this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
+        this._modelUrl =data.TEntity._modelUrl;
         this._CEntity = null;
+        this._id=data.TEntity._id;
+        this._orientation=data.TEntity._orientation;
 
         //defining parameters of the current object
         this._para = {    
@@ -75,7 +77,7 @@ export class TEntity {
             }
         }
 
-        this._Controller = null;
+        this._Controller = data.TEntity._Controller;
       }
 
 

@@ -40,5 +40,10 @@ export class EntityService{
     public getData() {
       return this.mongoDBService.getData();                                                                                                            
     }
-
+public getDefault1(){
+  return this.mongoDBService.getDefault1();
+}
+public getDefault2(){
+  return this.mongoDBService.getDefault2();
+}
 };

@@ -2,6 +2,7 @@ declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
 
+
  /**
  * @ngdoc method
  * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -13,6 +14,7 @@ export class CesiumManager{
       private _config;
 
       private _mouseEndCallback;
+     
 
       /**
        * @ngdoc method
@@ -86,7 +88,7 @@ export class CesiumManager{
         this._cesiumViewer = viewer;
       }
 
-
+     
       /**
        * @ngdoc method
        * @name addEntity#adds an entity

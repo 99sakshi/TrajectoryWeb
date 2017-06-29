@@ -33,7 +33,7 @@ export class ObjectManager{
             var rEntity= this._cesiumManager.addEntity(entity.getPara());
 
             // Add entity to DB
-            this._entityservice.addData(entity);
+           // this._entityservice.addData(entity);
             return rEntity;
       }
 

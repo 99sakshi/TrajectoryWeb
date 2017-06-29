@@ -28,7 +28,8 @@ export class MongoDBService {
   private getDataUrl = '/getdata';
   private getEntityUrl = '/getentity';
   private putDataUrl = '/putdata';
-
+  private getdefault1='/getDefault1';
+  private getdefault2='/getDefault2';
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
   }
@@ -43,8 +44,17 @@ export class MongoDBService {
     return this.http.get(this.serverUrl + this.getDataUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
-  }
-
+           }
+ getDefault1(){
+  return this.http.get(this.serverUrl + this.getdefault1)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+              }
+getDefault2(){
+  return this.http.get(this.serverUrl + this.getdefault2)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+}
   /**
  * @ngdoc method
  * @name getentity#It gets data in mongoDB based on XY hash
@@ -119,4 +129,4 @@ export class MongoDBService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-}
+}    

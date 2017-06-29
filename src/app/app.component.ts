@@ -19,12 +19,14 @@ import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
+//import { ObjectManager} from '../traj/objectmanager'
 
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from  '../traj/entity.service';
-
+import { GetEntity } from './getEntity';
+import { MongoDBService} from '../traj/mongodb.service'
 import { GetRequest} from '../traj/getRequest';
 
 @Component({
@@ -60,7 +62,9 @@ export class AppComponent {
       _simManager: SimManager;
       rEntity;
       receivedEntity;
-
+      _getEntity: GetEntity;
+      _mongo:MongoDBService
+      //objectmanager:ObjectManager;
       config;
       test;
        
@@ -69,6 +73,7 @@ export class AppComponent {
       r=0;
       area=0;
       EntityNumber;
+      Entity;
 
     /**
      * @ngdoc method
@@ -89,6 +94,8 @@ export class AppComponent {
       {
           this._simManager = _simManager,
           this.test=false;
+         
+
         
       }
                                            
@@ -100,7 +107,7 @@ export class AppComponent {
      *
      */
       ngOnInit() {
-
+        
           this.loadConfig.getConfig().subscribe( data =>  {
                                                             this.config = data;
                                                             this.init();
@@ -113,7 +120,14 @@ export class AppComponent {
      * This method Adds test entities to scene
      */
       init() {
-
+        /* this._mongo.getDefault1().subscribe( data =>  { 
+              console.log(data); 
+            this.addAppEntityToManager(data);} );
+              this._mongo.getDefault2().subscribe( data =>  { 
+              console.log(data); 
+              this.addAppEntityToManager(data);
+              })*/
+          var entity;
           this.test = this.config.Test;
 
           this.EntityNumber = 0;
@@ -131,14 +145,25 @@ export class AppComponent {
 
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );
-
+          this._mongo.getDefault1().subscribe( data =>  { 
+              console.log(data); 
+            this.addAppEntityToManager(data);} );
          // this.addAppEntityToManager(this.rEntity.TEntity._id ,this.rEntity.TEntity._name,this.rEntity.TEntity._position, this.rEntity.TEntity._modelUrl,this.rEntity.TEntity._Controller);
-        //  this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          //this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+          //this.addDefault(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          
+         // this.addDefault(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
+           getDefault(){
+           this._mongo.getDefault1().subscribe( data =>  { 
+              console.log(data); 
+              this.addAppEntityToManager(data);} );
+              this._mongo.getDefault2().subscribe( data =>  { 
+              console.log(data); 
+              this.addAppEntityToManager(data);
 
-
+            } );
+      }
     /**
      * @ngdoc method
      * @name addAppEntityToManager # adds AppEntity to SimManager
@@ -146,21 +171,21 @@ export class AppComponent {
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      */
-      addAppEntityToManager(id,name, position, modelUrl, controller ){
+      addAppEntityToManager(data ){
 
-        var appEntity = new TEntity;
-        appEntity.setId(id);
-        appEntity.setName(name);
-        appEntity.setModelUrl(modelUrl); 
-        appEntity.setPosition(position);
-        var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
-        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-        appEntity.setOrientation(orientation);
+        var appEntity = new TEntity(data);
+      //  appEntity.setId(id);
+       // appEntity.setName(name);
+       // appEntity.setModelUrl(modelUrl); 
+        //appEntity.setPosition(position);
+     //   var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
+       // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+       // appEntity.setOrientation(orientation);
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(appEntity); 
+       this._simManager.addEntity(appEntity); 
 
-        appEntity.setController(controller); 
+      //  appEntity.setController(controller); 
 
       }
 
@@ -204,7 +229,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-          this._entityservice.addData(null);
+           this._simManager.addEntity(null); 
       }
 
 
@@ -216,7 +241,7 @@ export class AppComponent {
       getData() {
           this._entityservice.getData().subscribe( data =>  { 
               console.log(data); 
-              this.addAppEntityToManager("10",data.TEntity._name,data.TEntity._position,data.TEntity._modelUrl, null);
+              this.addAppEntityToManager(data);
 
             } );
       }
@@ -231,3 +256,4 @@ export class AppComponent {
       }
 
 };
+ 
