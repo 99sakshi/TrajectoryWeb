@@ -1,12 +1,8 @@
 declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
-/*var viewer = new Cesium.Viewer('cesiumContainer', {
-      imageryProvider : new Cesium.createOpenStreetMapImageryProvider({
-          url : 'http://tile.stamen.com/watercolor/'
-      }),
-      baseLayerPicker : false
-    });*/
+
+    var CesiumMath ;
  /**
  * @ngdoc method
  * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -30,57 +26,34 @@ export class CesiumManager{
 
            this.loadConfig.getConfig().subscribe(    config => {
                                                             this._config = config; 
-                                                            this.init(); 
-                                                  } );  
-          function toDegrees(radians) {
-                    var pi = Math.PI;
-                    return (radians * (180/pi));
-                    }
+                                                            this.init();  } );  
+       CesiumMath.toDegrees = function(radians) {
+        //>>includeStart('debug', pragmas.debug);
+        if (!defined(radians)) {
+            throw new DeveloperError('degrees is required.');
+        }
+        //>>includeEnd('debug');
+        return radians * CesiumMath.DEGREES_PER_RADIAN;
+    };                                   
+         
           this._mouseEndCallback = function() {
                 var extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(extents);
-                console.log(  [toDegrees(extents)]);
-                   
+                  extents.west = Math.min(extents.longitude, extents.longitude);
+                  extents.east = Math.max(extents.longitude, extents.longitude);
+                  extents.south = Math.min(extents.latitude, extents.latitude);
+                  extents.north = Math.max(extents.latitude, extents.latitude);
+                  console.log( Cesium.CesiumMath.toDegrees(extents.west));
+                  console.log(Cesium.CesiumMath.toDegrees(extents.east));
+                  console.log(Cesium.CesiumMath.toDegrees(extents.south));
+                  console.log(Cesium.CesiumMath.toDegrees(extents.north));
+                  
+            
                
-                // link: https://cesiumjs.org/Cesium/Build/Documentation/Camera.html,https://cesiumjs.org/Cesium/Build/Documentation/Cartesian3.html
-
                 //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
            };
    
       
-      
-
- /*  var dataSource = Cesium.GeoJsonDataSource.load('../data/mDataSource.json').then(function(data)  {
-
-      viewer.dataSources.add(data);
-      viewer.zoomTo(data);
-
-      var entities = data.entities.values;
-      var colorHash = {};
-
-      for (var i = 0; i < entities.length; i++) {
-
-      var entity = entities[i];
-      var name = entity.name;
-      var color = colorHash[name];
-
-      if (!color) {
-          color = Cesium.Color.fromRandom({
-              alpha : 1.0
-          });
-
-          colorHash[name] = color;
-      }
-
-      entity.polygon.material = '../data/img/myMaterial.png';
-      entity.polygon.extrudedHeight = 10;
-  }
-
-    var mEntity = viewer.dataSources.get(0).entities.getById("mId");
-    mEntity.polygon.extrudedHeight = 0;
-    mEntity.polygon.height = 10;
-    mEntity.polygon.material = '../data/img/myMaterial.png';
-  });*/
       }
 
       /**
