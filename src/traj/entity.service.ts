@@ -4,10 +4,10 @@ import {MongoDBService} from './mongodb.service'
 
  /**
  * @ngdoc method
- * @name MongoManager # Injectable calls that manages all the operations of mongo
+ * @name EntityService # Injectable calls that manages all the operations of mongo
  */
 @Injectable()
-export class MongoManager{ 
+export class EntityService{ 
     
       /**
        * @ngdoc method
@@ -42,4 +42,3 @@ export class MongoManager{
     }
 
 };
-

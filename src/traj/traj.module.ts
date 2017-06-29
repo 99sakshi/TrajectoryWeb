@@ -27,7 +27,7 @@ import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
 import { MongoDBService }           from './mongodb.service';
-import { MongoManager }             from './mongomanager';
+import { EntityService }             from './entity.service';
 import { GetRequest}                from './getRequest';
 
 @NgModule({
@@ -35,7 +35,7 @@ import { GetRequest}                from './getRequest';
   declarations: [  ],
   bootstrap:    [  ],
   providers:    [ LoadConfig, StartService, MongoDBService,
-                  ObjectManager, CesiumManager, MongoManager,
+                  ObjectManager, CesiumManager, EntityService,
                   GetRequest],
 })
 

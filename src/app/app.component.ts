@@ -23,7 +23,7 @@ import { UpController } from './upcontroller';
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { MongoManager } from  '../traj/mongomanager';
+import { EntityService } from  '../traj/entity.service';
 
 import { GetRequest} from '../traj/getRequest';
 
@@ -81,7 +81,7 @@ export class AppComponent {
      * It initializes the variables of AppComponent. 
      *
      */
-      constructor(_simManager: SimManager, private _mongoman: MongoManager,
+      constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
                   private loadConfig: LoadConfig, private _getRequest: GetRequest
               
@@ -204,7 +204,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-          this._mongoman.addData(null);
+          this._entityservice.addData(null);
       }
 
 
@@ -214,7 +214,7 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-          this._mongoman.getData().subscribe( data =>  { 
+          this._entityservice.getData().subscribe( data =>  { 
               console.log(data); 
               this.addAppEntityToManager("10",data.TEntity._name,data.TEntity._position,data.TEntity._modelUrl, null);
 
