@@ -19,14 +19,11 @@ import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
-//import { ObjectManager} from '../traj/objectmanager'
-
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from  '../traj/entity.service';
 import { GetEntity } from './getEntity';
-import { MongoDBService} from '../traj/mongodb.service'
 import { GetRequest} from '../traj/getRequest';
 
 @Component({
@@ -63,8 +60,6 @@ export class AppComponent {
       rEntity;
       receivedEntity;
       _getEntity: GetEntity;
-      _mongo:MongoDBService
-      //objectmanager:ObjectManager;
       config;
       test;
        
@@ -120,16 +115,9 @@ export class AppComponent {
      * This method Adds test entities to scene
      */
       init() {
-        /* this._mongo.getDefault1().subscribe( data =>  { 
-              console.log(data); 
-            this.addAppEntityToManager(data);} );
-              this._mongo.getDefault2().subscribe( data =>  { 
-              console.log(data); 
-              this.addAppEntityToManager(data);
-              })
           var entity;
           this.test = this.config.Test;
-
+          /*
           this.EntityNumber = 0;
 
           var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
@@ -145,6 +133,16 @@ export class AppComponent {
 
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );*/
+            this._entityservice.getDefault1().subscribe( data =>  { 
+              console.log(data); 
+              this.addAppEntityToManager(data);
+
+            } );
+             this._entityservice.getDefault2().subscribe( data =>  { 
+              console.log(data); 
+              this.addAppEntityToManager(data);
+
+            } );
          //this.getDefault();
          // this.addAppEntityToManager(this.rEntity.TEntity._id ,this.rEntity.TEntity._name,this.rEntity.TEntity._position, this.rEntity.TEntity._modelUrl,this.rEntity.TEntity._Controller);
           //this.addDefault(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
@@ -152,16 +150,7 @@ export class AppComponent {
          // this.addDefault(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
-           getDefault(){
-              this._mongo.getDefault1().subscribe( data =>  { 
-              console.log(data); 
-              this.addAppEntityToManager(data);} );
-              this._mongo.getDefault2().subscribe( data =>  { 
-              console.log(data); 
-              this.addAppEntityToManager(data);
-
-            } );
-      }
+          
     /**
      * @ngdoc method
      * @name addAppEntityToManager # adds AppEntity to SimManager
