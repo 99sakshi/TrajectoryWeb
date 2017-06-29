@@ -132,7 +132,7 @@ export class AppComponent {
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager(this.rEntity.TEntity._id ,this.rEntity.TEntity._name,this.rEntity.TEntity._position, this.rEntity.TEntity._modelUrl,this.rEntity.TEntity._Controller);
+         // this.addAppEntityToManager(this.rEntity.TEntity._id ,this.rEntity.TEntity._name,this.rEntity.TEntity._position, this.rEntity.TEntity._modelUrl,this.rEntity.TEntity._Controller);
         //  this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
           //this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
@@ -214,8 +214,11 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-          this.receivedEntity=this._mongoman.getData();
-          this.rEntity=JSON.parse(this.receivedEntity);
+          this._mongoman.getData().subscribe( data =>  { 
+              console.log(data); 
+              this.addAppEntityToManager("10",data.TEntity._name,data.TEntity._position,data.TEntity._modelUrl, null);
+
+            } );
       }
 
       onHover($event)
@@ -224,7 +227,7 @@ export class AppComponent {
           this.y=$event.screenY; 
           this.r=Math.sqrt((this.x*this.x)+(this.y*this.y));
           this.area=(Math.PI*this.r*this.r);
-          this._getRequest.sendData(this.x,this.y);
+          //this._getRequest.sendData(this.x,this.y);
       }
 
 };

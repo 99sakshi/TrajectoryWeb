@@ -37,9 +37,8 @@ export class MongoManager{
      * @name getData # Fetches Data
      * This method retrieves the data from the database.
      */
-    public  getData() {
-      var getEntity =   this.mongoDBService.getData().subscribe( data =>  {console.log(data);} );
-      return getEntity;                                                                                                            
+    public getData() {
+      return this.mongoDBService.getData();                                                                                                            
     }
 
 };
