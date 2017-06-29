@@ -126,7 +126,7 @@ export class AppComponent {
               this._mongo.getDefault2().subscribe( data =>  { 
               console.log(data); 
               this.addAppEntityToManager(data);
-              })*/
+              })
           var entity;
           this.test = this.config.Test;
 
@@ -144,10 +144,8 @@ export class AppComponent {
           fwdcontroller.setPosition( PosKolkatta );
 
           var upcontroller = new UpController;
-          upcontroller.setPosition( PosMumbai );
-          this._mongo.getDefault1().subscribe( data =>  { 
-              console.log(data); 
-            this.addAppEntityToManager(data);} );
+          upcontroller.setPosition( PosMumbai );*/
+         //this.getDefault();
          // this.addAppEntityToManager(this.rEntity.TEntity._id ,this.rEntity.TEntity._name,this.rEntity.TEntity._position, this.rEntity.TEntity._modelUrl,this.rEntity.TEntity._Controller);
           //this.addDefault(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
           
@@ -155,7 +153,7 @@ export class AppComponent {
 
       }
            getDefault(){
-           this._mongo.getDefault1().subscribe( data =>  { 
+              this._mongo.getDefault1().subscribe( data =>  { 
               console.log(data); 
               this.addAppEntityToManager(data);} );
               this._mongo.getDefault2().subscribe( data =>  { 
