@@ -41,11 +41,22 @@ export class CesiumManager{
           this._mouseEndCallback = function() {
                 var extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(extents);
-                 var x1 = (extents.west*(180/(Math.PI)));
-                // var y1 = Cesium.CesiumMath.toDegrees(extents.south);
-               //  var x2 = Cesium.CesiumMath.toDegrees(extents.east);
-                 //var y2 = Cesium.CesiumMath.toDegrees(extents.north); 
-                 console.log(x1);
+                for(var i = x1; i <=x2; i++)
+                {
+                    for(var j = y1;j <= y2; j++)
+                    {
+                        var x1 = ((extents.west)*(180/(Math.PI)));
+                        var y1 = ((extents.south)*(180/(Math.PI)));
+                        var x2 = ((extents.east)*(180/(Math.PI)));
+                        var y2 = ((extents.north)*(180/(Math.PI))); 
+                        // var x1 = Cesium.CesiumMath.toDegrees(extents.west);
+                        // var y1 = Cesium.CesiumMath.toDegrees(extents.south);
+                        //  var x2 = Cesium.CesiumMath.toDegrees(extents.east);
+                        //var y2 = Cesium.CesiumMath.toDegrees(extents.north); 
+                        console.log(x1,y1,x2,y2);
+                    }
+                }
+               
                 //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
            };
    
