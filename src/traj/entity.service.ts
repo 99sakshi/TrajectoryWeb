@@ -39,6 +39,7 @@ export class EntityService {
 
 
   dltAir(){
+     alert("Delete Aircraft from Kolkata?");
     return this.http.get(this.serverUrl + this.dltAircraft)
                     .map(this.extractData)
                     .catch(this.handleError);
