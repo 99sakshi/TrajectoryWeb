@@ -36,6 +36,7 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
+       <button type="button" class="btn btn-warning btn-xs" (click)="dltAir()">Delete Aircraft</button>
       <h3> (X,Y) ----  Radius  ----  Area</h3>
       <h4>({{x}},{{y}}) ---- {{r}} ---- {{area}}</h4>
      </div>
@@ -231,6 +232,12 @@ export class AppComponent {
               this.addAppEntityToManager(data);
 
             } );
+      }
+
+      dltAir(){
+        this._entityservice.dltAir().subscribe(data =>{
+          alert("Aircraft Deleted from Kolkata");
+        });
       }
 
       onHover($event)

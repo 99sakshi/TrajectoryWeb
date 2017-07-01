@@ -30,6 +30,7 @@ export class EntityService {
   private putDataUrl = '/putdata';
   private getdefault1='/getDefault1';
   private getdefault2='/getDefault2';
+  private dltAircraft='/dltAir';
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
   }
@@ -37,18 +38,11 @@ export class EntityService {
 
 
 
-   /**
-     * @ngdoc method
-     * @name addData # Adds Data
-     * This method adds the data to the database.
-     */
-  /*   public addData(entity) {
-         
-      var dbEntity =  this.mongoDBService.putData(entity).subscribe( data =>  { console.log(data); } );
-      return dbEntity;                                                         
-                                                               
-     }
-*/
+  dltAir(){
+    return this.http.get(this.serverUrl + this.dltAircraft)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
 
 /**
  * @ngdoc method
