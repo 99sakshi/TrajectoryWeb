@@ -45,8 +45,9 @@ export class SimManager {
      * @ngdoc method
      * @name removeEntity # It removes the entity
      */
-    removeEntity () {
-
+    removeEntity (entity) {
+         entity.setCEntity( this.objectmanager.removeEntity(entity) );
+        this._entityMap[entity._name] = entity;
     }
 
 

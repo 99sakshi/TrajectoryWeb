@@ -36,7 +36,8 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
-       <button type="button" class="btn btn-warning btn-xs" (click)="dltAir()">Delete Aircraft</button>
+       <button type="button" class="btn btn-danger btn-xs" (click)="dltAir()">Delete Aircraft</button>
+        <button type="button" class="btn btn-warning btn-xs" (click)="remEntities()">Remove Entities</button>
       <h3> (X,Y) ----  Radius  ----  Area</h3>
       <h4>({{x}},{{y}}) ---- {{r}} ---- {{area}}</h4>
      </div>
@@ -68,7 +69,6 @@ export class AppComponent {
       y=0;
       r=0;
       area=0;
-      EntityNumber;
       Entity;
 
     /**
@@ -116,7 +116,6 @@ export class AppComponent {
      * This method Adds test entities to scene
      */
       init() {
-          var entity;
           this.test = this.config.Test;
           /*
           this.EntityNumber = 0;
@@ -134,8 +133,9 @@ export class AppComponent {
 
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );*/
-            this._entityservice.getDefault1().subscribe( data =>  { 
-              console.log(data); 
+             this._entityservice.getDefault1().subscribe( data =>
+             { console.log(data); 
+               this.Entity=  data;
               this.addAppEntityToManager(data);
 
             } );
@@ -236,8 +236,22 @@ export class AppComponent {
 
       dltAir(){
         this._entityservice.dltAir().subscribe(data =>{
-          alert("Aircraft Deleted from Kolkata");
         });
+      }
+
+
+      remEntities(){
+        var Entity= new TEntity(this.Entity);
+        Entity.getPara();
+           
+               //console.log(data); 
+              this._simManager.removeEntity(Entity);
+
+            /* this._entityservice.getDefault2().subscribe( data =>  { 
+              console.log(data); 
+              this.addAppEntityToManager(data);
+
+            } );*/
       }
 
       onHover($event)
