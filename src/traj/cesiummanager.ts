@@ -26,10 +26,12 @@ export class CesiumManager{
 
            this.loadConfig.getConfig().subscribe(    config => {
                                                             this._config = config; 
-                                                            this.init();  } );  
+                                                            this.init();  
+                                                        } );  
      
          
           this._mouseEndCallback = function() {
+              
                 var extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(extents);
                 var x1 = ((extents.west)*(180/(Math.PI)));//converting radians into degrees
@@ -37,6 +39,25 @@ export class CesiumManager{
                 var x2 = ((extents.east)*(180/(Math.PI)));
                 var y2 = ((extents.north)*(180/(Math.PI))); 
                 console.log("Degrees :" ,x1,y1,x2,y2);
+                var viewer =  new Cesium.Viewer('cesiumContainer');
+                this._cesiumViewer=viewer;
+                var camera = this._cesiumViewer.camera;
+                var position = camera.position;
+                var positionEarth=[0,0,0];
+                console.log(position);
+                console.log(position.x);
+                var distance=Math.sqrt((Math.pow((position.x-positionEarth[0]),2))+(Math.pow((position.y-positionEarth[1]),2))+(Math.pow((position.z-positionEarth[2]),2)));
+                console.log("Distance  "+distance*0.001 + " km");//  get the distance b/w earth and camera pos
+                var level=[0,0,0,0,0,0,0,0,0,0];
+                 var d=2500;
+               
+                for(var k=1; k <=10; k++)
+                  {
+                      level[k]=(d*k);
+                     console.log("Level is- "+k+"  Distance is-  "+level[k]);
+                 }
+               
+/*
                  for(var i = x1; i <=x2; i++)
                 {
                     for(var j = y1;j <= y2; j++)
@@ -44,7 +65,7 @@ export class CesiumManager{
                        // console.log(i,j)  ;
                     }
                 }
-
+*/
                
                
                 //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
@@ -68,11 +89,8 @@ export class CesiumManager{
         viewer.bottomContainer.innerHTML = "";
         viewer.animation.container.innerHTML = "";
         viewer.timeline.container.innerHTML = "";
-        this._cesiumViewer=viewer;
-        var camera = this._cesiumViewer.camera;
-        var position = camera.position;
-        console.log(position);
-
+       
+    
         if(this._config.UseLocalGeoserver)
         {
             var imageryLayers = viewer.imageryLayers;
