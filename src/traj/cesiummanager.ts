@@ -1,12 +1,7 @@
 declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
- /**
-     * Math functions.
-     *
-     * @exports CesiumMath
-     */
- //var CesiumMath={};   
+  
     
  /**
  * @ngdoc method
@@ -33,10 +28,6 @@ export class CesiumManager{
                                                             this._config = config; 
                                                             this.init();  } );  
      
-        /* Cesium.CesiumMath.toDegrees = function(radians) {
-          var pi = Math.PI;
-          return (radians * (180/pi));
-    };*/
          
           this._mouseEndCallback = function() {
                 var extents = this._cesiumViewer.camera.computeViewRectangle()
@@ -45,11 +36,7 @@ export class CesiumManager{
                 var y1 = ((extents.south)*(180/(Math.PI)));
                 var x2 = ((extents.east)*(180/(Math.PI)));
                 var y2 = ((extents.north)*(180/(Math.PI))); 
-                        // var x1 = Cesium.CesiumMath.toDegrees(extents.west);
-                        // var y1 = Cesium.CesiumMath.toDegrees(extents.south);
-                        //  var x2 = Cesium.CesiumMath.toDegrees(extents.east);
-                        //var y2 = Cesium.CesiumMath.toDegrees(extents.north); 
-                console.log(x1,y1,x2,y2);
+                console.log("Degrees :" ,x1,y1,x2,y2);
                  for(var i = x1; i <=x2; i++)
                 {
                     for(var j = y1;j <= y2; j++)
@@ -62,48 +49,9 @@ export class CesiumManager{
                
                 //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
            };
+         
 
-
-   /*  canvas : {
-            get : function() {
-                return this._canvas;
-            }
-        }
-           // Create scene without anisotropic texture filtering
-var scene = new Cesium.Scene({
-  canvas : canvas,
-  contextOptions : {
-    allowTextureFilterAnisotropic : false
-  }
-});
-
-           var camera = new Cesium.Camera(scene);
-camera.position = new Cesium.Cartesian3();
-camera.direction = Cesium.Cartesian3.negate(Cesium.Cartesian3.UNIT_Z, new Cesium.Cartesian3());
-camera.up = Cesium.Cartesian3.clone(Cesium.Cartesian3.UNIT_Y);
-camera.frustum.fov = Cesium.Math.PI_OVER_THREE;
-camera.frustum.near = 1.0;
-camera.frustum.far = 2.0;*/
-   /* var positions = Cesium.Cartesian3.fromDegreesArray([
-    -104.606667,50.454722,
-    15.71666666, 69.1 ]);      
-    var surfacePositions = Cesium.PolylinePipeline.generateArc({
-    positions: positions
-});       
-    var scratchCartesian3 = new Cesium.Cartesian3();
-    var surfacePositionsLength = surfacePositions.length;
-    var totalDistanceInMeters = 0;
-    for (var i = 3; i < surfacePositionsLength; i += 3) {
-    scratchCartesian3.x = surfacePositions[i] - surfacePositions[i - 3];
-    scratchCartesian3.y = surfacePositions[i + 1] - surfacePositions[i - 2];
-    scratchCartesian3.z = surfacePositions[i + 2] - surfacePositions[i - 1];
-    totalDistanceInMeters += Cesium.Cartesian3.magnitude(scratchCartesian3);
-    var totalDistanceInKm = totalDistanceInMeters * 0.001;
-    console.log('Distance: ' + totalDistanceInKm + ' km');
-}*/
-      
       }
-
       /**
        * @ngdoc method
        * @name init # creates cesium viewer
@@ -120,6 +68,10 @@ camera.frustum.far = 2.0;*/
         viewer.bottomContainer.innerHTML = "";
         viewer.animation.container.innerHTML = "";
         viewer.timeline.container.innerHTML = "";
+        this._cesiumViewer=viewer;
+        var camera = this._cesiumViewer.camera;
+        var position = camera.position;
+        console.log(position);
 
         if(this._config.UseLocalGeoserver)
         {
