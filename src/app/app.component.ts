@@ -36,11 +36,10 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
-      <h3> (X,Y) ----  Radius  ----  Area</h3>
-      <h4>({{x}},{{y}}) ---- {{r}} ---- {{area}}</h4>
+      Display Extents Here
      </div>
 
-     <div id="cesiumContainer" (mousemove)="onHover($event)" >
+     <div id="cesiumContainer" >
        
      </div>
      `,
@@ -61,11 +60,7 @@ export class AppComponent {
       receivedEntity;
       config;
       test;
-       
-      x=0;
-      y=0;
-      r=0;
-      area=0;
+
       EntityNumber;
       Entity;
 
@@ -115,12 +110,12 @@ export class AppComponent {
       init() {
           var entity;
           this.test = this.config.Test;
-          /*
+          
           this.EntityNumber = 0;
 
           var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
-          var PosDelhi = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
-          var PosKolkatta = Cesium.Cartesian3.fromDegrees(77.1025, 28.7041, 100);
+          var PosDelhi = Cesium.Cartesian3.fromDegrees(77.1025, 28.7041, 100);
+          var PosKolkatta = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
 
           var modelBalloon = "../Models/CesiumBalloon/CesiumBalloon.glb";
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
@@ -130,25 +125,14 @@ export class AppComponent {
           fwdcontroller.setPosition( PosKolkatta );
 
           var upcontroller = new UpController;
-          upcontroller.setPosition( PosMumbai );*/
-            this._entityservice.getDefault1().subscribe( data =>  { 
-              console.log(data); 
-              this.addAppEntityToManager(data);
+          upcontroller.setPosition( PosMumbai );
 
-            } );
-             this._entityservice.getDefault2().subscribe( data =>  { 
-              console.log(data); 
-              this.addAppEntityToManager(data);
-
-            } );
-         //this.getDefault();
-         // this.addAppEntityToManager(this.rEntity.TEntity._id ,this.rEntity.TEntity._name,this.rEntity.TEntity._position, this.rEntity.TEntity._modelUrl,this.rEntity.TEntity._Controller);
-          //this.addDefault(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          
-         // this.addDefault(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+        //  this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
+          this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+        //  this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
-          
+
     /**
      * @ngdoc method
      * @name addAppEntityToManager # adds AppEntity to SimManager
@@ -156,23 +140,24 @@ export class AppComponent {
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      */
-      addAppEntityToManager(data ){
+      addAppEntityToManager(id,name, position, modelUrl, controller ){
 
-        var appEntity = new TEntity(data);
-      //  appEntity.setId(id);
-       // appEntity.setName(name);
-       // appEntity.setModelUrl(modelUrl); 
-        //appEntity.setPosition(position);
-     //   var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
-       // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-       // appEntity.setOrientation(orientation);
+        var appEntity = new TEntity();
+        appEntity.setId(id);
+        appEntity.setName(name);
+        appEntity.setModelUrl(modelUrl); 
+        appEntity.setPosition(position);
+        var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        appEntity.setOrientation(orientation);
 
         // Entity has to be added to the manager before position set 
-       this._simManager.addEntity(appEntity, false); 
+        this._simManager.addEntity(appEntity, false); 
 
-      //  appEntity.setController(controller); 
+        appEntity.setController(controller); 
 
       }
+          
 
 
     /**
@@ -226,18 +211,8 @@ export class AppComponent {
       getData() {
           this._entityservice.getData().subscribe( data =>  { 
               console.log(data); 
-              this.addAppEntityToManager(data);
-
+              this._simManager.addEntity(new TEntity(data), false); 
             } );
-      }
-
-      onHover($event)
-      {
-          this.x=$event.screenX;
-          this.y=$event.screenY; 
-          this.r=Math.sqrt((this.x*this.x)+(this.y*this.y));
-          this.area=(Math.PI*this.r*this.r);
-          //this._getRequest.sendData(this.x,this.y);
       }
 
 };

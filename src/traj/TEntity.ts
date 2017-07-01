@@ -31,6 +31,7 @@ declare var Cesium: any;
   bootstrap:    [  ],
   providers:    [ LoadConfig, StartService, ObjectManager, CesiumManager ]
 })
+
 export class TEntity {
        _id;
       _name;
@@ -51,19 +52,28 @@ export class TEntity {
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
-      constructor(data) {
+      constructor(data?: any) {
 
-        this._name = data.TEntity._name;
-        this._position = data.TEntity._position;
+        this._name = "TestTEntity";
+        this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
         var heading = 0;
         var pitch = 0;
         var roll = 0;
-        this._hpr =data.TEntity._hpr;
-      //  this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
-        this._modelUrl =data.TEntity._modelUrl;
+        this._hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
+        this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
         this._CEntity = null;
-        this._id=data.TEntity._id;
-        this._orientation=data.TEntity._orientation;
+        this._Controller = null;    
+
+        if (data != null ) {
+            this._name = data.TEntity._name;
+            this._position = data.TEntity._position;    
+            this._hpr = data.TEntity._hpr;  
+            this._modelUrl = data.TEntity._modelUrl;
+            this._id = data.TEntity._id;
+            this._orientation = data.TEntity._orientation;
+            this._Controller = data.TEntity._Controller;
+        }    
 
         //defining parameters of the current object
         this._para = {    
@@ -76,8 +86,6 @@ export class TEntity {
                 maximumScale : 20000
             }
         }
-
-        this._Controller = data.TEntity._Controller;
       }
 
 
