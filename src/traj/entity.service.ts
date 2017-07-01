@@ -61,16 +61,6 @@ export class EntityService {
                     .map(this.extractData)
                     .catch(this.handleError);
            }
- getDefault1(){
-  return this.http.get(this.serverUrl + this.getdefault1)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-              }
-getDefault2(){
-  return this.http.get(this.serverUrl + this.getdefault2)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-}
   /**
  * @ngdoc method
  * @name getentity#It gets data in mongoDB based on XY hash
@@ -142,7 +132,8 @@ getDefault2(){
     } else {
       errMsg = error.message ? error.message : error.toString();// A generic error fallback
     }
+
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-}    
+}

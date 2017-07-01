@@ -19,11 +19,11 @@ import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
+
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { EntityService} from '../traj/entity.service';
-import { GetEntity } from './getEntity';
+import { EntityService } from  '../traj/entity.service';
 import { GetRequest} from '../traj/getRequest';
 
 @Component({
@@ -59,7 +59,6 @@ export class AppComponent {
       _simManager: SimManager;
       rEntity;
       receivedEntity;
-      _getEntity: GetEntity;
       config;
       test;
        
@@ -84,7 +83,6 @@ export class AppComponent {
       constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
                   private loadConfig: LoadConfig, private _getRequest: GetRequest
-              
                  )
       {
           this._simManager = _simManager,
@@ -170,7 +168,7 @@ export class AppComponent {
        // appEntity.setOrientation(orientation);
 
         // Entity has to be added to the manager before position set 
-       this._simManager.addEntity(appEntity); 
+       this._simManager.addEntity(appEntity, false); 
 
       //  appEntity.setController(controller); 
 
