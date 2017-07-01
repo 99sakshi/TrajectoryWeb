@@ -22,7 +22,7 @@ import { UpController } from './upcontroller';
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { EntityService } from  '../traj/entity.service';
+import { EntityService} from '../traj/entity.service';
 import { GetEntity } from './getEntity';
 import { GetRequest} from '../traj/getRequest';
 

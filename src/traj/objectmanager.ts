@@ -15,7 +15,7 @@ export class ObjectManager{
       private _config;
 
       constructor (private _cesiumManager: CesiumManager,
-                   private _entityservice: EntityService) {
+                   private _entityService: EntityService ) {
 
       }
 
@@ -33,7 +33,7 @@ export class ObjectManager{
             var rEntity= this._cesiumManager.addEntity(entity.getPara());
 
             // Add entity to DB
-           // this._entityservice.addData(entity);
+            this._entityService.putData(entity);
             return rEntity;
       }
 

@@ -26,7 +26,6 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
-import { MongoDBService }           from './mongodb.service';
 import { EntityService }             from './entity.service';
 import { GetRequest}                from './getRequest';
 
@@ -34,7 +33,7 @@ import { GetRequest}                from './getRequest';
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
-  providers:    [ LoadConfig, StartService, MongoDBService,
+  providers:    [ LoadConfig, StartService,
                   ObjectManager, CesiumManager, EntityService,
                   GetRequest],
 })
