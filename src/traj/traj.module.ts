@@ -26,16 +26,15 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
-import { MongoDBService }           from './mongodb.service';
-import { MongoManager }             from './mongomanager';
+import { EntityService }             from './entity.service';
 import { GetRequest}                from './getRequest';
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
   declarations: [  ],
   bootstrap:    [  ],
-  providers:    [ LoadConfig, StartService, MongoDBService,
-                  ObjectManager, CesiumManager, MongoManager,
+  providers:    [ LoadConfig, StartService,
+                  ObjectManager, CesiumManager, EntityService,
                   GetRequest],
 })
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoadConfig } from './loadconfig.service';
 import { CesiumManager} from './cesiummanager';
-import { MongoManager} from './mongomanager';
+import { EntityService} from './entity.service';
 
 
  /**
@@ -15,7 +15,7 @@ export class ObjectManager{
       private _config;
 
       constructor (private _cesiumManager: CesiumManager,
-                   private _mongoManager: MongoManager) {
+                   private _entityService: EntityService ) {
 
       }
 
@@ -24,16 +24,19 @@ export class ObjectManager{
        * @name addEntity#adds an entity
        *
        * @param {entity} entity to be added
+       * @param {shouldSave} shouldSave the entity to backend
        * Adds the new entity
        *
        * @return {retEntity} retEntity cesium generated entity
        */
-      addEntity(entity) {
+      addEntity(entity, shouldSave) {
             // This manager should also store the object somewhere
             var rEntity= this._cesiumManager.addEntity(entity.getPara());
 
             // Add entity to DB
-            this._mongoManager.addData(entity);
+            if(shouldSave)
+                  this._entityService.putData(entity);
+
             return rEntity;
       }
 

@@ -22,7 +22,7 @@ import 'rxjs/add/operator/map';
 
  
 @Injectable()
-export class MongoDBService {
+export class EntityService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
   private getDataUrl = '/getdata';
@@ -33,6 +33,22 @@ export class MongoDBService {
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
   }
+
+
+
+
+   /**
+     * @ngdoc method
+     * @name addData # Adds Data
+     * This method adds the data to the database.
+     */
+  /*   public addData(entity) {
+         
+      var dbEntity =  this.mongoDBService.putData(entity).subscribe( data =>  { console.log(data); } );
+      return dbEntity;                                                         
+                                                               
+     }
+*/
 
 /**
  * @ngdoc method
@@ -45,16 +61,6 @@ export class MongoDBService {
                     .map(this.extractData)
                     .catch(this.handleError);
            }
- getDefault1(){
-  return this.http.get(this.serverUrl + this.getdefault1)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-              }
-getDefault2(){
-  return this.http.get(this.serverUrl + this.getdefault2)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-}
   /**
  * @ngdoc method
  * @name getentity#It gets data in mongoDB based on XY hash
@@ -126,7 +132,8 @@ getDefault2(){
     } else {
       errMsg = error.message ? error.message : error.toString();// A generic error fallback
     }
+
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-}    
+}

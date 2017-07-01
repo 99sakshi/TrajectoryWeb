@@ -23,8 +23,7 @@ import { UpController } from './upcontroller';
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { MongoManager } from  '../traj/mongomanager';
-
+import { EntityService } from  '../traj/entity.service';
 import { GetRequest} from '../traj/getRequest';
 
 @Component({
@@ -37,11 +36,10 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
-      <h3> (X,Y) ----  Radius  ----  Area</h3>
-      <h4>({{x}},{{y}}) ---- {{r}} ---- {{area}}</h4>
+      Display Extents Here
      </div>
 
-     <div id="cesiumContainer" (mousemove)="onHover($event)" >
+     <div id="cesiumContainer" >
        
      </div>
      `,
@@ -58,15 +56,13 @@ import { GetRequest} from '../traj/getRequest';
 export class AppComponent { 
       
       _simManager: SimManager;
-
+      rEntity;
+      receivedEntity;
       config;
       test;
-       
-      x=0;
-      y=0;
-      r=0;
-      area=0;
+
       EntityNumber;
+      Entity;
 
     /**
      * @ngdoc method
@@ -79,14 +75,15 @@ export class AppComponent {
      * It initializes the variables of AppComponent. 
      *
      */
-      constructor(_simManager: SimManager, private _mongoman: MongoManager,
+      constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
                   private loadConfig: LoadConfig, private _getRequest: GetRequest
-              
                  )
       {
           this._simManager = _simManager,
           this.test=false;
+         
+
         
       }
                                            
@@ -98,7 +95,7 @@ export class AppComponent {
      *
      */
       ngOnInit() {
-
+        
           this.loadConfig.getConfig().subscribe( data =>  {
                                                             this.config = data;
                                                             this.init();
@@ -111,14 +108,14 @@ export class AppComponent {
      * This method Adds test entities to scene
      */
       init() {
-
+          var entity;
           this.test = this.config.Test;
-
+          
           this.EntityNumber = 0;
 
           var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
-          var PosDelhi = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
-          var PosKolkatta = Cesium.Cartesian3.fromDegrees(77.1025, 28.7041, 100);
+          var PosDelhi = Cesium.Cartesian3.fromDegrees(77.1025, 28.7041, 100);
+          var PosKolkatta = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
 
           var modelBalloon = "../Models/CesiumBalloon/CesiumBalloon.glb";
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
@@ -130,12 +127,11 @@ export class AppComponent {
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
+        //  this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
           this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+        //  this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
-
 
     /**
      * @ngdoc method
@@ -146,7 +142,7 @@ export class AppComponent {
      */
       addAppEntityToManager(id,name, position, modelUrl, controller ){
 
-        var appEntity = new TEntity;
+        var appEntity = new TEntity();
         appEntity.setId(id);
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
@@ -156,11 +152,12 @@ export class AppComponent {
         appEntity.setOrientation(orientation);
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(appEntity); 
+        this._simManager.addEntity(appEntity, false); 
 
         appEntity.setController(controller); 
 
       }
+          
 
 
     /**
@@ -202,7 +199,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-          this._mongoman.addData(null);
+           this._simManager.addEntity(null); 
       }
 
 
@@ -212,16 +209,11 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-          this._mongoman.getData();
-      }
-
-      onHover($event)
-      {
-          this.x=$event.screenX;
-          this.y=$event.screenY; 
-          this.r=Math.sqrt((this.x*this.x)+(this.y*this.y));
-          this.area=(Math.PI*this.r*this.r);
-          this._getRequest.sendData(this.x,this.y);
+          this._entityservice.getData().subscribe( data =>  { 
+              console.log(data); 
+              this._simManager.addEntity(new TEntity(data), false); 
+            } );
       }
 
 };
+ 
