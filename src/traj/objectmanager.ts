@@ -24,16 +24,19 @@ export class ObjectManager{
        * @name addEntity#adds an entity
        *
        * @param {entity} entity to be added
+       * @param {shouldSave} shouldSave the entity to backend
        * Adds the new entity
        *
        * @return {retEntity} retEntity cesium generated entity
        */
-      addEntity(entity) {
+      addEntity(entity, shouldSave) {
             // This manager should also store the object somewhere
             var rEntity= this._cesiumManager.addEntity(entity.getPara());
 
             // Add entity to DB
-            //this._entityService.putData(entity);
+            if(shouldSave)
+                  this._entityService.putData(entity);
+                  
             return rEntity;
       }
 
@@ -45,8 +48,7 @@ export class ObjectManager{
        * Removes an entity
        */
       removeEntity(entity) {
-            var rEntity= this._cesiumManager.removeEntity(entity);
-            return rEntity;
+            this._cesiumManager.removeEntity(entity);
       }
 
 }
