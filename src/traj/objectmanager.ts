@@ -45,7 +45,7 @@ export class ObjectManager{
        * Removes an entity
        */
       removeEntity(entity) {
-            var rEntity= this._cesiumManager.removeEntity(entity.getPara());
+            var rEntity= this._cesiumManager.removeEntity(entity);
             return rEntity;
       }
 
