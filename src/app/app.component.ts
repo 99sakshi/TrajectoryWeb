@@ -36,7 +36,7 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
-      <button type="button" class="btn btn-danger btn-xs" (click)="dltAir()">Delete Aircraft</button>
+      <button type="button" class="btn btn-danger btn-xs" (click)="deleteEntity()">Delete Aircraft</button>
       <button type="button" class="btn btn-warning btn-xs" (click)="remEntities()">Remove Entities</button>
       Display Extents Here
      </div>
@@ -216,8 +216,8 @@ export class AppComponent {
             } );
       }
 
-      dltAir(){
-        this._entityservice.dltAir().subscribe(data =>{
+      deleteEntity(){
+        this._entityservice.deleteEntity().subscribe(data =>{
         });
       }
 

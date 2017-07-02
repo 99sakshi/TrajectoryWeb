@@ -28,9 +28,8 @@ export class EntityService {
   private getDataUrl = '/getdata';
   private getEntityUrl = '/getentity';
   private putDataUrl = '/putdata';
-  private getdefault1='/getDefault1';
-  private getdefault2='/getDefault2';
-  private dltAircraft='/dltAir';
+  private deleteEntityUrl='/deleteEntity';
+
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
   }
@@ -38,9 +37,8 @@ export class EntityService {
 
 
 
-  dltAir(){
-     alert("Delete Aircraft from Kolkata?");
-    return this.http.get(this.serverUrl + this.dltAircraft)
+  deleteEntity(){
+    return this.http.get(this.serverUrl + this.deleteEntityUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
