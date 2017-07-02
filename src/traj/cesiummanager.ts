@@ -44,7 +44,8 @@ export class CesiumManager{
                 var camera = this._cesiumViewer.camera;
                 var position = camera.position;
                 console.log(position);
-                var positionEarth = new Cesium.Cartesian3(0,0,0); // this point needs to be closest to the camera
+    
+                var positionEarth = new Cesium.Cartesian3(303157.7006790363,5635474.981998206,2978294.6067709294); // Mount Everest coordinates
                 var distance = Cesium.Cartesian3.distance(position, positionEarth);
 
                 //// level logic
