@@ -111,7 +111,8 @@ export class CesiumManager{
        * Removes an entity
        */
       removeEntity(entity) {
-
+            this._cesiumViewer.entities.remove( entity._CEntity );
+       
       }
 
 }

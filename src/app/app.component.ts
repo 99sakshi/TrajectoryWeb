@@ -36,6 +36,8 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-danger btn-xs" (click)="stopSimulation()">Stop</button>
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
+      <button type="button" class="btn btn-danger btn-xs" (click)="dltAir()">Delete Aircraft</button>
+      <button type="button" class="btn btn-warning btn-xs" (click)="remEntities()">Remove Entities</button>
       Display Extents Here
      </div>
 
@@ -108,7 +110,6 @@ export class AppComponent {
      * This method Adds test entities to scene
      */
       init() {
-          var entity;
           this.test = this.config.Test;
           
           this.EntityNumber = 0;
@@ -125,6 +126,7 @@ export class AppComponent {
           fwdcontroller.setPosition( PosKolkatta );
 
           var upcontroller = new UpController;
+
           upcontroller.setPosition( PosMumbai );
 
         //  this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
@@ -199,9 +201,8 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-           this._simManager.addEntity(null); 
+          // this._simManager.addEntity(null,false); 
       }
-
 
     /**
      * @ngdoc method
@@ -214,6 +215,16 @@ export class AppComponent {
               this._simManager.addEntity(new TEntity(data), false); 
             } );
       }
+
+      dltAir(){
+        this._entityservice.dltAir().subscribe(data =>{
+        });
+      }
+
+      remEntities(){ 
+        this._simManager.removeAllEntity();
+      }
+
 
 };
  

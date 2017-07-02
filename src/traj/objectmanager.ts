@@ -36,7 +36,7 @@ export class ObjectManager{
             // Add entity to DB
             if(shouldSave)
                   this._entityService.putData(entity);
-
+                  
             return rEntity;
       }
 
@@ -48,7 +48,7 @@ export class ObjectManager{
        * Removes an entity
        */
       removeEntity(entity) {
-
+            this._cesiumManager.removeEntity(entity);
       }
 
 }
