@@ -31,7 +31,7 @@ export class CesiumManager{
      
          
           this._mouseEndCallback = function() {
-              
+                //// get extents
                 var extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(extents);
                 var x1 = ((extents.west)*(180/(Math.PI)));//converting radians into degrees
@@ -39,24 +39,20 @@ export class CesiumManager{
                 var x2 = ((extents.east)*(180/(Math.PI)));
                 var y2 = ((extents.north)*(180/(Math.PI))); 
                 console.log("Degrees :" ,x1,y1,x2,y2);
-                var viewer =  new Cesium.Viewer('cesiumContainer');
-                this._cesiumViewer=viewer;
+
+                //// compute level
                 var camera = this._cesiumViewer.camera;
                 var position = camera.position;
-                var positionEarth=[0,0,0];
                 console.log(position);
-                console.log(position.x);
-                var distance=Math.sqrt((Math.pow((position.x-positionEarth[0]),2))+(Math.pow((position.y-positionEarth[1]),2))+(Math.pow((position.z-positionEarth[2]),2)));
-                console.log("Distance  "+distance*0.001 + " km");//  get the distance b/w earth and camera pos
-                var level=[0,0,0,0,0,0,0,0,0,0];
-                 var d=2500;
-               
-                for(var k=1; k <=10; k++)
-                  {
-                      level[k]=(d*k);
-                     console.log("Level is- "+k+"  Distance is-  "+level[k]);
-                 }
-               
+                var positionEarth = new Cesium.Cartesian3(0,0,0); // this point needs to be closest to the camera
+                var distance = Cesium.Cartesian3.distance(position, positionEarth);
+
+                //// level logic
+                var levelNumber = Math.round(Number(distance/1000000));
+                // cap value between 0 - 10
+                var level = 10 - Math.max(Math.min(levelNumber, 10),0);
+                console.log("Level " + level);
+                
 /*
                  for(var i = x1; i <=x2; i++)
                 {
@@ -66,9 +62,6 @@ export class CesiumManager{
                     }
                 }
 */
-               
-               
-                //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
            };
          
 
