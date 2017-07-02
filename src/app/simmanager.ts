@@ -50,6 +50,16 @@ export class SimManager {
         this._entityMap[entity._name] = entity;
     }
 
+    /**
+     * @ngdoc method
+     * @name removeAllEntity # It removes all entities
+     */
+    removeAllEntity () {
+         for(var entityName in this._entityMap){
+             this.removeEntity(this._entityMap[entityName]);
+         }
+    }
+
 
     /**
      * @ngdoc method

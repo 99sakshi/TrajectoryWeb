@@ -201,9 +201,8 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-           this._simManager.addEntity(null); 
+          // this._simManager.addEntity(null,false); 
       }
-
 
     /**
      * @ngdoc method
@@ -223,7 +222,7 @@ export class AppComponent {
       }
 
       remEntities(){ 
-        this._simManager.removeEntity(Entity);
+        this._simManager.removeAllEntity();
       }
 
 
