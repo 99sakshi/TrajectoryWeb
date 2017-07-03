@@ -2,7 +2,6 @@ declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
 
-
  /**
  * @ngdoc method
  * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -27,18 +26,45 @@ export class CesiumManager{
 
            this.loadConfig.getConfig().subscribe(    config => {
                                                             this._config = config; 
-                                                            this.init(); 
-                                                  } );  
-
-           this._mouseEndCallback = function() {
-                var extents = this._cesiumViewer.camera.computeViewRectangle();
+                                                            this.init();  
+                                                        } );  
+     
+         
+          this._mouseEndCallback = function() {
+                //// get extents
+                var extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(extents);
+                var x1 = ((extents.west)*(180/(Math.PI)));//converting radians into degrees
+                var y1 = ((extents.south)*(180/(Math.PI)));
+                var x2 = ((extents.east)*(180/(Math.PI)));
+                var y2 = ((extents.north)*(180/(Math.PI))); 
+                console.log("Degrees :" ,x1,y1,x2,y2);
 
-                //TODO: iterate over rectangle and get the entities at each points after 0.1 degree change
+                //// compute level
+                var camera = this._cesiumViewer.camera;
+                var position = camera.position;
+                console.log(position);
+    
+                var positionEarth = new Cesium.Cartesian3(303157.7006790363,5635474.981998206,2978294.6067709294); // Mount Everest coordinates
+                var distance = Cesium.Cartesian3.distance(position, positionEarth);
+
+                //// level logic
+                var levelNumber = Math.round(Number(distance/1000000));
+                // cap value between 0 - 10
+                var level = 10 - Math.max(Math.min(levelNumber, 10),0);
+                console.log("Level " + level);
+                
+/*
+                 for(var i = x1; i <=x2; i++)
+                {
+                    for(var j = y1;j <= y2; j++)
+                    {  
+                       // console.log(i,j)  ;
+                    }
+                }
+*/
            };
       }
-
-
       /**
        * @ngdoc method
        * @name init # creates cesium viewer
@@ -47,7 +73,7 @@ export class CesiumManager{
       private init () {
 
         // show India when app fires up
-        var rectangle = Cesium.Rectangle.fromDegrees(68.0, 7.0, 89.0, 35.0);
+        var rectangle = Cesium.Rectangle.fromDegrees(68.0, 7.0, 89.0, 35.0);//west,south,east,north
         Cesium.Camera.DEFAULT_VIEW_FACTOR = 1.0;
         Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
 
