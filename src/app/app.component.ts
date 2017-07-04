@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
+import { CesiumManager } from '../traj/cesiummanager';
 
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
@@ -38,12 +39,13 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
       <button type="button" class="btn btn-danger btn-xs" (click)="deleteEntity()">Delete Aircraft</button>
       <button type="button" class="btn btn-default btn-xs" [class.clicked]="play" (click)="game()">let's PLAY!</button>
-      Display Extents Here
+     <h2>  north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}   </h2>
      </div>
 
-     <div id="cesiumContainer" >
-       
+     <div id="cesiumContainer">
+     
      </div>
+
      `,
 
   styles:[`
@@ -59,7 +61,10 @@ import { GetRequest} from '../traj/getRequest';
 
 
 export class AppComponent { 
-      
+      north:any;
+      east:any;
+      west:any;
+      south:any;
       _simManager: SimManager;
       rEntity;
       receivedEntity;
@@ -68,7 +73,7 @@ export class AppComponent {
       play=true;
       EntityNumber;
       Entity;
-
+      ex;
     /**
      * @ngdoc method
      * @name constructorr#Initialize Variables
@@ -83,7 +88,7 @@ export class AppComponent {
       constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
                   private loadConfig: LoadConfig, private _getRequest: GetRequest,
-                  private _tentity:TEntity
+                  private _tentity:TEntity, private _cesiumManager:CesiumManager
                  )
       {
           this._simManager = _simManager,
@@ -135,7 +140,7 @@ export class AppComponent {
 
         //  this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
           this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-         this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+          this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -158,7 +163,7 @@ export class AppComponent {
         appEntity.setOrientation(orientation);
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(appEntity, false); 
+        this._simManager.addEntity(appEntity); 
 
         appEntity.setController(controller); 
 
@@ -206,6 +211,7 @@ export class AppComponent {
      */
       addData() {
           // this._simManager.addEntity(null,false); 
+          this.getExtent();
       }
 
     /**
@@ -216,7 +222,7 @@ export class AppComponent {
       getData() {
           this._entityservice.getData().subscribe( data =>  { 
               console.log(data); 
-              this._simManager.addEntity(new TEntity(data), false); 
+              this.addAppEntityToManager(data.TEntity._id,data.TEntity._name, data.TEntity._position, data.TEntity._modelUrl, data.TEntity._controller); 
             } );
       }
 
@@ -237,6 +243,16 @@ export class AppComponent {
         {
           this._tentity.hide();
         }
+      }
+      getExtent(){
+        // this.north=$event.screenX;
+          this.ex=this._cesiumManager.fetchExtents();
+          this.north=this.ex;
+          //alert(ex.north);
+       //this.north=this.ex[3];
+       //this.south=this.ex[1];
+      // this.east=this.ex[2];
+      // this.west=this.ex[0];
       }
 
 

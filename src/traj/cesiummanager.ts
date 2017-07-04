@@ -13,6 +13,16 @@ export class CesiumManager{
       private _config;
 
       private _mouseEndCallback;
+      private extents;
+      north;
+      east;
+      west;
+      south;
+      x1;
+      y1;
+      x2;
+      y2;
+
      
 
       /**
@@ -28,18 +38,16 @@ export class CesiumManager{
                                                             this._config = config; 
                                                             this.init();  
                                                         } );  
-     
-         
-          this._mouseEndCallback = function() {
+           this._mouseEndCallback = function() {
                 //// get extents
-                var extents = this._cesiumViewer.camera.computeViewRectangle()
-                console.log(extents);
-                var x1 = ((extents.west)*(180/(Math.PI)));//converting radians into degrees
-                var y1 = ((extents.south)*(180/(Math.PI)));
-                var x2 = ((extents.east)*(180/(Math.PI)));
-                var y2 = ((extents.north)*(180/(Math.PI))); 
-                console.log("Degrees :" ,x1,y1,x2,y2);
-
+              this.extents = this._cesiumViewer.camera.computeViewRectangle()
+                console.log(this.extents);
+                this.x1 = ((this.extents.west)*(180/(Math.PI)));//converting radians into degrees
+                this.y1 = ((this.extents.south)*(180/(Math.PI)));
+                this.x2 = ((this.extents.east)*(180/(Math.PI)));
+                this.y2 = ((this.extents.north)*(180/(Math.PI))); 
+                //console.log("Degrees :" ,x1,y1,x2,y2);
+            
                 //// compute level
                 var camera = this._cesiumViewer.camera;
                 var position = camera.position;
@@ -62,9 +70,17 @@ export class CesiumManager{
                        // console.log(i,j)  ;
                     }
                 }
-*/
+*/                  
            };
-      }
+          }
+          fetchExtents(){
+            // var e= this._mouseEndCallback.function();
+            //var x1=
+            var ex=[x1,546,78.98,1233];
+             return ex;
+          }
+               
+        
       /**
        * @ngdoc method
        * @name init # creates cesium viewer

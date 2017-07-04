@@ -38,7 +38,11 @@ export class EntityService {
 
 
   deleteEntity(){
-    return this.http.get(this.serverUrl + this.deleteEntityUrl)
+    alert("Delete Aircraft from mLab?");
+     let headers = new Headers({ 'Content-Type': 'application/json' });
+     let options = new RequestOptions({ headers: headers });
+     let a={"id":3}
+    return this.http.put(this.serverUrl + this.deleteEntityUrl,JSON.stringify(a),options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
@@ -50,7 +54,10 @@ export class EntityService {
  * @return {.catch(this.handleError)} OK code or error if fails
  */
   getData() {
-    return this.http.get(this.serverUrl + this.getDataUrl)
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+     let options = new RequestOptions({ headers: headers });
+     let a={"id":3}
+    return this.http.put(this.serverUrl + this.getDataUrl,JSON.stringify(a),options)
                     .map(this.extractData)
                     .catch(this.handleError);
            }
