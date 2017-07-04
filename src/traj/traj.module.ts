@@ -26,8 +26,9 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
-import { EntityService }             from './entity.service';
+import { EntityService }            from './entity.service';
 import { GetRequest}                from './getRequest';
+import { TEntity }                  from './tentity';
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
@@ -35,7 +36,7 @@ import { GetRequest}                from './getRequest';
   bootstrap:    [  ],
   providers:    [ LoadConfig, StartService,
                   ObjectManager, CesiumManager, EntityService,
-                  GetRequest],
+                  GetRequest,TEntity],
 })
 
 export class TrajModule { }

@@ -35,9 +35,9 @@ export class SimManager {
      *
      * @param {entity} entity to be added
      */
-    addEntity (entity, shouldSave) {
-        entity.setCEntity( this.objectmanager.addEntity(entity, shouldSave) );
-        this._entityMap[entity._name] = entity;
+    addEntity (entity) {
+        entity.setCEntity( this.objectmanager.addEntity(entity) );
+        this._entityMap[entity._id] = entity;
     }
 
     
@@ -47,7 +47,7 @@ export class SimManager {
      */
     removeEntity (entity) {
          entity.setCEntity( this.objectmanager.removeEntity(entity) );
-        this._entityMap[entity._name] = entity;
+        this._entityMap[entity._id] = entity;
     }
 
     /**
@@ -55,9 +55,15 @@ export class SimManager {
      * @name removeAllEntity # It removes all entities
      */
     removeAllEntity () {
-         for(var entityName in this._entityMap){
-             this.removeEntity(this._entityMap[entityName]);
+         for(var _id in this._entityMap){
+             this.removeEntity(this._entityMap[_id]);
          }
+    }
+
+    showAllEntity(){
+        for (var _id in this._entityMap){
+            this.addEntity(this._entityMap[_id]);
+        }
     }
 
 

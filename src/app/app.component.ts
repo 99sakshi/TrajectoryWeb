@@ -37,7 +37,7 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-info btn-xs" (click)="addData()">Add Data</button>
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
       <button type="button" class="btn btn-danger btn-xs" (click)="deleteEntity()">Delete Aircraft</button>
-      <button type="button" class="btn btn-warning btn-xs" (click)="remEntities()">Remove Entities</button>
+      <button type="button" class="btn btn-default btn-xs" [class.clicked]="play" (click)="game()">let's PLAY!</button>
       Display Extents Here
      </div>
 
@@ -49,6 +49,9 @@ import { GetRequest} from '../traj/getRequest';
   styles:[`
       html, body, #cesiumContainer {
       width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; 
+     }
+     .clicked{
+       cursor:pointer;
      }
     `
   ]
@@ -62,7 +65,7 @@ export class AppComponent {
       receivedEntity;
       config;
       test;
-
+      play=true;
       EntityNumber;
       Entity;
 
@@ -79,7 +82,8 @@ export class AppComponent {
      */
       constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
-                  private loadConfig: LoadConfig, private _getRequest: GetRequest
+                  private loadConfig: LoadConfig, private _getRequest: GetRequest,
+                  private _tentity:TEntity
                  )
       {
           this._simManager = _simManager,
@@ -131,7 +135,7 @@ export class AppComponent {
 
         //  this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
           this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-        //  this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+         this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -144,7 +148,7 @@ export class AppComponent {
      */
       addAppEntityToManager(id,name, position, modelUrl, controller ){
 
-        var appEntity = new TEntity();
+        var appEntity = new TEntity(this._simManager);
         appEntity.setId(id);
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
@@ -223,6 +227,16 @@ export class AppComponent {
 
       remEntities(){ 
         this._simManager.removeAllEntity();
+      }
+      game(){
+        this.play=!this.play;
+        if(this.play){
+          this._tentity.show();
+        }
+        else
+        {
+          this._tentity.hide();
+        }
       }
 
 
