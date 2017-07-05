@@ -37,12 +37,12 @@ export class EntityService {
 
 
 
-  deleteEntity(){
-    alert("Delete Aircraft from mLab?");
+  deleteEntity(id){
+    alert("Delete Aircraft from Kolkata?");
      let headers = new Headers({ 'Content-Type': 'application/json' });
      let options = new RequestOptions({ headers: headers });
-     let a={"id":3}
-    return this.http.put(this.serverUrl + this.deleteEntityUrl,JSON.stringify(a),options)
+     let idJSON = {"id":id};
+    return this.http.put(this.serverUrl + this.deleteEntityUrl,JSON.stringify(idJSON),options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

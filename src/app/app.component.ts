@@ -141,7 +141,6 @@ export class AppComponent {
         //  this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
           this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
           this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
-
       }
 
     /**
@@ -227,7 +226,8 @@ export class AppComponent {
       }
 
       deleteEntity(){
-        this._entityservice.deleteEntity().subscribe(data =>{
+        var id = 3;
+        this._entityservice.deleteEntity(id).subscribe(data =>{
         });
       }
 
