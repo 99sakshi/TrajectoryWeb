@@ -30,7 +30,57 @@ export class CesiumManager{
                                                             this.init();  
                                                         } );  
 
+<<<<<<< HEAD
            this.extentcallback = () => {};
+=======
+           this._mouseEndCallback = function() {
+                var extents = this._cesiumViewer.camera.computeViewRectangle();
+                console.log(extents);
+                 var x1 = ((extents.west)*(180/(Math.PI)));//converting radians into degrees
+                var y1 = ((extents.south)*(180/(Math.PI)));
+                var x2 = ((extents.east)*(180/(Math.PI)));
+                var y2 = ((extents.north)*(180/(Math.PI))); 
+                console.log("Degrees :" ,x1,y1,x2,y2);
+
+                //// compute level
+                var camera = this._cesiumViewer.camera;
+                var position = camera.position;
+                console.log(position);
+                var camPosition = new Cesium.Cartesian2(position.x,position.y)
+                console.log(camPosition);
+                var positionEarth = new Cesium.Cartesian3(0,0,0); 
+                var distance = Cesium.Cartesian3.distance(position, positionEarth);
+                var lposition = new Cesium.Cartesian3(position.x,position.y, position.z);
+                var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(lposition);
+                console.log(cartographicPosition);
+                cartographicPosition.height=0;
+                console.log(cartographicPosition.height);
+                var DLong = ((cartographicPosition.longitude)*(180/(Math.PI)));
+                var DLat = ((cartographicPosition.latitude)*(180/(Math.PI)));
+                console.log("longitude and latitude in degrees :" ,DLong +","+DLat);
+                var rposition = new Cesium.Cartographic(Cesium.Math.toRadians(DLong), Cesium.Math.toRadians(DLat));
+                var cartesianPosition = Cesium.Ellipsoid.WGS84.cartographicToCartesian(rposition);
+                console.log(cartesianPosition);
+
+                 
+                //// level logic
+                var levelNumber = Math.round(Number(distance/1000000));
+                // cap value between 0 - 10
+                var level = 10 - Math.max(Math.min(levelNumber, 10),0);
+                console.log("Level " + level);
+                
+/*
+                 for(var i = x1; i <=x2; i++)
+                {
+                    for(var j = y1;j <= y2; j++)
+                    {  
+                       // console.log(i,j)  ;
+                    }
+                }
+*/
+           
+         
+>>>>>>> origin/level_logic
 
            this._mouseEndCallback = function() {
                 //// get extents

@@ -38,11 +38,13 @@ export class TEntity {
       _name;
       _position; 
       _orientation;
+      _hash
       _hpr;
       _modelUrl;
       _para;
       _CEntity;  // Cesium Entity
       _Controller;
+      Ename;
 
       /**
        * @ngdoc method
@@ -53,10 +55,26 @@ export class TEntity {
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
-      constructor( ) {
 
+      constructor() {
         this._name = "TestTEntity";
         this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
+        var lposition = new Cesium.Cartesian3(this._position.x,this._position.y,this._position.z);
+        var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(lposition);
+        console.log(cartographicPosition);
+        var DLong = ((cartographicPosition.longitude)*(180/(Math.PI)));
+        var DLat = ((cartographicPosition.latitude)*(180/(Math.PI)));
+        console.log("longitude and latitude in degrees :" ,DLong +","+DLat);
+       // var x = -123.0744619;
+        //var y = 44.0503706;
+        //var z = 100;
+         var _hash=""; 
+          console.log(this._position);
+          _hash=(DLong*1000)+(DLat*1000);
+            console.log("HashCode for entiy  "+_hash);
+            this._id=_hash;
+            console.log("id for entity is :",this._id);
+           
         var heading = 0;
         var pitch = 0;
         var roll = 0;
@@ -88,6 +106,7 @@ export class TEntity {
             }
         }
       }
+      
 
 
       /**
@@ -109,8 +128,9 @@ export class TEntity {
        * sets the TEntity id.
        *
        */
-       setId (id) {
-            this._id = id;
+       setId () {
+            //this._id =this.setHash();
+            console.log(this._id);
       }
       
 
@@ -167,7 +187,9 @@ export class TEntity {
             this._position = position;
             this._para.position = position;
             if(this._CEntity != null)
-                  this._CEntity.position = this._position;
+            this._CEntity.position = this._position;
+           // this._pos = this.setId();
+                  //setid
       }
 
 
@@ -232,6 +254,30 @@ export class TEntity {
             this.setOrientation(this._Controller._orientation); 
           
       }
+      /**
+       * @ngdoc method
+       * @name setHash # generates hashcode
+       *
+       * @param {entity} entity
+       * Generates the hash code for entities
+       *
+       */
+
+       setHash() {
+            var _hash=""; 
+            console.log(this._position);
+           // console.log(this.DLong );
+            console.log(this.cartographicPosition.longitude);
+            //console.log(this._position.latitude);
+            var lat=this._position.x;
+            var long=this._position;
+         //console.log("Code for "+ entity+" is- "+code);//Displays numeric value for entity
+            _hash=(lat*1000)+(long*1000);
+            console.log("HashCode for entiy "+entity+" in New York City is-  "+_hash);
+             return _hash;
+       }
+      
+      
 
       show(){
             this._CEntity.show = true;
