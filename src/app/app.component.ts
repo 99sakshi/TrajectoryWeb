@@ -217,7 +217,8 @@ export class AppComponent {
       }
 
       deleteEntity(){
-        this._entityservice.deleteEntity().subscribe(data =>{
+        var id = 3;
+        this._entityservice.deleteEntity(id).subscribe(data =>{
         });
       }
 
