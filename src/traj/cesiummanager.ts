@@ -23,8 +23,6 @@ export class CesiumManager{
       x2;
       y2;
 
-     
-
       /**
        * @ngdoc method
        * @name Constructor# loads and set config file

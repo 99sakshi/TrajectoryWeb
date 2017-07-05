@@ -88,7 +88,7 @@ export class AppComponent {
       constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
                   private loadConfig: LoadConfig, private _getRequest: GetRequest,
-                  private _tentity:TEntity, private _cesiumManager:CesiumManager
+                  private _cesiumManager:CesiumManager
                  )
       {
           this._simManager = _simManager,
@@ -152,7 +152,7 @@ export class AppComponent {
      */
       addAppEntityToManager(id,name, position, modelUrl, controller ){
 
-        var appEntity = new TEntity(this._simManager);
+        var appEntity = new TEntity();
         appEntity.setId(id);
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
@@ -219,7 +219,8 @@ export class AppComponent {
      * This method retrieves the data from the database.
      */
       getData() {
-          this._entityservice.getData().subscribe( data =>  { 
+          var id = 3;
+          this._entityservice.getData(id).subscribe( data =>  { 
               console.log(data); 
               this.addAppEntityToManager(data.TEntity._id,data.TEntity._name, data.TEntity._position, data.TEntity._modelUrl, data.TEntity._controller); 
             } );
@@ -234,16 +235,18 @@ export class AppComponent {
       remEntities(){ 
         this._simManager.removeAllEntity();
       }
+
       game(){
         this.play=!this.play;
         if(this.play){
-          this._tentity.show();
+          this._simManager.showAllEntity();
         }
         else
         {
-          this._tentity.hide();
+          this._simManager.hideAllEntity();
         }
       }
+      
       getExtent(){
         // this.north=$event.screenX;
           this.ex=this._cesiumManager.fetchExtents();

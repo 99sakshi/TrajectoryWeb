@@ -62,10 +62,15 @@ export class SimManager {
 
     showAllEntity(){
         for (var _id in this._entityMap){
-            this.addEntity(this._entityMap[_id]);
+           this._entityMap[_id].show();
         }
     }
-
+    
+    hideAllEntity(){
+        for (var _id in this._entityMap){
+           this._entityMap[_id].hide();
+        }
+    }
 
     /**
      * @ngdoc method

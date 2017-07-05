@@ -24,7 +24,7 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
-import { SimManager }               from '../app/simmanager';
+
 declare var Cesium: any;
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
@@ -53,7 +53,7 @@ export class TEntity {
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
-      constructor( private _simManager:SimManager) {
+      constructor( ) {
 
         this._name = "TestTEntity";
         this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
@@ -234,10 +234,11 @@ export class TEntity {
       }
 
       show(){
-            this._simManager.showAllEntity();
+            this._CEntity.show = true;
       }
+
       hide(){
-            this._simManager.removeAllEntity();
+            this._CEntity.show = false;
       }
 
 }
