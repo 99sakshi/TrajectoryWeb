@@ -34,17 +34,16 @@ declare var Cesium: any;
 })
 
 export class TEntity {
-       _id;
+
+      _id;
       _name;
       _position; 
       _orientation;
-      _hash
       _hpr;
       _modelUrl;
       _para;
       _CEntity;  // Cesium Entity
       _Controller;
-      Ename;
 
       /**
        * @ngdoc method
@@ -56,25 +55,10 @@ export class TEntity {
        *
        */
 
+
       constructor() {
         this._name = "TestTEntity";
-        this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
-        var lposition = new Cesium.Cartesian3(this._position.x,this._position.y,this._position.z);
-        var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(lposition);
-        console.log(cartographicPosition);
-        var DLong = ((cartographicPosition.longitude)*(180/(Math.PI)));
-        var DLat = ((cartographicPosition.latitude)*(180/(Math.PI)));
-        console.log("longitude and latitude in degrees :" ,DLong +","+DLat);
-       // var x = -123.0744619;
-        //var y = 44.0503706;
-        //var z = 100;
-         var _hash=""; 
-          console.log(this._position);
-          _hash=(DLong*1000)+(DLat*1000);
-            console.log("HashCode for entiy  "+_hash);
-            this._id=_hash;
-            console.log("id for entity is :",this._id);
-           
+        this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);      
         var heading = 0;
         var pitch = 0;
         var roll = 0;
@@ -83,18 +67,8 @@ export class TEntity {
         this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
         this._CEntity = null;
         this._Controller = null;    
-/*
-        if (data != null ) {
-            this._name = data.TEntity._name;
-            this._position = data.TEntity._position;    
-            this._hpr = data.TEntity._hpr;  
-            this._modelUrl = data.TEntity._modelUrl;
-            this._id = data.TEntity._id;
-            this._orientation = data.TEntity._orientation;
-            this._Controller = data.TEntity._Controller;
-        }    
 
-  */      //defining parameters of the current object
+        //defining parameters of the current object
         this._para = {    
             name : name,
             position : this._position,
@@ -105,10 +79,38 @@ export class TEntity {
                 maximumScale : 20000
             }
         }
+
+        this.setId();
+      }
+
+      // this is temprary, Ideally we should use parameterized constructor
+      setParameter (asdf) {
+
+      if (asdf != null ) {
+            this._name = asdf.TEntity._name;
+            this._position = asdf.TEntity._position;    
+            this._hpr = asdf.TEntity._hpr;  
+            this._modelUrl = asdf.TEntity._modelUrl;
+            this._id = asdf.TEntity._id;
+            this._orientation = asdf.TEntity._orientation;
+            this._Controller = asdf.TEntity._Controller;
+        }    
+
+        //defining parameters of the current object
+        this._para = {    
+            name : name,
+            position : this._position,
+            orientation : this._orientation,
+            model : {
+                uri : this._modelUrl,
+                minimumPixelSize : 128,
+                maximumScale : 20000
+            }
+        }
+
+        this.setId();
       }
       
-
-
       /**
        * @ngdoc method
        * @name setName # Sets Name
@@ -120,6 +122,7 @@ export class TEntity {
       setName (name) {
             this._name = name;
       }
+
        /**
        * @ngdoc method
        * @name setId # Sets id
@@ -129,9 +132,16 @@ export class TEntity {
        *
        */
        setId () {
-            //this._id =this.setHash();
-            console.log(this._id);
-      }
+            var xyhash=""; 
+            console.log(this._position);
+            var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(this._position);
+            var DLong = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.longitude) * 1000)));
+            var DLat = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.latitude) * 1000)));
+            console.log("longitude and latitude in degrees :" ,DLong +","+DLat);
+            xyhash = "" + DLat + "@" + DLong;
+            console.log("xyhash is " + xyhash);
+            this._id = xyhash;
+       }
       
 
       /**
@@ -174,6 +184,10 @@ export class TEntity {
             this._para.model.uri = url;
       }
 
+      setInitialPosition (position) {
+            this.setPosition(position);
+            this.setId();
+      }
 
       /**
        * @ngdoc method
@@ -253,31 +267,7 @@ export class TEntity {
             //sets orientation for every point
             this.setOrientation(this._Controller._orientation); 
           
-      }
-      /**
-       * @ngdoc method
-       * @name setHash # generates hashcode
-       *
-       * @param {entity} entity
-       * Generates the hash code for entities
-       *
-       */
-
-       setHash() {
-            var _hash=""; 
-            console.log(this._position);
-           // console.log(this.DLong );
-            console.log(this.cartographicPosition.longitude);
-            //console.log(this._position.latitude);
-            var lat=this._position.x;
-            var long=this._position;
-         //console.log("Code for "+ entity+" is- "+code);//Displays numeric value for entity
-            _hash=(lat*1000)+(long*1000);
-            console.log("HashCode for entiy "+entity+" in New York City is-  "+_hash);
-             return _hash;
-       }
-      
-      
+      }      
 
       show(){
             this._CEntity.show = true;

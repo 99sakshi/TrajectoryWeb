@@ -161,18 +161,18 @@ export class AppComponent {
      */
       addAppEntityToManager(name, position, modelUrl, controller ){
 
-        var appEntity = new TEntity();c
+        var appEntity = new TEntity();
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
-        appEntity.setPosition(position);
+        appEntity.setInitialPosition(position);
+        
         var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
         var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
         appEntity.setOrientation(orientation);
+        appEntity.setController(controller); 
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(appEntity); 
-
-        appEntity.setController(controller); 
+        this._simManager.addEntity(appEntity, false); // for test, dont add to backend
 
       }
 
@@ -215,7 +215,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-         this._simManager.addEntity(null,false); 
+         this._simManager.addEntity(null, false); 
       }
 
     /**
@@ -227,7 +227,9 @@ export class AppComponent {
           var id = 3;
           this._entityservice.getData(id).subscribe( data =>  { 
               console.log(data); 
-              this.addAppEntityToManager(data.TEntity._id,data.TEntity._name, data.TEntity._position, data.TEntity._modelUrl, data.TEntity._controller); 
+              var appEntity = new TEntity();
+              appEntity.setParameter(data);
+              this._simManager.addEntity(appEntity, false); 
             } );
       }
 

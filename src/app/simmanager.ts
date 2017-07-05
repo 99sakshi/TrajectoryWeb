@@ -35,8 +35,9 @@ export class SimManager {
      *
      * @param {entity} entity to be added
      */
-    addEntity (entity) {
-        entity.setCEntity( this.objectmanager.addEntity(entity) );
+
+    addEntity (entity, shouldSave) {
+        entity.setCEntity( this.objectmanager.addEntity(entity, shouldSave) );
         this._entityMap[entity._id] = entity;
     }
 

@@ -29,13 +29,14 @@ export class ObjectManager{
        *
        * @return {retEntity} retEntity cesium generated entity
        */
-      addEntity(entity) {
+
+      addEntity(entity, shouldSave) {
             // This manager should also store the object somewhere
             var rEntity= this._cesiumManager.addEntity(entity.getPara());
 
             // Add entity to DB
-            //if(shouldSave)
-                  //this._entityService.putData(entity);
+            if(shouldSave)
+                  this._entityService.putData(entity);
                   
             return rEntity;
       }
