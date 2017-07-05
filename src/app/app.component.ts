@@ -114,7 +114,7 @@ export class AppComponent {
 
           this.test = this.config.Test;
 
-          this.EntityNumber = 0;
+          //this.EntityNumber = 0;
 
           var PosMumbai = Cesium.Cartesian3.fromDegrees(72.8777, 19.0760, 100);
           var PosDelhi = Cesium.Cartesian3.fromDegrees(88.3639, 22.5726, 100);
@@ -130,9 +130,13 @@ export class AppComponent {
           var upcontroller = new UpController;
           upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager(++this.EntityNumber ,"ToomManDelhi", PosDelhi, modelToonMan, null);
-          this.addAppEntityToManager(++this.EntityNumber ,"BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          this.addAppEntityToManager(++this.EntityNumber ,"AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+        //  var toonman = "toonman";
+         // var balloon = "balloon";
+         // var aircraft = "aircraft";
+
+          this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
+          this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+          this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -144,10 +148,11 @@ export class AppComponent {
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      */
-      addAppEntityToManager(id,name, position, modelUrl, controller ){
+      addAppEntityToManager(name, position, modelUrl, controller ){
 
         var appEntity = new TEntity;
-        appEntity.setId(id);
+        //appEntity.setHash(Ename);
+        appEntity.setId();
         appEntity.setName(name);
         appEntity.setModelUrl(modelUrl); 
         appEntity.setPosition(position);
