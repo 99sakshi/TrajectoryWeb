@@ -24,6 +24,7 @@ import { LoadConfig }               from './loadconfig.service';
 import { CesiumManager }            from './cesiummanager';
 import { ObjectManager }            from './objectmanager';
 import { StartService }             from './start.service';
+
 declare var Cesium: any;
 @NgModule({
   imports:      [ BrowserModule, HttpModule, JsonpModule ],
@@ -52,7 +53,7 @@ export class TEntity {
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
-      constructor(data?: any) {
+      constructor( ) {
 
         this._name = "TestTEntity";
         this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
@@ -64,7 +65,7 @@ export class TEntity {
         this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
         this._CEntity = null;
         this._Controller = null;    
-
+/*
         if (data != null ) {
             this._name = data.TEntity._name;
             this._position = data.TEntity._position;    
@@ -75,7 +76,7 @@ export class TEntity {
             this._Controller = data.TEntity._Controller;
         }    
 
-        //defining parameters of the current object
+  */      //defining parameters of the current object
         this._para = {    
             name : name,
             position : this._position,
@@ -230,6 +231,14 @@ export class TEntity {
             //sets orientation for every point
             this.setOrientation(this._Controller._orientation); 
           
+      }
+
+      show(){
+            this._CEntity.show = true;
+      }
+
+      hide(){
+            this._CEntity.show = false;
       }
 
 }

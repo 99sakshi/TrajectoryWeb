@@ -13,7 +13,8 @@ export class CesiumManager{
       private _config;
 
       private _mouseEndCallback;
-     
+      extents;
+      extentcallback;
 
       /**
        * @ngdoc method
@@ -28,18 +29,19 @@ export class CesiumManager{
                                                             this._config = config; 
                                                             this.init();  
                                                         } );  
-     
-         
-          this._mouseEndCallback = function() {
-                //// get extents
-                var extents = this._cesiumViewer.camera.computeViewRectangle()
-                console.log(extents);
-                var x1 = ((extents.west)*(180/(Math.PI)));//converting radians into degrees
-                var y1 = ((extents.south)*(180/(Math.PI)));
-                var x2 = ((extents.east)*(180/(Math.PI)));
-                var y2 = ((extents.north)*(180/(Math.PI))); 
-                console.log("Degrees :" ,x1,y1,x2,y2);
 
+           this.extentcallback = () => {};
+
+           this._mouseEndCallback = function() {
+                //// get extents
+                this.extents = this._cesiumViewer.camera.computeViewRectangle()
+                console.log(this.extents);
+                let x1 = ((this.extents.west)*(180/(Math.PI)));//converting radians into degrees
+                let y1 = ((this.extents.south)*(180/(Math.PI)));
+                let x2 = ((this.extents.east)*(180/(Math.PI)));
+                let y2 = ((this.extents.north)*(180/(Math.PI))); 
+                console.log("Degrees :" ,x1,y1,x2,y2);
+            
                 //// compute level
                 var camera = this._cesiumViewer.camera;
                 var position = camera.position;
@@ -53,6 +55,8 @@ export class CesiumManager{
                 // cap value between 0 - 10
                 var level = 10 - Math.max(Math.min(levelNumber, 10),0);
                 console.log("Level " + level);
+
+                this.extentcallback();
                 
 /*
                  for(var i = x1; i <=x2; i++)
@@ -62,9 +66,10 @@ export class CesiumManager{
                        // console.log(i,j)  ;
                     }
                 }
-*/
+*/                  
            };
       }
+               
       /**
        * @ngdoc method
        * @name init # creates cesium viewer

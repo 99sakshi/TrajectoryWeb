@@ -38,7 +38,6 @@ export class EntityService {
 
 
   deleteEntity(id){
-    alert("Delete Aircraft from Kolkata?");
      let headers = new Headers({ 'Content-Type': 'application/json' });
      let options = new RequestOptions({ headers: headers });
      let idJSON = {"id":id};
@@ -53,11 +52,14 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  getData() {
-    return this.http.get(this.serverUrl + this.getDataUrl)
+  getData(id) {
+     let headers = new Headers({ 'Content-Type': 'application/json' });
+     let options = new RequestOptions({ headers: headers });
+     let a={"id":id}
+     return this.http.put(this.serverUrl + this.getDataUrl,JSON.stringify(a),options)
                     .map(this.extractData)
                     .catch(this.handleError);
-           }
+  }
   /**
  * @ngdoc method
  * @name getentity#It gets data in mongoDB based on XY hash
