@@ -39,13 +39,11 @@ import { GetRequest} from '../traj/getRequest';
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
       <button type="button" class="btn btn-danger btn-xs" (click)="deleteEntity()">Delete Aircraft</button>
       <button type="button" class="btn btn-default btn-xs" [class.clicked]="play" (click)="game()">let's PLAY!</button>
-     <h2>  north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}   </h2>
+       <br> Extents - north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}  
      </div>
 
      <div id="cesiumContainer">
-     
      </div>
-
      `,
 
   styles:[`
@@ -61,19 +59,20 @@ import { GetRequest} from '../traj/getRequest';
 
 
 export class AppComponent { 
+
       north:any;
       east:any;
       west:any;
       south:any;
+
       _simManager: SimManager;
-      rEntity;
-      receivedEntity;
       config;
       test;
       play=true;
       EntityNumber;
       Entity;
       ex;
+
     /**
      * @ngdoc method
      * @name constructorr#Initialize Variables
@@ -93,9 +92,20 @@ export class AppComponent {
       {
           this._simManager = _simManager,
           this.test=false;
-         
+          this.play=true; 
 
-        
+          this.north = 0;
+          this.east = 0;
+          this.west = 0;
+          this.south = 0;
+
+          this._cesiumManager.extentcallback = () => {
+            this.north = Cesium.Math.toDegrees(this._cesiumManager.extents.north);
+            this.east = Cesium.Math.toDegrees(this._cesiumManager.extents.east);
+            this.west = Cesium.Math.toDegrees(this._cesiumManager.extents.west);
+            this.south = Cesium.Math.toDegrees(this._cesiumManager.extents.south);
+          };
+
       }
                                            
     /**
@@ -169,7 +179,6 @@ export class AppComponent {
       }
           
 
-
     /**
      * @ngdoc method
      * @name startSimulation # Starts Simulation
@@ -209,8 +218,7 @@ export class AppComponent {
      * This method adds the data to the database.
      */
       addData() {
-          // this._simManager.addEntity(null,false); 
-          this.getExtent();
+         this._simManager.addEntity(null,false); 
       }
 
     /**
@@ -246,18 +254,6 @@ export class AppComponent {
           this._simManager.hideAllEntity();
         }
       }
-      
-      getExtent(){
-        // this.north=$event.screenX;
-          this.ex=this._cesiumManager.fetchExtents();
-          this.north=this.ex;
-          //alert(ex.north);
-       //this.north=this.ex[3];
-       //this.south=this.ex[1];
-      // this.east=this.ex[2];
-      // this.west=this.ex[0];
-      }
-
 
 };
  
