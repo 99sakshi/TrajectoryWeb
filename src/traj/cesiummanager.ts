@@ -36,22 +36,32 @@ export class CesiumManager{
                 //// get extents
                 this.extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(this.extents);
-                let x1 = ((this.extents.west)*(180/(Math.PI)));//converting radians into degrees
-                let y1 = ((this.extents.south)*(180/(Math.PI)));
-                let x2 = ((this.extents.east)*(180/(Math.PI)));
-                let y2 = ((this.extents.north)*(180/(Math.PI))); 
+                let x1 = Cesium.Math.toDegrees(this.extents.west);//converting radians into degrees
+                let y1 = Cesium.Math.toDegrees(this.extents.south);
+                let x2 = Cesium.Math.toDegrees(this.extents.east);
+                let y2 = Cesium.Math.toDegrees(this.extents.north); 
                 console.log("Degrees :" ,x1,y1,x2,y2);
             
                 //// compute level
                 var camera = this._cesiumViewer.camera;
+                
                 var position = camera.position;
                 console.log(position);
+                var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
+                console.log("camera position LLA " + cartographicPosition);
+
+                var distance = Number.MAX_VALUE;
     
-                var positionEarth = new Cesium.Cartesian3(303157.7006790363,5635474.981998206,2978294.6067709294); // Mount Everest coordinates
-                var distance = Cesium.Cartesian3.distance(position, positionEarth);
+                if(this._cesiumViewer.scene.mode == Cesium.SceneMode.SCENE3D)
+                {
+                    distance = cartographicPosition.height;
+                }else {
+                    distance = camera.getMagnitude();
+                }
 
                 //// level logic
-                var levelNumber = Math.round(Number(distance/1000000));
+                var levelNumber = Math.round(Number(distance/100000));
+                
                 // cap value between 0 - 10
                 var level = 10 - Math.max(Math.min(levelNumber, 10),0);
                 console.log("Level " + level);
