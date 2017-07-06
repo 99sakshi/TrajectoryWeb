@@ -135,11 +135,11 @@ export class TEntity {
             var xyhash=""; 
             console.log(this._position);
             var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(this._position);
-            var DLong = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.longitude) * 1000)));
-            var DLat = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.latitude) * 1000)));
+            var DLong = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.longitude) * 10)));
+            var DLat = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.latitude) * 10)));
             console.log("longitude and latitude in degrees :" ,DLong +","+DLat);
             xyhash = "" + DLat + "@" + DLong;
-            console.log("xyhash is " + xyhash);
+            console.log("xyhash of " + this._name + " is " + xyhash);
             this._id = xyhash;
        }
       

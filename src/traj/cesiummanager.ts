@@ -36,10 +36,12 @@ export class CesiumManager{
                 //// get extents
                 this.extents = this._cesiumViewer.camera.computeViewRectangle()
                 console.log(this.extents);
-                let x1 = Cesium.Math.toDegrees(this.extents.west);//converting radians into degrees
-                let y1 = Cesium.Math.toDegrees(this.extents.south);
-                let x2 = Cesium.Math.toDegrees(this.extents.east);
-                let y2 = Cesium.Math.toDegrees(this.extents.north); 
+                // converting radians into degrees
+                // and using lat long values to one decimal place
+                let x1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.west) * 10)));
+                let y1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.south) * 10)));
+                let x2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.east) * 10)));
+                let y2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.north) * 10)));
                 console.log("Degrees :" ,x1,y1,x2,y2);
             
                 //// compute level
@@ -67,16 +69,21 @@ export class CesiumManager{
                 console.log("Level " + level);
 
                 this.extentcallback();
+
+                if(level < 5)
+                    return ;
                 
-/*
-                 for(var i = x1; i <=x2; i++)
+                // either move this logic to back end 
+                // move it to another thread
+                for(var i = x1; i <=x2; ++i)
                 {
-                    for(var j = y1;j <= y2; j++)
+                    for(var j = y1;j <= y2; ++j)
                     {  
-                       // console.log(i,j)  ;
+                        var xyhash = "" + j + "@" + i;
+                        console.log(xyhash);
                     }
                 }
-*/                  
+                
            };
            
       }
