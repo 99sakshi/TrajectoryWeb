@@ -1,5 +1,5 @@
-export class GetEntity{
-    constructor(data){
-        
+export class GetEntity {
+    constructor(data) {
+
     }
 }

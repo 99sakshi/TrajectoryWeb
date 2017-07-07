@@ -1,6 +1,6 @@
 // Simulation State
 import { Injectable } from '@angular/core';
-import { ObjectManager } from  '../traj/objectmanager';
+import { ObjectManager } from '../traj/objectmanager';
 
 enum State {
     Start,
@@ -9,19 +9,19 @@ enum State {
 }
 
 @Injectable()
-export class SimManager { 
+export class SimManager {
     _entityMap;
     _interval;
     _time;
     _deltaTime;
     _State;
 
-   /**
-     * @ngdoc method
-     * @name constructor#Initializes
-     * It initializes _time, _deltaTime, _entityMap,  _State to stop
-     */
-    constructor( private objectmanager: ObjectManager) {
+    /**
+      * @ngdoc method
+      * @name constructor#Initializes
+      * It initializes _time, _deltaTime, _entityMap,  _State to stop
+      */
+    constructor(private objectmanager: ObjectManager) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01; // in seconds
         this._entityMap = [];
@@ -36,18 +36,18 @@ export class SimManager {
      * @param {entity} entity to be added
      */
 
-    addEntity (entity, shouldSave) {
-        entity.setCEntity( this.objectmanager.addEntity(entity, shouldSave) );
+    addEntity(entity, shouldSave) {
+        entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
         this._entityMap[entity._id] = entity;
     }
 
-    
+
     /**
      * @ngdoc method
      * @name removeEntity # It removes the entity
      */
-    removeEntity (entity) {
-         entity.setCEntity( this.objectmanager.removeEntity(entity) );
+    removeEntity(entity) {
+        entity.setCEntity(this.objectmanager.removeEntity(entity));
         this._entityMap[entity._id] = entity;
     }
 
@@ -55,21 +55,21 @@ export class SimManager {
      * @ngdoc method
      * @name removeAllEntity # It removes all entities
      */
-    removeAllEntity () {
-         for(var _id in this._entityMap){
-             this.removeEntity(this._entityMap[_id]);
-         }
-    }
-
-    showAllEntity(){
-        for (var _id in this._entityMap){
-           this._entityMap[_id].show();
+    removeAllEntity() {
+        for (var _id in this._entityMap) {
+            this.removeEntity(this._entityMap[_id]);
         }
     }
-    
-    hideAllEntity(){
-        for (var _id in this._entityMap){
-           this._entityMap[_id].hide();
+
+    showAllEntity() {
+        for (var _id in this._entityMap) {
+            this._entityMap[_id].show();
+        }
+    }
+
+    hideAllEntity() {
+        for (var _id in this._entityMap) {
+            this._entityMap[_id].hide();
         }
     }
 
@@ -78,13 +78,14 @@ export class SimManager {
      * @name start # Starts the simulation 
      * Calls tick function routine
      */
-    start () {
-        if(this._State == State.Start)
+    start() {
+        if (this._State == State.Start)
             return;
 
-        this._interval = setInterval(() =>  {   this._time += this._deltaTime; 
-                                                this.tick();  
-                                            },  1000 * this._deltaTime); // to convert in milli seconds
+        this._interval = setInterval(() => {
+            this._time += this._deltaTime;
+            this.tick();
+        }, 1000 * this._deltaTime); // to convert in milli seconds
         this._State = State.Start;
     }
 
@@ -94,18 +95,17 @@ export class SimManager {
      * @name tick # Calls tick function on every Entity 
      * pushs next tick call at back of the event queue
      */
-    tick () {
-        for(var entityName in this._entityMap)
-        {
+    tick() {
+        for (var entityName in this._entityMap) {
             var timeInfo = {
-                time :      parseFloat( this._time.toFixed(2) ),
-                deltaTime : parseFloat( this._deltaTime.toFixed(2) )
+                time: parseFloat(this._time.toFixed(2)),
+                deltaTime: parseFloat(this._deltaTime.toFixed(2))
             }
-            
-            this._entityMap[entityName].tick( timeInfo );//setting the position and orientation of the current entitythis._entityMap[entityName].tick( timeInfo )
+
+            this._entityMap[entityName].tick(timeInfo);//setting the position and orientation of the current entitythis._entityMap[entityName].tick( timeInfo )
 
             // Wait for a while
-            setTimeout( () => {} ,0 ); 
+            setTimeout(() => { }, 0);
         }
     }
 
@@ -114,8 +114,8 @@ export class SimManager {
      * @name stop # Stop the simulation
      * Also, sets time to zero
      */
-    stop () {
-        if(this._State == State.Stop)
+    stop() {
+        if (this._State == State.Stop)
             return;
         clearInterval(this._interval);// When you want to cancel it
         this._time = 0;
@@ -128,8 +128,8 @@ export class SimManager {
      * @name pause # pause the simulation
      * 
      */
-    pause (){
-        if(this._State == State.Pause)
+    pause() {
+        if (this._State == State.Pause)
             return;
         clearInterval(this._interval);
         this._State = State.Pause;
