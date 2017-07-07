@@ -6,8 +6,8 @@
  * @description Injectable class that receives front end config file from backend
  */
 
-import { Injectable }              from '@angular/core';
-import { Http, Response }          from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
@@ -27,50 +27,50 @@ export class LoadConfig {
    * @param { http} event Private variable,receives Http
    * Instantiate Service with constructor http: Http in Angular 2
    */
-    constructor (private http: Http) {
-        
-    }
+  constructor(private http: Http) {
 
-/**
- * @ngdoc method
- * @name getConfig#
- *
- * @return { Observable.of(this.config)} returns observalbe of config recived,
- *          error if fails
- */
+  }
+
+  /**
+   * @ngdoc method
+   * @name getConfig#
+   *
+   * @return { Observable.of(this.config)} returns observalbe of config recived,
+   *          error if fails
+   */
   getConfig() {
-    if(this.config == null)
+    if (this.config == null)
       return this.http.get('config/config.json')
-                      .map(this.extractData)
-                      .catch(this.handleError);
-    else 
+        .map(this.extractData)
+        .catch(this.handleError);
+    else
       return Observable.of(this.config);
   }
 
 
-/**
- * @ngdoc method
- * @name extractData#extracts the data
- *
- * @param {res} event Receives the Response event
- *
- * @return {body} It returns the content of JSON
- */
+  /**
+   * @ngdoc method
+   * @name extractData#extracts the data
+   *
+   * @param {res} event Receives the Response event
+   *
+   * @return {body} It returns the content of JSON
+   */
   private extractData(res: Response) {
     let body = res.json();
     this.config = body;
-    return body || { };
+    return body || {};
   }
 
-/**
- * @ngdoc method
- * @name  handleError#handles the error
- *
- * @param {error} event is error event
- *
- * @return {Observable.throw(errMsg)} throws error message
- */
-  private handleError (error: Response | any) {
+  /**
+   * @ngdoc method
+   * @name  handleError#handles the error
+   *
+   * @param {error} event is error event
+   *
+   * @return {Observable.throw(errMsg)} throws error message
+   */
+  private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
     // Normally errors come in as response objects

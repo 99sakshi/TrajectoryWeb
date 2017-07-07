@@ -16,28 +16,28 @@
  * It's providers are LoadConfig, CesiumManager, StartService
  **/
 
-import { NgModule }                 from '@angular/core';
-import { BrowserModule }            from '@angular/platform-browser';
-import { HttpModule, JsonpModule }  from '@angular/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule, JsonpModule } from '@angular/http';
 
-import { LoadConfig }               from './loadconfig.service';
-import { CesiumManager }            from './cesiummanager';
-import { ObjectManager }            from './objectmanager';
-import { StartService }             from './start.service';
+import { LoadConfig } from './loadconfig.service';
+import { CesiumManager } from './cesiummanager';
+import { ObjectManager } from './objectmanager';
+import { StartService } from './start.service';
 
 declare var Cesium: any;
 @NgModule({
-  imports:      [ BrowserModule, HttpModule, JsonpModule ],
-  declarations: [  ],
-  bootstrap:    [  ],
-  providers:    [ LoadConfig, StartService, ObjectManager, CesiumManager ]
+      imports: [BrowserModule, HttpModule, JsonpModule],
+      declarations: [],
+      bootstrap: [],
+      providers: [LoadConfig, StartService, ObjectManager, CesiumManager]
 })
 
 export class TEntity {
 
       _id;
       _name;
-      _position; 
+      _position;
       _orientation;
       _hpr;
       _modelUrl;
@@ -57,60 +57,60 @@ export class TEntity {
 
 
       constructor() {
-        this._name = "TestTEntity";
-        this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);      
-        var heading = 0;
-        var pitch = 0;
-        var roll = 0;
-        this._hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-        this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
-        this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
-        this._CEntity = null;
-        this._Controller = null;    
+            this._name = "TestTEntity";
+            this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
+            var heading = 0;
+            var pitch = 0;
+            var roll = 0;
+            this._hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+            this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
+            this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
+            this._CEntity = null;
+            this._Controller = null;
 
-        //defining parameters of the current object
-        this._para = {    
-            name : name,
-            position : this._position,
-            orientation : this._orientation,
-            model : {
-                uri : this._modelUrl,
-                minimumPixelSize : 128,
-                maximumScale : 20000
+            //defining parameters of the current object
+            this._para = {
+                  name: name,
+                  position: this._position,
+                  orientation: this._orientation,
+                  model: {
+                        uri: this._modelUrl,
+                        minimumPixelSize: 128,
+                        maximumScale: 20000
+                  }
             }
-        }
 
-        this.setId();
+            this.setId();
       }
 
       // this is temprary, Ideally we should use parameterized constructor
-      setParameter (asdf) {
+      setParameter(asdf) {
 
-      if (asdf != null ) {
-            this._name = asdf.TEntity._name;
-            this._position = asdf.TEntity._position;    
-            this._hpr = asdf.TEntity._hpr;  
-            this._modelUrl = asdf.TEntity._modelUrl;
-            this._id = asdf.TEntity._id;
-            this._orientation = asdf.TEntity._orientation;
-            this._Controller = asdf.TEntity._Controller;
-        }    
-
-        //defining parameters of the current object
-        this._para = {    
-            name : name,
-            position : this._position,
-            orientation : this._orientation,
-            model : {
-                uri : this._modelUrl,
-                minimumPixelSize : 128,
-                maximumScale : 20000
+            if (asdf != null) {
+                  this._name = asdf.TEntity._name;
+                  this._position = asdf.TEntity._position;
+                  this._hpr = asdf.TEntity._hpr;
+                  this._modelUrl = asdf.TEntity._modelUrl;
+                  this._id = asdf.TEntity._id;
+                  this._orientation = asdf.TEntity._orientation;
+                  this._Controller = asdf.TEntity._Controller;
             }
-        }
 
-        this.setId();
+            //defining parameters of the current object
+            this._para = {
+                  name: name,
+                  position: this._position,
+                  orientation: this._orientation,
+                  model: {
+                        uri: this._modelUrl,
+                        minimumPixelSize: 128,
+                        maximumScale: 20000
+                  }
+            }
+
+            this.setId();
       }
-      
+
       /**
        * @ngdoc method
        * @name setName # Sets Name
@@ -119,30 +119,30 @@ export class TEntity {
        * sets the TEntity name.
        *
        */
-      setName (name) {
+      setName(name) {
             this._name = name;
       }
 
-       /**
-       * @ngdoc method
-       * @name setId # Sets id
-       *
-       * @param {id} id of Entity 
-       * sets the TEntity id.
-       *
-       */
-       setId () {
-            var xyhash=""; 
+      /**
+      * @ngdoc method
+      * @name setId # Sets id
+      *
+      * @param {id} id of Entity 
+      * sets the TEntity id.
+      *
+      */
+      setId() {
+            var xyhash = "";
             console.log(this._position);
             var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(this._position);
             var DLong = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.longitude) * 10)));
             var DLat = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.latitude) * 10)));
-            console.log("longitude and latitude in degrees :" ,DLong +","+DLat);
+            console.log("longitude and latitude in degrees :", DLong + "," + DLat);
             xyhash = "" + DLat + "@" + DLong;
             console.log("xyhash of " + this._name + " is " + xyhash);
             this._id = xyhash;
-       }
-      
+      }
+
 
       /**
        * @ngdoc method
@@ -184,7 +184,7 @@ export class TEntity {
             this._para.model.uri = url;
       }
 
-      setInitialPosition (position) {
+      setInitialPosition(position) {
             this.setPosition(position);
             this.setId();
       }
@@ -200,10 +200,10 @@ export class TEntity {
       setPosition(position) {
             this._position = position;
             this._para.position = position;
-            if(this._CEntity != null)
-            this._CEntity.position = this._position;
-           // this._pos = this.setId();
-                  //setid
+            if (this._CEntity != null)
+                  this._CEntity.position = this._position;
+            // this._pos = this.setId();
+            //setid
       }
 
 
@@ -214,7 +214,7 @@ export class TEntity {
        * @param {hpr} hpr of entity
        * Updates the Heading Pitch Roll.
        *
-       */ 
+       */
       setHPR(hpr) {
             this._hpr = hpr;
       }
@@ -231,7 +231,7 @@ export class TEntity {
       setOrientation(orientation) {
             this._orientation = orientation;
             this._para.orientation = orientation;
-            if(this._CEntity != null)
+            if (this._CEntity != null)
                   this._CEntity.orientation = this._orientation;
       }
 
@@ -242,7 +242,7 @@ export class TEntity {
        * @return {parameter} parameter of AppEntity.
        *
        */
-      getPara(){
+      getPara() {
             return this._para;
       }
 
@@ -256,26 +256,26 @@ export class TEntity {
        * contoler is set
        */
       tick(timeInfo) {
-            if(this._Controller == null) 
+            if (this._Controller == null)
                   return;
 
             // Updates the controller 
             this._Controller.tick(timeInfo);
 
             //sets position for every point 
-            this.setPosition(this._Controller._position); 
+            this.setPosition(this._Controller._position);
             //sets orientation for every point
-            this.setOrientation(this._Controller._orientation); 
-          
-      }      
+            this.setOrientation(this._Controller._orientation);
 
-      show(){
+      }
+
+      show() {
             this._CEntity.show = true;
       }
 
-      hide(){
+      hide() {
             this._CEntity.show = false;
       }
 
 }
- 
+

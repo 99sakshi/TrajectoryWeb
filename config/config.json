@@ -4,7 +4,9 @@
 	"UseLocalGeoserver": true,
 	"Geoserver": {
 		"Url": "http://192.168.1.2:8181/geoserver/oponop/wms",
-		"Layers": ["oponop:World"]
+		"Layers": [
+			"oponop:World"
+		]
 	},
 	"EngineUrl": "http://localhost:3333",
 	"Other": "Other"

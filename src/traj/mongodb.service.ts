@@ -9,9 +9,11 @@
  * and inject it into the components that need it.Using a separate service keeps components lean and focused on 
  * supporting the view, and makes it easy to unit-test components with a mock service.
  */
-import { Injectable }              from '@angular/core';
-import { Http, Response, 
-         Headers, RequestOptions }          from '@angular/http';
+import { Injectable } from '@angular/core';
+import {
+  Http, Response,
+  Headers, RequestOptions
+} from '@angular/http';
 
 
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +22,7 @@ import { LoadConfig } from '../traj/loadconfig.service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
- 
+
 @Injectable()
 export class MongoDBService {
 
@@ -28,53 +30,53 @@ export class MongoDBService {
   private getDataUrl = '/getdata';
   private getEntityUrl = '/getentity';
   private putDataUrl = '/putdata';
-  private getdefault1='/getDefault1';
-  private getdefault2='/getDefault2';
-  constructor (private http: Http, private loadConfig: LoadConfig) {
-    this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
+  private getdefault1 = '/getDefault1';
+  private getdefault2 = '/getDefault2';
+  constructor(private http: Http, private loadConfig: LoadConfig) {
+    this.loadConfig.getConfig().subscribe(config => this.serverUrl = config.EngineUrl);
   }
 
-/**
- * @ngdoc method
- * @name getsData#It gets data in mongoDB
- *
- * @return {.catch(this.handleError)} OK code or error if fails
- */
+  /**
+   * @ngdoc method
+   * @name getsData#It gets data in mongoDB
+   *
+   * @return {.catch(this.handleError)} OK code or error if fails
+   */
   getData() {
     return this.http.get(this.serverUrl + this.getDataUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-           }
- getDefault1(){
-  return this.http.get(this.serverUrl + this.getdefault1)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-              }
-getDefault2(){
-  return this.http.get(this.serverUrl + this.getdefault2)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-}
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  getDefault1() {
+    return this.http.get(this.serverUrl + this.getdefault1)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  getDefault2() {
+    return this.http.get(this.serverUrl + this.getdefault2)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
   /**
  * @ngdoc method
  * @name getentity#It gets data in mongoDB based on XY hash
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  getEntity(x,y) {
-     let headers = new Headers({ 'Content-Type': 'application/json' });
-     let options = new RequestOptions({ headers: headers });
-     let a={
-        "Coordinates":[
-          {
-            X : x,
-            Y: y,
-          }
-        ]
-      }
-   return this.http.put(this.serverUrl + this.getEntityUrl, JSON.stringify(a), options)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+  getEntity(x, y) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let a = {
+      "Coordinates": [
+        {
+          X: x,
+          Y: y,
+        }
+      ]
+    }
+    return this.http.put(this.serverUrl + this.getEntityUrl, JSON.stringify(a), options)
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   /**
@@ -87,35 +89,35 @@ getDefault2(){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let data = { "TEntity": entity };
- 
-    return this.http.put(this.serverUrl + this.putDataUrl, JSON.stringify(data), options)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-  }
-  
 
-/**
- * @ngdoc method
- * @name extractData#extracts the data
- *
- * @param {res} event Receives the Response event
- *
- * @return {body} It returns the content of JSON
- */
+    return this.http.put(this.serverUrl + this.putDataUrl, JSON.stringify(data), options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+
+  /**
+   * @ngdoc method
+   * @name extractData#extracts the data
+   *
+   * @param {res} event Receives the Response event
+   *
+   * @return {body} It returns the content of JSON
+   */
   private extractData(res: Response) {
     let body = res.json();
-    return body || { };
+    return body || {};
   }
-  
- /**
- * @ngdoc method
- * @name  handleError#handles the error
- *
- * @param {error} event is error event
- *
- * @return {Observable.throw(errMsg)} throws error message
- */
-  private handleError (error: Response | any) {// helper function for Error Handling
+
+  /**
+  * @ngdoc method
+  * @name  handleError#handles the error
+  *
+  * @param {error} event is error event
+  *
+  * @return {Observable.throw(errMsg)} throws error message
+  */
+  private handleError(error: Response | any) {// helper function for Error Handling
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
     // Normally errors come in as response objects
