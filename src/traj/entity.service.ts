@@ -2,8 +2,17 @@
  * @ngdoc service
  * @name getdata.service
  * @module traj.module
+ * 
+ * @requires Injectable
+ * @requires Http,Response,Headers,RequestOptions
+ * @requires Observable
+ * @requires LoadConfig 
+ * @requires catch operator
+ * @requires map operator
  *
- * @description sends start request to backend server
+ * @description 
+ * It sends request to backend server
+ * for sending and receiving data.
  *
  * ## Instead of copying and pasting the same code over and over, you'll create a single reusable data service 
  * and inject it into the components that need it.Using a separate service keeps components lean and focused on 
@@ -12,8 +21,6 @@
 import { Injectable }              from '@angular/core';
 import { Http, Response, 
          Headers, RequestOptions }          from '@angular/http';
-
-
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
 
@@ -30,14 +37,32 @@ export class EntityService {
   private putDataUrl = '/putdata';
   private deleteEntityUrl='/deleteEntity';
 
+  
+  /**
+   * @ngdoc method
+   * @name  constructor# Establishes connection
+   *
+   * @param { http} event Private variable,receives Http
+   * @param { loadConfig} event Private variable,receives LoadConfig
+   * Instantiate Service with constructor http: Http in Angular 2
+   */
+
   constructor (private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe( config => this.serverUrl = config.EngineUrl );   
   }
 
 
-
-
-  deleteEntity(id){
+/**
+ * @ngdoc method
+ * @name deleteEntity# It deletes data in mongoDB
+ * 
+ * @param {id} Receives the id of entity to be deleted
+ * 
+ * It sends the request to delete the specified entity from the database.
+ *
+ * @return {.catch(this.handleError)} OK code or error if fails
+ */
+   deleteEntity(id){
      let headers = new Headers({ 'Content-Type': 'application/json' });
      let options = new RequestOptions({ headers: headers });
      let idJSON = {"id":id};
@@ -48,7 +73,11 @@ export class EntityService {
 
 /**
  * @ngdoc method
- * @name getsData#It gets data in mongoDB
+ * @name getData# It gets data from mongoDB
+ * 
+ * @param {id} Receives the id of entity to be added
+ * 
+ * It sends the request to add the specified entity from the database.
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
@@ -60,9 +89,14 @@ export class EntityService {
                     .map(this.extractData)
                     .catch(this.handleError);
   }
-  /**
+ /**
  * @ngdoc method
- * @name getentity#It gets data in mongoDB based on XY hash
+ * @name getentity# It gets data from mongoDB based on XY hash
+ * 
+ * @param {x} Receives the x coordinate of entity to be added.
+ * @param {y} Receives the y coordinate of entity to be added.
+ * 
+ * It sends the request to add the specified entity from the database.
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
@@ -84,7 +118,9 @@ export class EntityService {
 
   /**
  * @ngdoc method
- * @name putData#It puts data in mongoDB
+ * @name putData# It puts data in mongoDB
+ * 
+ * @param {entity} Receives entity to be added to the database.
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */

@@ -22,6 +22,9 @@ export class CesiumManager{
        *
        * @param {loadConfig} event Private variable, receives injectable LoadConfig
        * 
+       * It computes the view extents.
+       * It sends the computed view extents to be displayed on Browser.
+       * 
        */
       constructor ( private loadConfig: LoadConfig) {
 

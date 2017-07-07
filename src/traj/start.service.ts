@@ -30,7 +30,7 @@ export class StartService {
   }
 /**
  * @ngdoc method
- * @name startSimulation#It start simulation
+ * @name startSimulation# It start simulation
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */

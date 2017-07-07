@@ -1,6 +1,18 @@
 /**
  * @ngdoc Component
- * @name Component
+ * @name AppComponent
+ * 
+ * @requires Component
+ * @requires SimManager
+ * @requires ForwardController
+ * @requires UpController
+ * @requires CesiumManager
+ * @requires TEntity
+ * @requires StartService
+ * @requires LoadConfig
+ * @requires EntityService
+ * @requires GetRequest
+ * 
  *
  * @description
  *
@@ -20,7 +32,6 @@ import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { CesiumManager } from '../traj/cesiummanager';
-
 import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
@@ -78,10 +89,14 @@ export class AppComponent {
      * @name constructorr#Initialize Variables
      *
      * @param {_simanager} _simanager Injectable member
+     * @param {EntityService} _entityservice Injectable member
      * @param {startService} startService Injectable member
-     * @param {loadConfig} loadConfig Injectable member
+     * @param {LoadConfig} loadConfig Injectable member
+     * @param {GetRequest} _getRequest Injectable member
+     * @param {CesiumManager} _cesiumManager Injectable member
      * 
      * It initializes the variables of AppComponent. 
+     * It displays the View Extents on the Browser.
      *
      */
       constructor(_simManager: SimManager, private _entityservice: EntityService,
@@ -158,6 +173,7 @@ export class AppComponent {
      * This method creates object of AppEntity class and ForwardController class.
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
+     * 
      */
       addAppEntityToManager(name, position, modelUrl, controller ){
 
@@ -182,7 +198,6 @@ export class AppComponent {
      * This method starts the movement of Entities
      */
     startSimulation(){
-       // alert('Start Button Clicked!');
         this.startService.startSimulation().subscribe( data =>  {
                                                                     console.log(data);
                                                                     this._simManager.start()
@@ -221,7 +236,8 @@ export class AppComponent {
     /**
      * @ngdoc method
      * @name getData # Fetches Data
-     * This method retrieves the data from the database.
+     * This method retrieves the data from the database according
+     * to the specified id of the entity.
      */
       getData() {
           var id = 3;
@@ -233,16 +249,35 @@ export class AppComponent {
             } );
       }
 
+
+     /**
+     * @ngdoc method
+     * @name deleteEntity # Deletes data
+     * This method deletes the data from the database according
+     * to the specified id of the entity.
+     */
       deleteEntity(){
         var id = 3;
         this._entityservice.deleteEntity(id).subscribe(data =>{
         });
       }
 
+
+     /**
+     * @ngdoc method
+     * @name removeEntities # Removes data
+     * This method deletes all the data from the database.
+     */
       remEntities(){ 
         this._simManager.removeAllEntity();
       }
 
+
+     /**
+     * @ngdoc method
+     * @name game # Performs Local Hide and Show of data
+     * This method removes and displays the data from the globe alternatively.
+     */
       game(){
         this.play=!this.play;
         if(this.play){

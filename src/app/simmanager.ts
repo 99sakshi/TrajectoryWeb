@@ -1,4 +1,21 @@
 // Simulation State
+
+/**
+ * @name SimManager
+ * 
+ * @requires Injectable
+ * @requires ObjectManager
+ * 
+ *
+ * @description
+ *
+ * This method defines the simulation state of the data.
+ *
+ * @usage
+ *
+ * ### How to use
+ *
+ **/
 import { Injectable } from '@angular/core';
 import { ObjectManager } from  '../traj/objectmanager';
 
@@ -45,6 +62,7 @@ export class SimManager {
     /**
      * @ngdoc method
      * @name removeEntity # It removes the entity
+     * from the database.
      */
     removeEntity (entity) {
          entity.setCEntity( this.objectmanager.removeEntity(entity) );
@@ -53,7 +71,8 @@ export class SimManager {
 
     /**
      * @ngdoc method
-     * @name removeAllEntity # It removes all entities
+     * @name removeAllEntity # It removes all entities 
+     * from the database.
      */
     removeAllEntity () {
          for(var _id in this._entityMap){
@@ -61,12 +80,22 @@ export class SimManager {
          }
     }
 
+
+     /**
+     * @ngdoc method
+     * @name showAllEntity # It displays all entities.
+     */
     showAllEntity(){
         for (var _id in this._entityMap){
            this._entityMap[_id].show();
         }
     }
     
+
+     /**
+     * @ngdoc method
+     * @name hideAllEntity # It removes all entities locally.
+     */
     hideAllEntity(){
         for (var _id in this._entityMap){
            this._entityMap[_id].hide();
