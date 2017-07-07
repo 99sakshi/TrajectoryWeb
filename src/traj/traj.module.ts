@@ -11,13 +11,12 @@
  * @requires ObjectManager           
  * @requires StartService 
  * @requires EntityService 
- * @requires GetRequest
  * @requires TEntity    
  * 
  * @description
  *
  * This is the trajectory module. It includes all of our components for the trajectory feature.
- * It's providers are LoadConfig, StartService, ObjectManager, CesiumManager, EntityService, GetRequest and TEntity
+ * It's providers are LoadConfig, StartService, ObjectManager, CesiumManager, EntityService and TEntity
  **/
 
 import { NgModule } from '@angular/core';
@@ -29,7 +28,6 @@ import { CesiumManager } from './cesiummanager';
 import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
 import { EntityService } from './entity.service';
-import { GetRequest } from './getRequest';
 import { TEntity } from './tentity';
 
 @NgModule({
@@ -37,8 +35,8 @@ import { TEntity } from './tentity';
   declarations: [],
   bootstrap: [],
   providers: [LoadConfig, StartService,
-    ObjectManager, CesiumManager, EntityService,
-    GetRequest, TEntity],
+    ObjectManager, CesiumManager,
+    EntityService, TEntity],
 })
 
 export class TrajModule { }

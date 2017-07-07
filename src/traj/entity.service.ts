@@ -36,9 +36,6 @@ export class EntityService {
   private getEntityUrl = '/getentity';
   private putDataUrl = '/putdata';
   private deleteEntityUrl = '/deleteEntity';
-
-  private deleteEntityUrl='/deleteEntity';
-
   
   /**
    * @ngdoc method

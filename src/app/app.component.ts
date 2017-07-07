@@ -11,7 +11,6 @@
  * @requires StartService
  * @requires LoadConfig
  * @requires EntityService
- * @requires GetRequest
  * 
  *
  * @description
@@ -36,7 +35,6 @@ import { TEntity } from '../traj/tentity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
-import { GetRequest } from '../traj/getRequest';
 
 @Component({
   selector: 'my-app',
@@ -92,7 +90,6 @@ export class AppComponent {
      * @param {EntityService} _entityservice Injectable member
      * @param {startService} startService Injectable member
      * @param {LoadConfig} loadConfig Injectable member
-     * @param {GetRequest} _getRequest Injectable member
      * @param {CesiumManager} _cesiumManager Injectable member
      * 
      * It initializes the variables of AppComponent. 
@@ -101,7 +98,7 @@ export class AppComponent {
      */
      constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
-                  private loadConfig: LoadConfig, private _getRequest: GetRequest,
+                  private loadConfig: LoadConfig, 
                   private _cesiumManager:CesiumManager
                  )
      {
