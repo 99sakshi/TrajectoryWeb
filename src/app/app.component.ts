@@ -185,7 +185,7 @@ export class AppComponent {
         appEntity.setController(controller); 
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(appEntity, false); // for test, dont add to backend
+        this._simManager.addEntity(appEntity, true); // for test, dont add to backend
 
       }
 

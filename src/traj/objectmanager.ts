@@ -36,7 +36,9 @@ export class ObjectManager {
 
             // Add entity to DB
             if (shouldSave)
-                  this._entityService.putData(entity);
+                  this._entityService.putData(entity).subscribe( data =>  {
+                                                                    console.log(data);
+                                                                } );
 
             return rEntity;
       }
