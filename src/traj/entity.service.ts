@@ -33,7 +33,6 @@ export class EntityService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
   private getDataUrl = '/getdata';
-  private getEntityUrl = '/getentity';
   private putDataUrl = '/putdata';
   private deleteEntityUrl = '/deleteEntity';
   
@@ -85,32 +84,6 @@ export class EntityService {
     let options = new RequestOptions({ headers: headers });
     let a = { "id": id }
     return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
- /**
- * @ngdoc method
- * @name getentity# It gets data from mongoDB based on XY hash
- * 
- * @param {x} Receives the x coordinate of entity to be added.
- * @param {y} Receives the y coordinate of entity to be added.
- * 
- * It sends the request to add the specified entity from the database.
- *
- * @return {.catch(this.handleError)} OK code or error if fails
- */
-  getEntity(x, y) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let a = {
-      "Coordinates": [
-        {
-          X: x,
-          Y: y,
-        }
-      ]
-    }
-    return this.http.put(this.serverUrl + this.getEntityUrl, JSON.stringify(a), options)
       .map(this.extractData)
       .catch(this.handleError);
   }
