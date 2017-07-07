@@ -28,12 +28,12 @@ export class StartService {
   constructor(private http: Http, private loadConfig: LoadConfig) {
     this.loadConfig.getConfig().subscribe(config => this.serverUrl = config.EngineUrl);
   }
-  /**
-   * @ngdoc method
-   * @name startSimulation#It start simulation
-   *
-   * @return {.catch(this.handleError)} OK code or error if fails
-   */
+/**
+ * @ngdoc method
+ * @name startSimulation# It start simulation
+ *
+ * @return {.catch(this.handleError)} OK code or error if fails
+ */
   startSimulation() {
     return this.http.get(this.serverUrl + this.startUrl)
       .map(this.extractData)

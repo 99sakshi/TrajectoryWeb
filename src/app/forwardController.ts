@@ -11,7 +11,7 @@ export class ForwardController {
      * @name Constructor # Initialize Variables
      *
      * Initializes parameters of current object of ForwardController class.
-     * It sets default position and Orientation of the controller
+     * It sets default position and Orientation of the controller.
      * 
      */
     constructor() {

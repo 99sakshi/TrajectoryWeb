@@ -5,17 +5,19 @@
  *
  * @requires NgModule                
  * @requires BrowserModule             
- * @requires HttpModule, JsonpModule   
+ * @requires HttpModule,JsonpModule   
  * @requires LoadConfig              
- * @requires CesiumManager            
- * @requires StartService    
- * @requires MongoDBService
- * @requires MongoManager
- * @requires ObjectManager
+ * @requires CesiumManager 
+ * @requires ObjectManager           
+ * @requires StartService 
+ * @requires EntityService 
+ * @requires GetRequest
+ * @requires TEntity    
+ * 
  * @description
  *
  * This is the trajectory module. It includes all of our components for the trajectory feature.
- * It's providers are LoadConfig, CesiumManager, StartService
+ * It's providers are LoadConfig, StartService, ObjectManager, CesiumManager, EntityService, GetRequest and TEntity
  **/
 
 import { NgModule } from '@angular/core';

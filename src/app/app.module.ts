@@ -9,8 +9,7 @@
  * @requires TrajModule
  * @requires AppComponent
  * @requires SimManager
- * @requires Missile
- * @requires ForwardController
+ * @requires TrajModule
  *
  * @description
  *

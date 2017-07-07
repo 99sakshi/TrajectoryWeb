@@ -1,9 +1,17 @@
 /**
  * @ngdoc service
- * @name getdata.service
+ * @name MongoDBService.service
  * @module traj.module
  *
- * @description sends start request to backend server
+ * 
+ * @requires Injectable
+ * @requires Http,Response,Headers,RequestOptions
+ * @requires Observable
+ * @requires LoadConfig
+ * @requires catch operator
+ * @requires map operator
+ * 
+ * @description sends add and get data requests to backend server
  *
  * ## Instead of copying and pasting the same code over and over, you'll create a single reusable data service 
  * and inject it into the components that need it.Using a separate service keeps components lean and focused on 
@@ -36,30 +44,27 @@ export class MongoDBService {
     this.loadConfig.getConfig().subscribe(config => this.serverUrl = config.EngineUrl);
   }
 
-  /**
-   * @ngdoc method
-   * @name getsData#It gets data in mongoDB
-   *
-   * @return {.catch(this.handleError)} OK code or error if fails
-   */
+/**
+ * @ngdoc method
+ * @name getsData#It gets data from mongoDB
+ * 
+ * It sends request to receive data from the database.
+ *
+ * @return {.catch(this.handleError)} OK code or error if fails
+ */
   getData() {
     return this.http.get(this.serverUrl + this.getDataUrl)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-  getDefault1() {
-    return this.http.get(this.serverUrl + this.getdefault1)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-  getDefault2() {
-    return this.http.get(this.serverUrl + this.getdefault2)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-  /**
+                    .map(this.extractData)
+                    .catch(this.handleError);
+           }
+ /**
  * @ngdoc method
- * @name getentity#It gets data in mongoDB based on XY hash
+ * @name getentity# It gets data from mongoDB based on XY hash
+ * 
+ * @param {x} Receives the x coordinate of entity to be added.
+ * @param {y} Receives the y coordinate of entity to be added.
+ * 
+ * It sends the request to add the specified entity from the database.
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
@@ -79,9 +84,11 @@ export class MongoDBService {
       .catch(this.handleError);
   }
 
-  /**
+   /**
  * @ngdoc method
- * @name putData#It puts data in mongoDB
+ * @name putData# It puts data in mongoDB
+ * 
+ * @param {entity} Receives entity to be added to the database.
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */

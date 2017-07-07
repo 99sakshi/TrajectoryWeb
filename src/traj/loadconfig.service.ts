@@ -3,6 +3,13 @@
  * @name loadconfig.service
  * @module traj.module
  *
+ * @requires Injectable
+ * @requires Http,Response
+ * @requires Observable
+ * @requires catch operator
+ * @requires map operator
+ * @requires of operator
+ * 
  * @description Injectable class that receives front end config file from backend
  */
 

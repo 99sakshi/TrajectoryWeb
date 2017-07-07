@@ -7,77 +7,83 @@ import { LoadConfig } from './loadconfig.service';
 * @name CesiumManager # Injectable calls that manages all the operations of cesium
 */
 @Injectable()
-export class CesiumManager {
+export class CesiumManager{ 
+      
+      private _cesiumViewer;
+      private _config;
 
-    private _cesiumViewer;
-    private _config;
+      private _mouseEndCallback;
+      extents;
+      extentcallback;
 
-    private _mouseEndCallback;
-    extents;
-    extentcallback;
+      /**
+       * @ngdoc method
+       * @name Constructor# loads and set config file
+       *
+       * @param {loadConfig} event Private variable, receives injectable LoadConfig
+       * 
+       * It computes the view extents.
+       * It sends the computed view extents to be displayed on Browser.
+       * 
+       */
+      constructor ( private loadConfig: LoadConfig) {
 
-    /**
-     * @ngdoc method
-     * @name Constructor# loads and set config file
-     *
-     * @param {loadConfig} event Private variable, receives injectable LoadConfig
-     * 
-     */
-    constructor(private loadConfig: LoadConfig) {
+           this.loadConfig.getConfig().subscribe(    config => {
+                                                            this._config = config; 
+                                                            this.init();  
+                                                        } );  
 
-        this.loadConfig.getConfig().subscribe(config => {
-            this._config = config;
-            this.init();
-        });
+           this.extentcallback = () => {};
 
-        this.extentcallback = () => { };
+           this._mouseEndCallback = function() {
+                //// get extents
+                this.extents = this._cesiumViewer.camera.computeViewRectangle()
+                console.log(this.extents);
+                // converting radians into degrees
+                // and using lat long values to one decimal place
+                let x1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.west) * 10)));
+                let y1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.south) * 10)));
+                let x2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.east) * 10)));
+                let y2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.north) * 10)));
+                console.log("Degrees :" ,x1,y1,x2,y2);
+            
+                //// compute level
+                var camera = this._cesiumViewer.camera;
+                
+                var position = camera.position;
+                console.log(position);
+                var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
+                console.log("camera position LLA " + cartographicPosition);
 
-        this._mouseEndCallback = function () {
-            //// get extents
-            this.extents = this._cesiumViewer.camera.computeViewRectangle()
-            console.log(this.extents);
-            // converting radians into degrees
-            // and using lat long values to one decimal place
-            let x1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.west) * 10)));
-            let y1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.south) * 10)));
-            let x2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.east) * 10)));
-            let y2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.north) * 10)));
-            console.log("Degrees :", x1, y1, x2, y2);
+                var distance = Number.MAX_VALUE;
+    
+                if(this._cesiumViewer.scene.mode == Cesium.SceneMode.SCENE3D)
+                {
+                    distance = cartographicPosition.height;
+                }else {
+                    distance = camera.getMagnitude();
+                }
 
-            //// compute level
-            var camera = this._cesiumViewer.camera;
+                //// level logic
+                var levelNumber = Math.round(Number(distance/100000));
+                
+                // cap value between 0 - 10
+                var level = 10 - Math.max(Math.min(levelNumber, 10),0);
+                console.log("Level " + level);
 
-            var position = camera.position;
-            console.log(position);
-            var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
-            console.log("camera position LLA " + cartographicPosition);
+                this.extentcallback();
 
-            var distance = Number.MAX_VALUE;
-
-            if (this._cesiumViewer.scene.mode == Cesium.SceneMode.SCENE3D) {
-                distance = cartographicPosition.height;
-            } else {
-                distance = camera.getMagnitude();
-            }
-
-            //// level logic
-            var levelNumber = Math.round(Number(distance / 100000));
-
-            // cap value between 0 - 10
-            var level = 10 - Math.max(Math.min(levelNumber, 10), 0);
-            console.log("Level " + level);
-
-            this.extentcallback();
-
-            if (level < 5)
-                return;
-
-            // either move this logic to back end 
-            // move it to another thread
-            for (var i = x1; i <= x2; ++i) {
-                for (var j = y1; j <= y2; ++j) {
-                    var xyhash = "" + j + "@" + i;
-                    console.log(xyhash);
+                if(level < 5)
+                    return ;
+                
+                // either move this logic to back end 
+                // move it to another thread
+                for(var i = x1; i <=x2; ++i)
+                {
+                    for(var j = y1;j <= y2; ++j)
+                    {  
+                        var xyhash = "" + j + "@" + i;
+                        console.log(xyhash);
                 }
             }
 

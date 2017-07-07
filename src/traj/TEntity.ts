@@ -1,19 +1,19 @@
 /**
  *
- * @ngdoc module
- * @name @NgModule
+ * @name TEntity
  *
  * @requires NgModule                
  * @requires BrowserModule             
- * @requires HttpModule, JsonpModule   
+ * @requires HttpModule,JsonpModule   
  * @requires LoadConfig              
- * @requires CesiumManager            
+ * @requires CesiumManager 
+ * @requires ObjectManager            
  * @requires StartService    
  *
  * @description
  *
- * This is the trajectory module. It includes all of our components for the trajectory feature.
- * It's providers are LoadConfig, CesiumManager, StartService
+ * It handles all the functionalities of the entities.
+ * It's providers are LoadConfig, CesiumManager, ObjectManager and StartService
  **/
 
 import { NgModule } from '@angular/core';
@@ -49,7 +49,7 @@ export class TEntity {
        * @ngdoc method
        * @name Constructor # initializes Variables
        *
-       * It initializes parameters of current object of AppEntity class.
+       * It initializes parameters of current object of TEntity class.
        * It sets _name, _position, _orientation, _hpr, _modulUrl and _Controller of the current object.
        * It also declares and initializes heading, pitch and roll variables. 
        *
@@ -83,8 +83,8 @@ export class TEntity {
             this.setId();
       }
 
-      // this is temprary, Ideally we should use parameterized constructor
-      setParameter(asdf) {
+      // this is temporary, Ideally we should use parameterized constructor
+      setParameter (asdf) {
 
             if (asdf != null) {
                   this._name = asdf.TEntity._name;
@@ -146,11 +146,11 @@ export class TEntity {
 
       /**
        * @ngdoc method
-       * @name setCEntity # Sets Entity
+       * @name setCEntity # Sets CEntity
        *
        * @param {entity} entity of cesium 
        * sets the cesium Entity of TEntity.
-       * It's called by sim manager
+       * It is called by sim manager
        *
        */
       setCEntity(entity) {
@@ -184,7 +184,16 @@ export class TEntity {
             this._para.model.uri = url;
       }
 
-      setInitialPosition(position) {
+
+       /**
+       * @ngdoc method
+       * @name setInitialPosition # sets Initial Position
+       *
+       * @param {position} position of entity
+       * Sets the initial position and id of TEntity
+       *
+       */
+      setInitialPosition (position) {
             this.setPosition(position);
             this.setId();
       }
@@ -269,11 +278,27 @@ export class TEntity {
 
       }
 
-      show() {
+
+       /**
+       * @ngdoc method
+       * @name show# Displays entities
+       *
+       * It displays entities on the globe
+       * by turning show attribute of CEntity to true.
+       */
+      show(){
             this._CEntity.show = true;
       }
 
-      hide() {
+
+       /**
+       * @ngdoc method
+       * @name hide# Removes entities
+       *
+       * It removes entities from the globe locally
+       * by turning show attribute of CEntity to false.
+       */
+      hide(){
             this._CEntity.show = false;
       }
 
