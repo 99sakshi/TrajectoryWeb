@@ -2,7 +2,6 @@ declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
 import { EntityService } from './entity.service';
-//import { SimManager } from '../app/simmanager';
 /**
 * @ngdoc method
 * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -37,8 +36,6 @@ export class CesiumManager{
 
            this.extentcallback = () => {};
              this.getData=(data) =>{};
-            //this._simManager=SimManager;
-
            this._mouseEndCallback = function() {
                 //// get extents
                 this.extents = this._cesiumViewer.camera.computeViewRectangle()
@@ -87,11 +84,9 @@ export class CesiumManager{
                     for(var j = y1;j <= y2; ++j)
                     {  
                         var xyhash = "" + j + "@" + i;
-                       // console.log(xyhash);
              this._entityservice.getData(xyhash).subscribe( data =>  { 
                 if((data._id)!=null){
                     this.getData(data)
-                 //this._simManager.addEntity(data, false); 
                                     }
              else
             {

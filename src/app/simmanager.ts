@@ -41,7 +41,7 @@ export class SimManager {
     constructor(private objectmanager: ObjectManager) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01; // in seconds
-        this._entityMap = [];
+        this._entityMap=[];
         this._State = State.Stop;
     }
 
@@ -54,9 +54,17 @@ export class SimManager {
      */
 
     addEntity(entity, shouldSave) {
-        entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
+       // entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
+       // this._entityMap[entity._id] = entity;
+         //  var flag=0;
+       if(this._entityMap[entity._id]==null)
+       {
         this._entityMap[entity._id] = entity;
+        entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
+
+       }
     }
+
 
 
     /**
