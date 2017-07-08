@@ -1,7 +1,8 @@
 declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
-
+import { EntityService } from './entity.service';
+//import { SimManager } from '../app/simmanager';
 /**
 * @ngdoc method
 * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -11,10 +12,11 @@ export class CesiumManager{
       
       private _cesiumViewer;
       private _config;
-
       private _mouseEndCallback;
       extents;
       extentcallback;
+      getData;
+    // _simManager;
 
       /**
        * @ngdoc method
@@ -26,7 +28,7 @@ export class CesiumManager{
        * It sends the computed view extents to be displayed on Browser.
        * 
        */
-      constructor ( private loadConfig: LoadConfig) {
+      constructor ( private loadConfig: LoadConfig, private _entityservice:EntityService) {
 
            this.loadConfig.getConfig().subscribe(    config => {
                                                             this._config = config; 
@@ -34,6 +36,8 @@ export class CesiumManager{
                                                         } );  
 
            this.extentcallback = () => {};
+             this.getData=(data) =>{};
+            //this._simManager=SimManager;
 
            this._mouseEndCallback = function() {
                 //// get extents
@@ -83,7 +87,16 @@ export class CesiumManager{
                     for(var j = y1;j <= y2; ++j)
                     {  
                         var xyhash = "" + j + "@" + i;
-                        console.log(xyhash);
+                       // console.log(xyhash);
+             this._entityservice.getData(xyhash).subscribe( data =>  { 
+                if((data._id)!=null){
+                    this.getData(data)
+                 //this._simManager.addEntity(data, false); 
+                                    }
+             else
+            {
+                console.log("Not found")
+            } });
                 }
             }
 
@@ -163,6 +176,16 @@ export class CesiumManager{
     removeEntity(entity) {
         this._cesiumViewer.entities.remove(entity._CEntity);
 
+    }
+
+    getEntity(hash){
+
+        //  this._entityservice.getData(hash).subscribe( data =>  { 
+        //       console.log(data); 
+        //       var appEntity = new TEntity();
+        //       appEntity.setParameter(data);
+        //       this._simManager.addEntity(appEntity, false); 
+        //     } );
     }
 
 }

@@ -118,6 +118,13 @@ export class AppComponent {
             this.south = Cesium.Math.toDegrees(this._cesiumManager.extents.south);
           };
 
+           this._cesiumManager.getData = (data) => {
+              console.log(data); 
+              var appEntity = new TEntity();
+              appEntity.setParameter(data);
+              this._simManager.addEntity(appEntity, false); 
+           }
+
      }
                                            
     /**
@@ -158,9 +165,9 @@ export class AppComponent {
 
           upcontroller.setPosition( PosMumbai );
 
-          this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
-          this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-          this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+        //  this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
+       //   this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
+         // this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
 
       }
 
@@ -185,7 +192,7 @@ export class AppComponent {
         appEntity.setController(controller); 
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(appEntity, true); // for test, dont add to backend
+        this._simManager.addEntity(appEntity, false); // for test, dont add to backend
 
       }
 
@@ -237,13 +244,9 @@ export class AppComponent {
      * to the specified id of the entity.
      */
      getData() {
-          var id = 3;
-          this._entityservice.getData(id).subscribe( data =>  { 
-              console.log(data); 
-              var appEntity = new TEntity();
-              appEntity.setParameter(data);
-              this._simManager.addEntity(appEntity, false); 
-            } );
+         // var id = '226@884';
+          //this._cesiumManager.getEntity();
+
       }
 
 
