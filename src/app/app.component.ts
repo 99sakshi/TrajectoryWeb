@@ -237,7 +237,7 @@ export class AppComponent {
      * to the specified id of the entity.
      */
      getData() {
-          var id = 3;
+          var id = '226@884';
           this._entityservice.getData(id).subscribe( data =>  { 
               console.log(data); 
               var appEntity = new TEntity();
