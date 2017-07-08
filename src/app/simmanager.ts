@@ -54,18 +54,12 @@ export class SimManager {
      */
 
     addEntity(entity, shouldSave) {
-       // entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
-       // this._entityMap[entity._id] = entity;
-         //  var flag=0;
        if(this._entityMap[entity._id]==null)
        {
         this._entityMap[entity._id] = entity;
         entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
-
        }
     }
-
-
 
     /**
      * @ngdoc method
