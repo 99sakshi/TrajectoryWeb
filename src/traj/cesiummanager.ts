@@ -33,10 +33,11 @@ export class CesiumManager{
            this.loadConfig.getConfig().subscribe(    config => {
                                                             this._config = config; 
                                                             this.init();  
-                                                        } );  
+                                                });  
 
            this.extentcallback = () => {};
-             this.getData=(data:TEntity) =>{};
+           this.getData=(data:TEntity) => {};
+
            this._mouseEndCallback = function() {
                 //// get extents
                 this.extents = this._cesiumViewer.camera.computeViewRectangle()
@@ -77,31 +78,14 @@ export class CesiumManager{
 
                 if(level < 5)
                     return ;
-                
-                // either move this logic to back end 
-                // move it to another thread
-            //     for(var i = x1; i <=x2; ++i)
-            //     {
-            //         for(var j = y1;j <= y2; ++j)
-            //         {  
-            //             var xyhash = "" + j + "@" + i;
-            //  this._entityservice.getData(xyhash).subscribe( data =>  { 
-            //     if((data._id)!=null){
-            //         this.getData(data)
-            //                         }
-            //  else
-            // {
-            //     console.log("Not found")
-            // } });
-            //     }
-            // }
-            else{
-                this._entityservice.getData(x1,x2,y1,y2).subscribe( data =>  { 
-                if((data._id)!=null){
-                    this.getData(data)
-                                    }});
-                }
-             }};
+
+                this._entityservice.getDataExtents(x1,x2,y1,y2).subscribe( data =>  { 
+                    if((data._id)!=null){
+                        this.getData(data);
+                    }
+                });
+           };
+    }
 
 
     /**

@@ -34,6 +34,7 @@ export class EntityService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
   private getDataUrl = '/getdata';
+  private getDataExtentsUrl = '/getdataExtents';
   private putDataUrl = '/putdata';
   private deleteEntityUrl = '/deleteEntity';
   
@@ -80,25 +81,34 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  // getData(id:string) {
-  //   let headers = new Headers({ 'Content-Type': 'application/json' });
-  //   let options = new RequestOptions({ headers: headers });
-  //   let a = { "id": id }
-  //   return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
-  //     .map(this.extractData)
-  //     .catch(this.handleError);
-  // }
+  getData(id:string) {
+     let headers = new Headers({ 'Content-Type': 'application/json' });
+     let options = new RequestOptions({ headers: headers });
+     let a = { "id": id }
+     return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
+       .map(this.extractData)
+       .catch(this.handleError);
+  }
 
-
- getData(x1,x2:number,y1,y2:number) {
+/**
+ * @ngdoc method
+ * @name getData# It gets data from mongoDB
+ * 
+ * @param {id} Receives the id of entity to be added
+ * 
+ * It sends the request to add the specified entity from the database.
+ *
+ * @return {.catch(this.handleError)} OK code or error if fails
+ */
+ getDataExtents(x1,x2:number,y1,y2:number) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let a = { "x1": x1,
-              "x2":x2,
-              "y1":y1,
+              "x2": x2,
+              "y1": y1,
               "y2": y2 
             }
-    return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
+    return this.http.put(this.serverUrl + this.getDataExtentsUrl, JSON.stringify(a), options)
       .map(this.extractData)
       .catch(this.handleError);
   }
