@@ -54,7 +54,7 @@ export class SimManager {
      * @param {entity} entity to be added
      */
 
-    addEntity(entity:TEntity, shouldSave:boolean) {
+    addEntity(entity:TEntity, shouldSave:Boolean) {
        if(this._entityMap[entity._id]==null)
        {
         this._entityMap[entity._id] = entity;

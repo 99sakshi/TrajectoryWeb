@@ -31,7 +31,7 @@ export class ObjectManager {
         * @return {retEntity} retEntity cesium generated entity
         */
 
-      addEntity(entity:TEntity, shouldSave:boolean) {
+      addEntity(entity:TEntity, shouldSave:Boolean) {
             // This manager should also store the object somewhere
             var rEntity = this._cesiumManager.addEntity(entity.getPara());
 

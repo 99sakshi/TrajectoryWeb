@@ -1,11 +1,11 @@
 export interface TEntityInterface{
-        _id?: string;
-      _name: string;
+        _id?: String;
+      _name: String;
       _position?;
       _orientation?;
       _hpr?;
-      _modelUrl:string;
-      _para?: object;
-      _CEntity?: string;  // Cesium Entity
-      _Controller:object;
+      _modelUrl: String;
+      _para?: Object;
+      _CEntity?: String;  // Cesium Entity
+      _Controller:Object;
 } 

@@ -62,7 +62,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-   deleteEntity(id:string){
+   deleteEntity(id:String){
      let headers = new Headers({ 'Content-Type': 'application/json' });
      let options = new RequestOptions({ headers: headers });
      let idJSON = {"id":id};
@@ -81,7 +81,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  getData(id:string) {
+  getData(id:String) {
      let headers = new Headers({ 'Content-Type': 'application/json' });
      let options = new RequestOptions({ headers: headers });
      let a = { "id": id }
@@ -100,7 +100,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
- getDataExtents(x1,x2:number,y1,y2:number) {
+ getDataExtents(x1:Number,x2:Number,y1:Number,y2:Number) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let a = { "x1": x1,

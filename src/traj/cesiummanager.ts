@@ -144,7 +144,7 @@ export class CesiumManager{
      * 
      * @return {retEntity} retEntity cesium generated entity
      */
-    addEntity(entityParameters:object) {
+    addEntity(entityParameters:Object) {
         var retEntity = this._cesiumViewer.entities.add(entityParameters);
         return retEntity;
     }
@@ -162,14 +162,14 @@ export class CesiumManager{
             return retEntity;
     }
 
-    getEntity(hash:string){
+    getEntity(hash:String){
 
-        //  this._entityservice.getData(hash).subscribe( data =>  { 
-        //       console.log(data); 
-        //       var appEntity = new TEntity();
-        //       appEntity.setParameter(data);
-        //       this._simManager.addEntity(appEntity, false); 
-        //     } );
+          this._entityservice.getData(hash).subscribe( data =>  { 
+               console.log(data); 
+               var appEntity = new TEntity();
+               appEntity.setParameter(data);
+               this._simManager.addEntity(appEntity, false); 
+             } );
     }
 
 }

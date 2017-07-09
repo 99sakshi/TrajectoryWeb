@@ -97,18 +97,6 @@ export class TEntity implements TEntityInterface {
                   this._Controller = asdf.TEntity._Controller;
             }
 
-
-//  setParameter (asdf:TEntityInterface) {
-
-//             if (asdf != null) {
-//                   this._name = asdf._name;
-//                   this._position = asdf._position;
-//                   this._hpr = asdf._hpr;
-//                   this._modelUrl = asdf._modelUrl;
-//                   this._id = asdf._id;
-//                   this._orientation = asdf._orientation;
-//                   this._Controller = asdf._Controller;
-//             }
             //defining parameters of the current object
             this._para = {
                   name: name,
@@ -132,7 +120,7 @@ export class TEntity implements TEntityInterface {
        * sets the TEntity name.
        *
        */
-      setName(name:string) {
+      setName(name:String) {
             this._name = name;
       }
 
@@ -146,7 +134,6 @@ export class TEntity implements TEntityInterface {
       */
       setId() {
             var xyhash = "";
-            //this._position= new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
             console.log(this._position);
             var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(this._position);
             var DLong = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.longitude) * 10)));
@@ -180,7 +167,7 @@ export class TEntity implements TEntityInterface {
        * Updates the Controller of the AppEntity
        *
        */
-      setController(controller:object) {
+      setController(controller:Object) {
             this._Controller = controller;
       }
 
@@ -193,7 +180,7 @@ export class TEntity implements TEntityInterface {
        * Updates the model's Url of TEntity
        *
        */
-      setModelUrl(url:string) {
+      setModelUrl(url:String) {
             this._modelUrl = url;
             this._para.model.uri = url;
       }
@@ -207,7 +194,7 @@ export class TEntity implements TEntityInterface {
        * Sets the initial position and id of TEntity
        *
        */
-      setInitialPosition (position:object) {
+      setInitialPosition (position:Object) {
             this.setPosition(position);
             this.setId();
       }
@@ -220,7 +207,7 @@ export class TEntity implements TEntityInterface {
        * Updates the position and cesium's position of AppEntity
        *
        */
-      setPosition(position:object) {
+      setPosition(position:Object) {
             this._position = position;
             this._para.position = position;
             if (this._CEntity != null)
@@ -238,7 +225,7 @@ export class TEntity implements TEntityInterface {
        * Updates the Heading Pitch Roll.
        *
        */
-      setHPR(hpr:object) {
+      setHPR(hpr:Object) {
             this._hpr = hpr;
       }
 
@@ -251,7 +238,7 @@ export class TEntity implements TEntityInterface {
        * Updates the orientation and cesium Entity's orientation 
        *
        */
-      setOrientation(orientation:object) {
+      setOrientation(orientation:Object) {
             this._orientation = orientation;
             this._para.orientation = orientation;
             if (this._CEntity != null)
