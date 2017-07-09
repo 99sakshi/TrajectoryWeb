@@ -33,7 +33,7 @@ export class ForwardController {
      * @param {position} position to set
      * It sets position and position in LLA of the controller
      */
-    setPosition(position) {
+    setPosition(position:object) {
         this._position = position;
         this._positionLLA = new Cesium.Cartographic.fromCartesian(this._position);
     }
@@ -46,7 +46,7 @@ export class ForwardController {
      * @param {orientation} orientation set the orientation
      * Updates the orientation
      */
-    setOrientation(orientation) {
+    setOrientation(orientation:object) {
         this._orientation = orientation;
     }
 
@@ -59,7 +59,7 @@ export class ForwardController {
      * Updates the position and orientation of the controller
      *
      */
-    tick(timeInfo) {
+    tick(timeInfo:number) {
         //sets position at each simuatlion step
         this._position = Cesium.Cartesian3.fromDegrees(this._positionLLA.longitude * Cesium.Math.DEGREES_PER_RADIAN + timeInfo.time / 1,
             this._positionLLA.latitude * Cesium.Math.DEGREES_PER_RADIAN,

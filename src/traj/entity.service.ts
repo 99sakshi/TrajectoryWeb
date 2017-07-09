@@ -23,6 +23,7 @@ import { Http, Response,
          Headers, RequestOptions }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
+import { TEntity } from './TEntity';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -60,7 +61,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-   deleteEntity(id){
+   deleteEntity(id:string){
      let headers = new Headers({ 'Content-Type': 'application/json' });
      let options = new RequestOptions({ headers: headers });
      let idJSON = {"id":id};
@@ -79,7 +80,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  getData(id) {
+  getData(id:string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let a = { "id": id }
@@ -96,7 +97,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  putData(entity) {
+  putData(entity:TEntity) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let data = { "TEntity": entity };

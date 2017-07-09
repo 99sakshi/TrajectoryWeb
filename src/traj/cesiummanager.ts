@@ -2,6 +2,7 @@ declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
 import { EntityService } from './entity.service';
+import { TEntity } from './TEntity'
 /**
 * @ngdoc method
 * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -35,7 +36,7 @@ export class CesiumManager{
                                                         } );  
 
            this.extentcallback = () => {};
-             this.getData=(data) =>{};
+             this.getData=(data:TEntity) =>{};
            this._mouseEndCallback = function() {
                 //// get extents
                 this.extents = this._cesiumViewer.camera.computeViewRectangle()
@@ -155,7 +156,7 @@ export class CesiumManager{
      * 
      * @return {retEntity} retEntity cesium generated entity
      */
-    addEntity(entityParameters) {
+    addEntity(entityParameters:object) {
         var retEntity = this._cesiumViewer.entities.add(entityParameters);
         return retEntity;
     }
@@ -168,12 +169,12 @@ export class CesiumManager{
      * @param {entity} entity to be removed
      * Removes an entity
      */
-    removeEntity(entity) {
-        this._cesiumViewer.entities.remove(entity._CEntity);
-
+    removeEntity(entity:TEntity) {
+       var retEntity= this._cesiumViewer.entities.remove(entity._CEntity);
+            return retEntity;
     }
 
-    getEntity(hash){
+    getEntity(hash:string){
 
         //  this._entityservice.getData(hash).subscribe( data =>  { 
         //       console.log(data); 
