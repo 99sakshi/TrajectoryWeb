@@ -24,6 +24,7 @@ import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
 import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
+import { TEntityInterface } from './TEntityInterface';
 
 declare var Cesium: any;
 @NgModule({
@@ -33,7 +34,7 @@ declare var Cesium: any;
       providers: [LoadConfig, StartService, ObjectManager, CesiumManager]
 })
 
-export class TEntity {
+export class TEntity implements TEntityInterface {
 
       _id;
       _name;
@@ -96,6 +97,18 @@ export class TEntity {
                   this._Controller = asdf.TEntity._Controller;
             }
 
+
+//  setParameter (asdf:TEntityInterface) {
+
+//             if (asdf != null) {
+//                   this._name = asdf._name;
+//                   this._position = asdf._position;
+//                   this._hpr = asdf._hpr;
+//                   this._modelUrl = asdf._modelUrl;
+//                   this._id = asdf._id;
+//                   this._orientation = asdf._orientation;
+//                   this._Controller = asdf._Controller;
+//             }
             //defining parameters of the current object
             this._para = {
                   name: name,
@@ -119,7 +132,7 @@ export class TEntity {
        * sets the TEntity name.
        *
        */
-      setName(name) {
+      setName(name:string) {
             this._name = name;
       }
 
@@ -133,6 +146,7 @@ export class TEntity {
       */
       setId() {
             var xyhash = "";
+            //this._position= new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
             console.log(this._position);
             var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(this._position);
             var DLong = Math.round(Number((Cesium.Math.toDegrees(cartographicPosition.longitude) * 10)));
@@ -153,7 +167,7 @@ export class TEntity {
        * It is called by sim manager
        *
        */
-      setCEntity(entity) {
+      setCEntity(entity:TEntityInterface) {
             this._CEntity = entity;
       }
 
@@ -166,7 +180,7 @@ export class TEntity {
        * Updates the Controller of the AppEntity
        *
        */
-      setController(controller) {
+      setController(controller:object) {
             this._Controller = controller;
       }
 
@@ -179,7 +193,7 @@ export class TEntity {
        * Updates the model's Url of TEntity
        *
        */
-      setModelUrl(url) {
+      setModelUrl(url:string) {
             this._modelUrl = url;
             this._para.model.uri = url;
       }

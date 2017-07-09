@@ -31,10 +31,11 @@ import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { CesiumManager } from '../traj/cesiummanager';
-import { TEntity } from '../traj/tentity';
+import { TEntity } from '../traj/TEntity';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
+import { TEntityInterface } from '../traj/TEntityInterface';
 
 @Component({
   selector: 'my-app',
@@ -118,7 +119,7 @@ export class AppComponent {
             this.south = Cesium.Math.toDegrees(this._cesiumManager.extents.south);
           };
 
-           this._cesiumManager.getData = (data) => {
+           this._cesiumManager.getData = (data:TEntityInterface) => {
               console.log(data); 
               var appEntity = new TEntity();
               appEntity.setParameter(data);
@@ -179,17 +180,33 @@ export class AppComponent {
      * It also adds an entity to sim manager.
      * 
      */
-      addAppEntityToManager(name, position, modelUrl, controller ){
+      // //  addAppEntityToManager(name, position, modelUrl, controller ){
+
+      // //   var appEntity = new TEntity();
+      // //   appEntity.setName(name);
+      // //   appEntity.setModelUrl(modelUrl); 
+      // //   appEntity.setInitialPosition(position);
+        
+      // //   var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
+      // //   var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+      // //   appEntity.setOrientation(orientation);
+      // //   appEntity.setController(controller); 
+
+      //   // Entity has to be added to the manager before position set 
+      //   this._simManager.addEntity(appEntity, false); // for test, dont add to backend
+
+      // }
+        addAppEntityToManager(tentity:TEntityInterface){
 
         var appEntity = new TEntity();
-        appEntity.setName(name);
-        appEntity.setModelUrl(modelUrl); 
-        appEntity.setInitialPosition(position);
+        appEntity.setName(tentity._name);
+        appEntity.setModelUrl(tentity._modelUrl); 
+        appEntity.setInitialPosition(tentity._position);
         
         var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
-        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(tentity._position, hpr);
         appEntity.setOrientation(orientation);
-        appEntity.setController(controller); 
+        appEntity.setController(tentity._Controller); 
 
         // Entity has to be added to the manager before position set 
         this._simManager.addEntity(appEntity, false); // for test, dont add to backend
