@@ -18,6 +18,7 @@
  **/
 import { Injectable } from '@angular/core';
 import { ObjectManager } from '../traj/objectmanager';
+import { TEntity } from '../traj/TEntity';
 
 enum State {
     Start,
@@ -53,7 +54,7 @@ export class SimManager {
      * @param {entity} entity to be added
      */
 
-    addEntity(entity, shouldSave) {
+    addEntity(entity:TEntity, shouldSave:boolean) {
        if(this._entityMap[entity._id]==null)
        {
         this._entityMap[entity._id] = entity;
@@ -66,7 +67,7 @@ export class SimManager {
      * @name removeEntity # It removes the entity
      * from the database.
      */
-    removeEntity(entity) {
+    removeEntity(entity:TEntity) {
         entity.setCEntity(this.objectmanager.removeEntity(entity));
         this._entityMap[entity._id] = entity;
     }

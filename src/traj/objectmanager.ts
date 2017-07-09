@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
 import { EntityService } from './entity.service';
+import { TEntity } from './TEntity';
 
 
 /**
@@ -30,7 +31,7 @@ export class ObjectManager {
         * @return {retEntity} retEntity cesium generated entity
         */
 
-      addEntity(entity, shouldSave) {
+      addEntity(entity:TEntity, shouldSave:boolean) {
             // This manager should also store the object somewhere
             var rEntity = this._cesiumManager.addEntity(entity.getPara());
 
@@ -50,8 +51,9 @@ export class ObjectManager {
        * @param {entity} entity to be removed
        * Removes an entity
        */
-      removeEntity(entity) {
-            this._cesiumManager.removeEntity(entity);
+      removeEntity(entity:TEntity) {
+          var rEntity=  this._cesiumManager.removeEntity(entity);
+          return rEntity;
       }
 
 }

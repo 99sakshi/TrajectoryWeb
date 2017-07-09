@@ -23,6 +23,7 @@ import { Http, Response,
          Headers, RequestOptions }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
+import { TEntity } from './TEntity';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -33,6 +34,7 @@ export class EntityService {
 
   private serverUrl = 'http://localhost:3333';  // URL to web API
   private getDataUrl = '/getdata';
+  private getDataExtentsUrl = '/getdataExtents';
   private putDataUrl = '/putdata';
   private deleteEntityUrl = '/deleteEntity';
   
@@ -60,7 +62,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-   deleteEntity(id){
+   deleteEntity(id:string){
      let headers = new Headers({ 'Content-Type': 'application/json' });
      let options = new RequestOptions({ headers: headers });
      let idJSON = {"id":id};
@@ -79,15 +81,37 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  getData(id) {
+  getData(id:string) {
+     let headers = new Headers({ 'Content-Type': 'application/json' });
+     let options = new RequestOptions({ headers: headers });
+     let a = { "id": id }
+     return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
+       .map(this.extractData)
+       .catch(this.handleError);
+  }
+
+/**
+ * @ngdoc method
+ * @name getData# It gets data from mongoDB
+ * 
+ * @param {id} Receives the id of entity to be added
+ * 
+ * It sends the request to add the specified entity from the database.
+ *
+ * @return {.catch(this.handleError)} OK code or error if fails
+ */
+ getDataExtents(x1,x2:number,y1,y2:number) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let a = { "id": id }
-    return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
+    let a = { "x1": x1,
+              "x2": x2,
+              "y1": y1,
+              "y2": y2 
+            }
+    return this.http.put(this.serverUrl + this.getDataExtentsUrl, JSON.stringify(a), options)
       .map(this.extractData)
       .catch(this.handleError);
   }
-
   /**
  * @ngdoc method
  * @name putData# It puts data in mongoDB
@@ -96,7 +120,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  putData(entity) {
+  putData(entity:TEntity) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let data = { "TEntity": entity };

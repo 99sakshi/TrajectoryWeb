@@ -193,7 +193,7 @@ export class TEntity {
        * Sets the initial position and id of TEntity
        *
        */
-      setInitialPosition (position) {
+      setInitialPosition (position:object) {
             this.setPosition(position);
             this.setId();
       }
@@ -206,7 +206,7 @@ export class TEntity {
        * Updates the position and cesium's position of AppEntity
        *
        */
-      setPosition(position) {
+      setPosition(position:object) {
             this._position = position;
             this._para.position = position;
             if (this._CEntity != null)
@@ -224,7 +224,7 @@ export class TEntity {
        * Updates the Heading Pitch Roll.
        *
        */
-      setHPR(hpr) {
+      setHPR(hpr:object) {
             this._hpr = hpr;
       }
 
@@ -237,7 +237,7 @@ export class TEntity {
        * Updates the orientation and cesium Entity's orientation 
        *
        */
-      setOrientation(orientation) {
+      setOrientation(orientation:object) {
             this._orientation = orientation;
             this._para.orientation = orientation;
             if (this._CEntity != null)
