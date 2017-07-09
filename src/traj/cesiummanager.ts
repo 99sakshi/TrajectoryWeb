@@ -16,7 +16,6 @@ export class CesiumManager{
       extents;
       extentcallback;
       getData;
-    // _simManager;
 
       /**
        * @ngdoc method
@@ -164,12 +163,6 @@ export class CesiumManager{
 
     getEntity(hash:String){
 
-          this._entityservice.getData(hash).subscribe( data =>  { 
-               console.log(data); 
-               var appEntity = new TEntity();
-               appEntity.setParameter(data);
-               this._simManager.addEntity(appEntity, false); 
-             } );
     }
 
 }
