@@ -59,7 +59,7 @@ export class ForwardController {
      * Updates the position and orientation of the controller
      *
      */
-    tick(timeInfo:number) {
+    tick(timeInfo) {
         //sets position at each simuatlion step
         this._position = Cesium.Cartesian3.fromDegrees(this._positionLLA.longitude * Cesium.Math.DEGREES_PER_RADIAN + timeInfo.time / 1,
             this._positionLLA.latitude * Cesium.Math.DEGREES_PER_RADIAN,

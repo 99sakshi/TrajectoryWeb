@@ -80,15 +80,28 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  getData(id:string) {
+  // getData(id:string) {
+  //   let headers = new Headers({ 'Content-Type': 'application/json' });
+  //   let options = new RequestOptions({ headers: headers });
+  //   let a = { "id": id }
+  //   return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
+  //     .map(this.extractData)
+  //     .catch(this.handleError);
+  // }
+
+
+ getData(x1,x2:number,y1,y2:number) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let a = { "id": id }
+    let a = { "x1": x1,
+              "x2":x2,
+              "y1":y1,
+              "y2": y2 
+            }
     return this.http.put(this.serverUrl + this.getDataUrl, JSON.stringify(a), options)
       .map(this.extractData)
       .catch(this.handleError);
   }
-
   /**
  * @ngdoc method
  * @name putData# It puts data in mongoDB

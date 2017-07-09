@@ -264,7 +264,7 @@ export class TEntity {
        * updates position and orientation of TEntity if 
        * contoler is set
        */
-      tick(timeInfo:number) {
+      tick(timeInfo) {
             if (this._Controller == null)
                   return;
 

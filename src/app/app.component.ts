@@ -257,7 +257,7 @@ export class AppComponent {
      * to the specified id of the entity.
      */
      deleteEntity(){
-        var id = 3;
+        var id = '226@884';
         this._entityservice.deleteEntity(id).subscribe(data =>{
         });
       }

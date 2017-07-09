@@ -80,25 +80,29 @@ export class CesiumManager{
                 
                 // either move this logic to back end 
                 // move it to another thread
-                for(var i = x1; i <=x2; ++i)
-                {
-                    for(var j = y1;j <= y2; ++j)
-                    {  
-                        var xyhash = "" + j + "@" + i;
-             this._entityservice.getData(xyhash).subscribe( data =>  { 
+            //     for(var i = x1; i <=x2; ++i)
+            //     {
+            //         for(var j = y1;j <= y2; ++j)
+            //         {  
+            //             var xyhash = "" + j + "@" + i;
+            //  this._entityservice.getData(xyhash).subscribe( data =>  { 
+            //     if((data._id)!=null){
+            //         this.getData(data)
+            //                         }
+            //  else
+            // {
+            //     console.log("Not found")
+            // } });
+            //     }
+            // }
+            else{
+                this._entityservice.getData(x1,x2,y1,y2).subscribe( data =>  { 
                 if((data._id)!=null){
                     this.getData(data)
-                                    }
-             else
-            {
-                console.log("Not found")
-            } });
+                                    }});
                 }
-            }
+             }};
 
-        };
-
-    }
 
     /**
      * @ngdoc method
