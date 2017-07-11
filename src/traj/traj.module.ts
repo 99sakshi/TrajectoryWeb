@@ -28,7 +28,7 @@ import { CesiumManager } from './cesiummanager';
 import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
 import { EntityService } from './entity.service';
-import { TEntity } from './tentity';
+import { TObject } from './tobject';
 
 @NgModule({
   imports: [BrowserModule, HttpModule, JsonpModule],
@@ -36,7 +36,7 @@ import { TEntity } from './tentity';
   bootstrap: [],
   providers: [LoadConfig, StartService,
     ObjectManager, CesiumManager,
-    EntityService, TEntity],
+    EntityService, TObject],
 })
 
 export class TrajModule { }
