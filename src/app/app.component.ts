@@ -125,11 +125,6 @@ export class AppComponent {
               appObject.setParameter(data);
               this._simManager.addEntity(appObject, false); 
            }
-
-             this._cesiumManager.removeData = () => {
-              this._simManager.removeAllEntity(); 
-           }
-
      }
                                            
     /**
@@ -162,7 +157,7 @@ export class AppComponent {
           var modelBalloon = "../Models/CesiumBalloon/CesiumBalloon.glb";
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
           var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
-          var modelwolf="../Models/CesiumWolf/Cesium_Wolf.glb"
+
           var fwdcontroller = new ForwardController;
           fwdcontroller.setPosition( PosKolkatta );
 
@@ -170,13 +165,9 @@ export class AppComponent {
 
           upcontroller.setPosition( PosMumbai );
 
-        //  this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
-       //   this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-   this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
-  // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
- //this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
-   //this.addAppEntityToManager({_name:"WolfKolkata",_position:PosKolkatta,_modelUrl:modelwolf,_Controller:fwdcontroller});
-
+       // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+       // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
+       // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
       }
 
     /**

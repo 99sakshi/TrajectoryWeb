@@ -2,7 +2,7 @@ declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
 import { EntityService } from './entity.service';
-import { TEntity } from './TEntity'
+import { TObject } from './tobject'
 /**
 * @ngdoc method
 * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -35,7 +35,7 @@ export class CesiumManager{
                                                 });  
 
            this.extentcallback = () => {};
-           this.getData=(data:TEntity) => {};
+           this.getData=(data:TObject) => {};
 
            this._mouseEndCallback = function() {
                 //// get extents
@@ -156,7 +156,7 @@ export class CesiumManager{
      * @param {entity} entity to be removed
      * Removes an entity
      */
-    removeEntity(entity:TEntity) {
+    removeEntity(entity:TObject) {
        var retEntity= this._cesiumViewer.entities.remove(entity._CEntity);
             return retEntity;
     }
