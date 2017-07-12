@@ -68,11 +68,9 @@ export class SimManager {
      * from the database.
      */
     removeEntity(entity:TObject) {
-        if(!entity.isPersistent){
         entity.setCEntity(this.objectmanager.removeEntity(entity));
         this._entityMap[entity._id] = entity;
     }
-}
 
     /**
      * @ngdoc method
