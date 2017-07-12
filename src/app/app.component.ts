@@ -7,7 +7,7 @@
  * @requires ForwardController
  * @requires UpController
  * @requires CesiumManager
- * @requires TEntity
+ * @requires TObject
  * @requires StartService
  * @requires LoadConfig
  * @requires EntityService
@@ -31,11 +31,11 @@ import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { CesiumManager } from '../traj/cesiummanager';
-import { TEntity } from '../traj/TEntity';
+import { TObject } from '../traj/TObject';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
-import { TEntityInterface } from '../traj/TEntityInterface';
+import { TObjectInterface } from '../traj/TObjectInterface';
 
 @Component({
   selector: 'my-app',
@@ -119,11 +119,15 @@ export class AppComponent {
             this.south = Cesium.Math.toDegrees(this._cesiumManager.extents.south);
           };
 
-           this._cesiumManager.getData = (data:TEntityInterface) => {
+           this._cesiumManager.getData = (data:TObjectInterface) => {
               console.log(data); 
-              var appEntity = new TEntity();
-              appEntity.setParameter(data);
-              this._simManager.addEntity(appEntity, false); 
+              var appObject = new TObject();
+              appObject.setParameter(data);
+              this._simManager.addEntity(appObject, false); 
+           }
+
+             this._cesiumManager.removeData = () => {
+              this._simManager.removeAllEntity(); 
            }
 
      }
@@ -158,7 +162,7 @@ export class AppComponent {
           var modelBalloon = "../Models/CesiumBalloon/CesiumBalloon.glb";
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
           var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
-
+          var modelwolf="../Models/CesiumWolf/Cesium_Wolf.glb"
           var fwdcontroller = new ForwardController;
           fwdcontroller.setPosition( PosKolkatta );
 
@@ -168,7 +172,10 @@ export class AppComponent {
 
         //  this.addAppEntityToManager("ToomManDelhi", PosDelhi, modelToonMan, null);
        //   this.addAppEntityToManager("BalloonMumbai", PosMumbai, modelBalloon, upcontroller);
-         // this.addAppEntityToManager("AircraftKolkatta", PosKolkatta, modelAircraft, fwdcontroller);
+   this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+  // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
+ //this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+   //this.addAppEntityToManager({_name:"WolfKolkata",_position:PosKolkatta,_modelUrl:modelwolf,_Controller:fwdcontroller});
 
       }
 
@@ -180,20 +187,20 @@ export class AppComponent {
      * It also adds an entity to sim manager.
      * 
      */
-      addAppEntityToManager(tentity:TEntityInterface){
+      addAppEntityToManager(tobject:TObjectInterface){
 
-        var appEntity = new TEntity();
-        appEntity.setName(tentity._name);
-        appEntity.setModelUrl(tentity._modelUrl); 
-        appEntity.setInitialPosition(tentity._position);
+        var appObject = new TObject();
+        appObject.setName(tobject._name);
+        appObject.setModelUrl(tobject._modelUrl); 
+        appObject.setInitialPosition(tobject._position);
         
         var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
-        var orientation = Cesium.Transforms.headingPitchRollQuaternion(tentity._position, hpr);
-        appEntity.setOrientation(orientation);
-        appEntity.setController(tentity._Controller); 
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(tobject._position, hpr);
+        appObject.setOrientation(orientation);
+        appObject.setController(tobject._Controller); 
 
         // Entity has to be added to the manager before position set 
-        this._simManager.addEntity(appEntity, false); // for test, dont add to backend
+        this._simManager.addEntity(appObject, false); // for test, dont add to backend
 
       }
 
@@ -245,8 +252,8 @@ export class AppComponent {
      * to the specified id of the entity.
      */
      getData() {
-         // var id = '226@884';
-          //this._cesiumManager.getEntity();
+          var id = '226@884';
+          this._cesiumManager.getEntity(id);
 
       }
 
