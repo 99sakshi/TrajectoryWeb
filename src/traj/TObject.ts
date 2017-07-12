@@ -1,6 +1,6 @@
 /**
  *
- * @name TEntity
+ * @name TObject
  *
  * @requires NgModule                
  * @requires BrowserModule             
@@ -24,7 +24,7 @@ import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
 import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
-import { TEntityInterface } from './TEntityInterface';
+import { TObjectInterface } from './TObjectInterface';
 
 declare var Cesium: any;
 @NgModule({
@@ -34,7 +34,7 @@ declare var Cesium: any;
       providers: [LoadConfig, StartService, ObjectManager, CesiumManager]
 })
 
-export class TEntity implements TEntityInterface {
+export class TObject implements TObjectInterface {
 
       _id;
       _name;
@@ -45,12 +45,13 @@ export class TEntity implements TEntityInterface {
       _para;
       _CEntity;  // Cesium Entity
       _Controller;
+      isPersistent;
 
       /**
        * @ngdoc method
        * @name Constructor # initializes Variables
        *
-       * It initializes parameters of current object of TEntity class.
+       * It initializes parameters of current object of TObject class.
        * It sets _name, _position, _orientation, _hpr, _modulUrl and _Controller of the current object.
        * It also declares and initializes heading, pitch and roll variables. 
        *
@@ -58,7 +59,7 @@ export class TEntity implements TEntityInterface {
 
 
       constructor() {
-            this._name = "TestTEntity";
+            this._name = "TestTObject";
             this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
             var heading = 0;
             var pitch = 0;
@@ -68,6 +69,7 @@ export class TEntity implements TEntityInterface {
             this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
             this._CEntity = null;
             this._Controller = null;
+            this.isPersistent=true;
 
             //defining parameters of the current object
             this._para = {
@@ -95,6 +97,7 @@ export class TEntity implements TEntityInterface {
                   this._id = asdf.TEntity._id;
                   this._orientation = asdf.TEntity._orientation;
                   this._Controller = asdf.TEntity._Controller;
+                  this.isPersistent=false;
             }
 
             //defining parameters of the current object
@@ -117,7 +120,7 @@ export class TEntity implements TEntityInterface {
        * @name setName # Sets Name
        *
        * @param {name} name of Entity 
-       * sets the TEntity name.
+       * sets the TObject name.
        *
        */
       setName(name:String) {
@@ -129,7 +132,7 @@ export class TEntity implements TEntityInterface {
       * @name setId # Sets id
       *
       * @param {id} id of Entity 
-      * sets the TEntity id.
+      * sets the TObject id.
       *
       */
       setId() {
@@ -150,11 +153,11 @@ export class TEntity implements TEntityInterface {
        * @name setCEntity # Sets CEntity
        *
        * @param {entity} entity of cesium 
-       * sets the cesium Entity of TEntity.
+       * sets the cesium Entity of TObject.
        * It is called by sim manager
        *
        */
-      setCEntity(entity:TEntityInterface) {
+      setCEntity(entity:TObjectInterface) {
             this._CEntity = entity;
       }
 
@@ -177,7 +180,7 @@ export class TEntity implements TEntityInterface {
        * @name setModeUrl # sets Model's Url
        *
        * @param {url} url of model to be added
-       * Updates the model's Url of TEntity
+       * Updates the model's Url of TObject
        *
        */
       setModelUrl(url:String) {
@@ -191,7 +194,7 @@ export class TEntity implements TEntityInterface {
        * @name setInitialPosition # sets Initial Position
        *
        * @param {position} position of entity
-       * Sets the initial position and id of TEntity
+       * Sets the initial position and id of TObject
        *
        */
       setInitialPosition (position:Object) {
@@ -262,7 +265,7 @@ export class TEntity implements TEntityInterface {
        * @name tick # sets Position and Orientation
        *
        * @param {timeInfo} timeInfo time info of simulation
-       * updates position and orientation of TEntity if 
+       * updates position and orientation of TObject if 
        * contoler is set
        */
       tick(timeInfo) {

@@ -23,7 +23,7 @@ import { Http, Response,
          Headers, RequestOptions }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { TEntity } from './TEntity';
+import { TObject } from './TObject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -120,7 +120,7 @@ export class EntityService {
  *
  * @return {.catch(this.handleError)} OK code or error if fails
  */
-  putData(entity:TEntity) {
+  putData(entity:TObject) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let data = { "TEntity": entity };

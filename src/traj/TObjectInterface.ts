@@ -1,4 +1,4 @@
-export interface TEntityInterface{
+export interface TObjectInterface{
         _id?: String;
       _name: String;
       _position?;
