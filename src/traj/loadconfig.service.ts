@@ -42,7 +42,7 @@ export class LoadConfig {
    * @ngdoc method
    * @name getConfig#
    *
-   * @return { Observable.of(this.config)} returns observalbe of config recived,
+   * @return { Observable} returns observalbe of config recived,
    *          error if fails
    */
   getConfig() {

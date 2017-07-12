@@ -56,8 +56,7 @@ export class TObject implements TObjectInterface {
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
-
-
+      
       constructor() {
             this._name = "TestTObject";
             this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);

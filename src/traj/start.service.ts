@@ -32,7 +32,7 @@ export class StartService {
  * @ngdoc method
  * @name startSimulation# It start simulation
  *
- * @return {.catch(this.handleError)} OK code or error if fails
+ * @return {Observable} OK code or error if fails
  */
   startSimulation() {
     return this.http.get(this.serverUrl + this.startUrl)

@@ -1,5 +1,5 @@
 export interface TObjectInterface{
-        _id?: String;
+      _id?: String;
       _name: String;
       _position?;
       _orientation?;

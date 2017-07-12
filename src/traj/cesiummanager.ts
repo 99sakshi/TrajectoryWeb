@@ -130,6 +130,10 @@ export class CesiumManager{
             scene.moon = new Cesium.Moon();
         }
 
+        if (!this._config.ShowCesiumUi) {
+            viewer.homeButton.container.innerHTML = "";
+        }
+
         viewer.camera.moveEnd.addEventListener(this._mouseEndCallback, this);
         this._cesiumViewer = viewer;
     }

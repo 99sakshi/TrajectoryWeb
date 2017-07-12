@@ -60,7 +60,7 @@ export class EntityService {
  * 
  * It sends the request to delete the specified entity from the database.
  *
- * @return {.catch(this.handleError)} OK code or error if fails
+ * @return {Observable} OK code or error if fails
  */
    deleteEntity(id:String){
      let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -79,7 +79,7 @@ export class EntityService {
  * 
  * It sends the request to add the specified entity from the database.
  *
- * @return {.catch(this.handleError)} OK code or error if fails
+ * @return {Observable} OK code or error if fails
  */
   getData(id:String) {
      let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -98,7 +98,7 @@ export class EntityService {
  * 
  * It sends the request to add the specified entity from the database.
  *
- * @return {.catch(this.handleError)} OK code or error if fails
+ * @return {Observable} OK code or error if fails
  */
  getDataExtents(x1:Number,x2:Number,y1:Number,y2:Number) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -118,7 +118,7 @@ export class EntityService {
  * 
  * @param {entity} Receives entity to be added to the database.
  *
- * @return {.catch(this.handleError)} OK code or error if fails
+ * @return {Observable} OK code or error if fails
  */
   putData(entity:TObject) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
