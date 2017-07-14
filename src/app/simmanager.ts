@@ -18,7 +18,7 @@
  **/
 import { Injectable } from '@angular/core';
 import { ObjectManager } from '../traj/objectmanager';
-import { TObject } from '../traj/TObject';
+import { TObject } from '../traj/tobject';
 
 enum State {
     Start,

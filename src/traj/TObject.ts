@@ -24,7 +24,7 @@ import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
 import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
-import { TObjectInterface } from './TObjectInterface';
+import { TObjectInterface } from './tobjectInterface';
 
 declare var Cesium: any;
 @NgModule({
@@ -56,7 +56,6 @@ export class TObject implements TObjectInterface {
        * It also declares and initializes heading, pitch and roll variables. 
        *
        */
-      
       constructor() {
             this._name = "TestTObject";
             this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);

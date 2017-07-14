@@ -23,7 +23,7 @@ import { Http, Response,
          Headers, RequestOptions }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { LoadConfig } from '../traj/loadconfig.service';
-import { TObject } from './TObject';
+import { TObject } from './tobject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';

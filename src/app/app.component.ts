@@ -35,7 +35,7 @@ import { TObject } from '../traj/TObject';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
-import { TObjectInterface } from '../traj/TObjectInterface';
+import { TObjectInterface } from '../traj/tobjectInterface';
 
 @Component({
   selector: 'my-app',
