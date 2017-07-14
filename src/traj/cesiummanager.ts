@@ -16,7 +16,6 @@ export class CesiumManager{
       extents;
       extentcallback;
       getData;
-      private _viewer;
 
       /**
        * @ngdoc method
@@ -100,13 +99,13 @@ export class CesiumManager{
         Cesium.Camera.DEFAULT_VIEW_FACTOR = 1.0;
         Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
 
-        this._viewer = new Cesium.Viewer('cesiumContainer');//Initialize the viewer widget with several custom options and mixins.
-        this._viewer.bottomContainer.innerHTML = "";
-        this._viewer.animation.container.innerHTML = "";
-        this._viewer.timeline.container.innerHTML = "";
+        var viewer = new Cesium.Viewer('cesiumContainer');//Initialize the viewer widget with several custom options and mixins.
+        viewer.bottomContainer.innerHTML = "";
+        viewer.animation.container.innerHTML = "";
+        viewer.timeline.container.innerHTML = "";
 
            if (this._config.UseLocalGeoserver) {
-            var imageryLayers = this._viewer.imageryLayers;
+            var imageryLayers = viewer.imageryLayers;
             // to include in the WMS URL to obtain images
             var myLayer = new Cesium.WebMapServiceImageryProvider({
                 url: this._config.Geoserver.Url,
@@ -123,20 +122,20 @@ export class CesiumManager{
                 url: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles'
             });
 
-           this._viewer.terrainProvider = terrainProvider;
+           viewer.terrainProvider = terrainProvider;
         }
 
         if (this._config.ShowMoon) {
-            var scene = this._viewer.scene;
+            var scene =viewer.scene;
             scene.moon = new Cesium.Moon();
         }
 
         if (!this._config.ShowCesiumUi) {
-            this._viewer.homeButton.container.innerHTML = "";
+           viewer.homeButton.container.innerHTML = "";
         }
 
-       this._viewer.camera.moveEnd.addEventListener(this._mouseEndCallback, this);
-        this._cesiumViewer = this._viewer;
+     viewer.camera.moveEnd.addEventListener(this._mouseEndCallback, this);
+        this._cesiumViewer =viewer;
 
         //Predefined Entity
     var entity = this.addEntity({
@@ -195,9 +194,9 @@ export class CesiumManager{
 }, false);
 
 //viewer=this._cesiumViewer;
-var scene = this._viewer.scene;
+var scene = this._cesiumViewer.scene;
 var dragging = false;
-var handler = new Cesium.ScreenSpaceEventHandler(this._viewer.canvas);
+var handler = new Cesium.ScreenSpaceEventHandler(this._cesiumViewer.canvas);
 handler.setInputAction(
     function(click) {
         var pickedObject = scene.pick(click.position);
