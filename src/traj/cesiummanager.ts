@@ -16,6 +16,7 @@ export class CesiumManager{
       extents;
       extentcallback;
       getData;
+      private _viewer;
 
       /**
        * @ngdoc method
@@ -99,13 +100,13 @@ export class CesiumManager{
         Cesium.Camera.DEFAULT_VIEW_FACTOR = 1.0;
         Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
 
-        var viewer = new Cesium.Viewer('cesiumContainer');//Initialize the viewer widget with several custom options and mixins.
-        viewer.bottomContainer.innerHTML = "";
-        viewer.animation.container.innerHTML = "";
-        viewer.timeline.container.innerHTML = "";
+        this._viewer = new Cesium.Viewer('cesiumContainer');//Initialize the viewer widget with several custom options and mixins.
+        this._viewer.bottomContainer.innerHTML = "";
+        this._viewer.animation.container.innerHTML = "";
+        this._viewer.timeline.container.innerHTML = "";
 
-        if (this._config.UseLocalGeoserver) {
-            var imageryLayers = viewer.imageryLayers;
+           if (this._config.UseLocalGeoserver) {
+            var imageryLayers = this._viewer.imageryLayers;
             // to include in the WMS URL to obtain images
             var myLayer = new Cesium.WebMapServiceImageryProvider({
                 url: this._config.Geoserver.Url,
@@ -122,20 +123,33 @@ export class CesiumManager{
                 url: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles'
             });
 
-            viewer.terrainProvider = terrainProvider;
+           this._viewer.terrainProvider = terrainProvider;
         }
 
         if (this._config.ShowMoon) {
-            var scene = viewer.scene;
+            var scene = this._viewer.scene;
             scene.moon = new Cesium.Moon();
         }
 
         if (!this._config.ShowCesiumUi) {
-            viewer.homeButton.container.innerHTML = "";
+            this._viewer.homeButton.container.innerHTML = "";
         }
 
-        viewer.camera.moveEnd.addEventListener(this._mouseEndCallback, this);
-        this._cesiumViewer = viewer;
+       this._viewer.camera.moveEnd.addEventListener(this._mouseEndCallback, this);
+        this._cesiumViewer = this._viewer;
+
+        //Predefined Entity
+    var entity = this.addEntity({
+    name : 'Red box with black outline',
+    position: Cesium.Cartesian3.fromDegrees(77.1025, 28.7041, 300000.0),
+    box : {
+        dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+        material : Cesium.Color.RED,
+        outline : true,
+        outlineColor : Cesium.Color.BLACK
+    }
+});     
+                this.dragNdrop(entity);
     }
 
 
@@ -168,5 +182,57 @@ export class CesiumManager{
     getEntity(hash:String){
 
     }
+
+    dragNdrop(entity)
+{
+
+    var mousePosition = new Cesium.Cartesian2();
+    var mousePositionProperty = new Cesium.CallbackProperty(function(time, result){
+    var position = scene.camera.pickEllipsoid(mousePosition, undefined, result);
+    var cartographic = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
+    cartographic.height = 300000.0;
+    return Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartographic);
+}, false);
+
+//viewer=this._cesiumViewer;
+var scene = this._viewer.scene;
+var dragging = false;
+var handler = new Cesium.ScreenSpaceEventHandler(this._viewer.canvas);
+handler.setInputAction(
+    function(click) {
+        var pickedObject = scene.pick(click.position);
+        if (Cesium.defined(pickedObject) && (pickedObject.id === entity)) {
+            dragging = true;
+            scene.screenSpaceCameraController.enableRotate = false;
+            Cesium.Cartesian2.clone(click.position, mousePosition);
+            entity.position = mousePositionProperty;
+        }
+    },
+    Cesium.ScreenSpaceEventType.LEFT_DOWN
+);
+
+handler.setInputAction(
+    function(movement) {
+        if (dragging) {
+            Cesium.Cartesian2.clone(movement.endPosition, mousePosition);
+        }
+    },
+    Cesium.ScreenSpaceEventType.MOUSE_MOVE
+);
+
+
+handler.setInputAction(
+    function(click) {
+        if(dragging) {
+          dragging = false;
+          scene.screenSpaceCameraController.enableRotate = true;
+          entity.position = scene.camera.pickEllipsoid(click.position);
+        }
+    },
+    Cesium.ScreenSpaceEventType.LEFT_UP
+);
+
+}
+
 
 }
