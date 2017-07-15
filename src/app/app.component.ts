@@ -31,7 +31,7 @@ import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { CesiumManager } from '../traj/cesiummanager';
-import { TObject } from '../traj/TObject';
+import { TObject } from '../traj/tobject';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
