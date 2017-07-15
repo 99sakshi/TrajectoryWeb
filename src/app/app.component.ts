@@ -32,10 +32,12 @@ import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { CesiumManager } from '../traj/cesiummanager';
 import { TObject } from '../traj/TObject';
+import { TVector } from '../traj/TVector'
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
 import { TObjectInterface } from '../traj/tobjectInterface';
+
 
 @Component({
   selector: 'my-app',
@@ -100,7 +102,8 @@ export class AppComponent {
      constructor(_simManager: SimManager, private _entityservice: EntityService,
                   private startService: StartService,
                   private loadConfig: LoadConfig, 
-                  private _cesiumManager:CesiumManager
+                  private _cesiumManager:CesiumManager,
+                  private _tvector: TVector
                  )
      {
           this._simManager = _simManager,
@@ -165,9 +168,9 @@ export class AppComponent {
 
           upcontroller.setPosition( PosMumbai );
 
-       // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
-       // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
-       // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+        this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+        this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
+        this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
       }
 
     /**
@@ -181,6 +184,7 @@ export class AppComponent {
       addAppEntityToManager(tobject:TObjectInterface){
 
         var appObject = new TObject();
+        //var tvector= new TVector(this._cesiumManager);
         appObject.setName(tobject._name);
         appObject.setModelUrl(tobject._modelUrl); 
         appObject.setInitialPosition(tobject._position);
@@ -188,10 +192,12 @@ export class AppComponent {
         var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
         var orientation = Cesium.Transforms.headingPitchRollQuaternion(tobject._position, hpr);
         appObject.setOrientation(orientation);
+        
         appObject.setController(tobject._Controller); 
 
         // Entity has to be added to the manager before position set 
         this._simManager.addEntity(appObject, false); // for test, dont add to backend
+        this._tvector.addVector(appObject);
 
       }
 

@@ -10,7 +10,7 @@ import { TObject } from './tobject'
 @Injectable()
 export class CesiumManager{ 
       
-      private _cesiumViewer;
+       _cesiumViewer;
       private _config;
       private _mouseEndCallback;
       extents;
