@@ -49,7 +49,7 @@ import { TObjectInterface } from '../traj/tobjectInterface';
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
       <button type="button" class="btn btn-danger btn-xs" (click)="deleteEntity()">Delete Aircraft</button>
       <button type="button" class="btn btn-default btn-xs" [class.clicked]="play" (click)="game()">let's PLAY!</button>
-       <br> Extents - north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}  
+       Extents - north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}  
      </div>
 
      <div id="cesiumContainer">

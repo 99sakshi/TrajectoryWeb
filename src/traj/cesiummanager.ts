@@ -104,6 +104,16 @@ export class CesiumManager{
         viewer.animation.container.innerHTML = "";
         viewer.timeline.container.innerHTML = "";
 
+        if(this._config.Showlogo)
+        {
+            viewer.bottomContainer.innerHTML = "<img src=\"\\src\\traj\\oponop.png\">";
+            // HACK: - shouldn't be called after each render
+            viewer.scene.postRender.addEventListener(function(scene, time)  { 
+                viewer.bottomContainer.style.left = "1px";
+                viewer.bottomContainer.style.bottom = "1px";
+            });
+        }
+
         if (this._config.UseLocalGeoserver) {
             var imageryLayers = viewer.imageryLayers;
             // to include in the WMS URL to obtain images
