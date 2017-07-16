@@ -29,7 +29,6 @@ import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
 import { EntityService } from './entity.service';
 import { TObject } from './tobject';
-import { TVector } from './TVector';
 
 @NgModule({
   imports: [BrowserModule, HttpModule, JsonpModule],
@@ -37,7 +36,7 @@ import { TVector } from './TVector';
   bootstrap: [],
   providers: [LoadConfig, StartService,
     ObjectManager, CesiumManager,
-    EntityService, TObject,TVector],
+    EntityService, TObject],
 })
 
 export class TrajModule { }
