@@ -165,7 +165,7 @@ export class AppComponent {
 
           upcontroller.setPosition( PosMumbai );
 
-       // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+          this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
        // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
        // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
       }
