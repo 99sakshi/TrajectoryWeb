@@ -40,7 +40,7 @@ export class TVector{
     var greenCylinder =this._cesiummanager.addEntity({
      name : 'Yellow cylinder with black outline',
      position: {
-         x:entity._position.x,
+        x:entity._position.x,
         y:entity._position.y,
         z:entity._position.z
                },
@@ -88,12 +88,16 @@ var redCone = this._cesiummanager.addEntity({
     }
 });
 
+var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(entity._position);
+cartographicPosition.height += 200000;
+var poistion = Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartographicPosition);
+
 var redCone = this._cesiummanager.addEntity({
     name : 'Red cone',
     position: {
-        x:entity._position.x+105000,
-        y:entity._position.y+300000,
-        z:entity._position.z+130000
+        x:poistion.x,
+        y:poistion.y,
+        z:poistion.z
               },
     cylinder : {
         length : 200000.0,

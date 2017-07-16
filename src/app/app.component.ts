@@ -103,7 +103,6 @@ export class AppComponent {
                   private startService: StartService,
                   private loadConfig: LoadConfig, 
                   private _cesiumManager:CesiumManager,
-                  private _tvector: TVector
                  )
      {
           this._simManager = _simManager,
@@ -197,8 +196,9 @@ export class AppComponent {
 
         // Entity has to be added to the manager before position set 
         this._simManager.addEntity(appObject, false); // for test, dont add to backend
-        this._tvector.addVector(appObject);
 
+        let vector = new TVector(this._cesiumManager);
+        vector.addVector(appObject);
       }
 
     /**
