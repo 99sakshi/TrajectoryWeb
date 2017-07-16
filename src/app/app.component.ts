@@ -196,9 +196,17 @@ export class AppComponent {
 
         // Entity has to be added to the manager before position set 
         this._simManager.addEntity(appObject, false); // for test, dont add to backend
+        var position=Cesium.Cartesian3.fromDegrees(75.8577,22.7196,100);
+          var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
+        var direction = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+      //    var direction=
+      // { x: -0.05725358280129918,
+      //   y: -0.5065361546937046,
+      //   z: -0.8548722660033764,
+      //   w: -0.09662587677626809 }
 
-        let vector = new TVector(this._cesiumManager);
-        vector.addVector(appObject);
+        var vector = new TVector(position,direction);
+       //vector.addVector(position,direction);
       }
 
     /**

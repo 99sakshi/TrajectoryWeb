@@ -1,84 +1,88 @@
-import { CesiumManager } from './cesiummanager';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, JsonpModule } from '@angular/http';
+//import { HttpModule, JsonpModule } from '@angular/http';
 
-import { LoadConfig } from './loadconfig.service';
-import { ObjectManager } from './objectmanager';
-import { StartService } from './start.service';
-import { TObjectInterface } from './tobjectInterface';
+//import { LoadConfig } from './loadconfig.service';
+import { CesiumManager } from './cesiummanager';
+//import { ObjectManager } from './objectmanager';
+//import { StartService } from './start.service';
+//import { TObjectInterface } from './tobjectInterface';
 
 declare var Cesium: any;
-
 @NgModule({
-      imports: [BrowserModule, HttpModule, JsonpModule],
+      imports: [BrowserModule],
       declarations: [],
       bootstrap: [],
-      providers: [LoadConfig, StartService, ObjectManager, CesiumManager]
+      providers: [CesiumManager]
 })
+
+
 export class TVector{
 
-//Cesium;
-//_cesiummanager;
+private _cesiummanager:CesiumManager;
 
 
-    constructor(private _cesiummanager:CesiumManager){
-       // this.Cesium=this._cesiummanager._cesiumViewer;
+    constructor(private _position, private _direction){
+        this.addVector(this._position,this._direction);
     }
 
-    addVector(entity){
-        var position=entity._position;
-        var direction=entity._orientation;
+    addVector(position,direction){
+      //  var position=entity._position;
+      //  var direction=entity._orientation;
         //this.vectorX(entity);
-        this.vectorY(entity);
+        this.vectorY(position,direction);
         //this.vectorZ(entity);
     }
 
-    vectorX(entity){
-       // this.Cesium=this._cesiummanager._cesiumViewer;
-      // var Cesium= this._cesiummanager.Cesium;
-    var greenCylinder =this._cesiummanager.addEntity({
-     name : 'Yellow cylinder with black outline',
-     position: {
-        x:entity._position.x,
-        y:entity._position.y,
-        z:entity._position.z
-               },
-     cylinder : {
-        length : 800000.0,
-        topRadius : 20000.0,
-        bottomRadius : 20000.0,
-        material : Cesium.Color.YELLOW
+//     vectorX(entity){
+//        // this.Cesium=this._cesiummanager._cesiumViewer;
+//       // var Cesium= this._cesiummanager.Cesium;
+//     var greenCylinder =this._cesiummanager.addEntity({
+//      name : 'Yellow cylinder with black outline',
+//      position: {
+//         x:entity._position.x,
+//         y:entity._position.y,
+//         z:entity._position.z
+//                },
+//      cylinder : {
+//         length : 800000.0,
+//         topRadius : 20000.0,
+//         bottomRadius : 20000.0,
+//         material : Cesium.Color.YELLOW
     
-    }
-});
+//     }
+// });
 
-var redCone = this._cesiummanager.addEntity({
-    name : 'Green cone',
-    position: {
-        x:entity._position.x,
-        y:entity._position.y,
-        z:entity._position.z
-              },
-    cylinder : {
-        length : 200000.0,
-        topRadius : 0.0,
-        bottomRadius : 40000.0,
-        material : Cesium.Color.GREEN
-    }
-});
-    }
+// var redCone = this._cesiummanager.addEntity({
+//     name : 'Green cone',
+//     position: {
+//         x:entity._position.x,
+//         y:entity._position.y,
+//         z:entity._position.z
+//               },
+//     cylinder : {
+//         length : 200000.0,
+//         topRadius : 0.0,
+//         bottomRadius : 40000.0,
+//         material : Cesium.Color.GREEN
+//     }
+// });
+//     }
 
-    vectorY(entity){
+    vectorY(position,direction){
        // this.Cesium=this._cesiummanager._cesiumViewer;
       // var Cesium= this._cesiummanager.Cesium;
-    var greenCylinder =this._cesiummanager.addEntity({
+
+            var heading = 0;
+            var pitch = 0;
+            var roll = 0;
+            var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+            var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+
+    var yellowCylinder =this._cesiummanager.addEntity({
      name : 'Yellow cylinder with black outline',
-     position: {
-        x:entity._position.x,
-        y:entity._position.y,
-        z:entity._position.z
-               },
+     position: position,
+     orientation:orientation,
      cylinder : {
         length : 400000.0,
         topRadius : 20000.0,
@@ -88,16 +92,16 @@ var redCone = this._cesiummanager.addEntity({
     }
 });
 
-var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(entity._position);
+var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
 cartographicPosition.height += 200000;
-var poistion = Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartographicPosition);
+var position = Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartographicPosition);
 
 var redCone = this._cesiummanager.addEntity({
     name : 'Red cone',
     position: {
-        x:poistion.x,
-        y:poistion.y,
-        z:poistion.z
+        x:position.x,
+        y:position.y,
+        z:position.z
               },
     cylinder : {
         length : 200000.0,
@@ -108,39 +112,39 @@ var redCone = this._cesiummanager.addEntity({
 });
     }
 
-    vectorZ(entity){
-       // this.Cesium=this._cesiummanager._cesiumViewer;
-      // var Cesium= this._cesiummanager.Cesium;
-    var greenCylinder =this._cesiummanager.addEntity({
-     name : 'Yellow cylinder with black outline',
-     position: {
-         x:entity._position.x,
-        y:entity._position.y,
-        z:entity._position.z
-               },
-     cylinder : {
-        length : 800000.0,
-        topRadius : 20000.0,
-        bottomRadius : 20000.0,
-        material : Cesium.Color.YELLOW
+//     vectorZ(entity){
+//        // this.Cesium=this._cesiummanager._cesiumViewer;
+//       // var Cesium= this._cesiummanager.Cesium;
+//     var greenCylinder =this._cesiummanager.addEntity({
+//      name : 'Yellow cylinder with black outline',
+//      position: {
+//          x:entity._position.x,
+//         y:entity._position.y,
+//         z:entity._position.z
+//                },
+//      cylinder : {
+//         length : 800000.0,
+//         topRadius : 20000.0,
+//         bottomRadius : 20000.0,
+//         material : Cesium.Color.YELLOW
     
-    }
-});
+//     }
+// });
 
-var redCone = this._cesiummanager.addEntity({
-    name : 'Blue cone',
-    position: {
-        x:entity._position.x,
-        y:entity._position.y,
-        z:10*entity._position.z
-              },
-    cylinder : {
-        length : 200000.0,
-        topRadius : 0.0,
-        bottomRadius : 40000.0,
-        material : Cesium.Color.BLUE
-    }
-});
-    }
+// var redCone = this._cesiummanager.addEntity({
+//     name : 'Blue cone',
+//     position: {
+//         x:entity._position.x,
+//         y:entity._position.y,
+//         z:10*entity._position.z
+//               },
+//     cylinder : {
+//         length : 200000.0,
+//         topRadius : 0.0,
+//         bottomRadius : 40000.0,
+//         material : Cesium.Color.BLUE
+//     }
+// });
+//     }
 
 }
