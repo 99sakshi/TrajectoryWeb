@@ -31,11 +31,11 @@ import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { CesiumManager } from '../traj/cesiummanager';
-import { TObject } from '../traj/TObject';
+import { TObject } from '../traj/tobject';
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
-import { TObjectInterface } from '../traj/TObjectInterface';
+import { TObjectInterface } from '../traj/tobjectInterface';
 
 @Component({
   selector: 'my-app',
@@ -49,7 +49,7 @@ import { TObjectInterface } from '../traj/TObjectInterface';
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
       <button type="button" class="btn btn-danger btn-xs" (click)="deleteEntity()">Delete Aircraft</button>
       <button type="button" class="btn btn-default btn-xs" [class.clicked]="play" (click)="game()">let's PLAY!</button>
-       <br> Extents - north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}  
+       Extents - north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}  
      </div>
 
      <div id="cesiumContainer">

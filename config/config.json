@@ -1,5 +1,6 @@
 {
 	"Test": true,
+	"Showlogo": true,
 	"ShowMoon": true,
 	"UseLocalGeoserver": true,
 	"ShowCesiumUi":false,
