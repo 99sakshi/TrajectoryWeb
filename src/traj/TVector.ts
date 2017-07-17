@@ -1,30 +1,36 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-//import { HttpModule, JsonpModule } from '@angular/http';
+import { Injectable } from '@angular/core';
 
-//import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
-//import { ObjectManager } from './objectmanager';
-//import { StartService } from './start.service';
-//import { TObjectInterface } from './tobjectInterface';
+import { SimManager } from '../app/simmanager';
+
 
 declare var Cesium: any;
 @NgModule({
     imports: [BrowserModule],
     declarations: [],
     bootstrap: [],
-    providers: [CesiumManager]
+    providers: [CesiumManager, SimManager]
 })
-
 
 export class TVector {
 
-    // _cesiummanager:CesiumManager;
+    private _yellowCylinder;
+    private _redCone;
+    _time;
+    _deltaTime;
 
 
-    constructor(private _position, private _direction, private _cesiummanager: CesiumManager) {
-        // this._cesiummanager=CesiumManager;
+    constructor(private _position,
+        private _direction,
+        private _cesiummanager: CesiumManager,
+        private _simmanager: SimManager) {
+        this._time = 0; // in seconds
+        this._deltaTime = 0.01;   // in seconds
+       // setTimeout(() => {this.tickVector()}, 3000);
         this.addVector(this._position, this._direction);
+
     }
 
     addVector(position, direction) {
@@ -38,16 +44,14 @@ export class TVector {
 
 
     vectorY(position, direction) {
-        var heading = direction.x;
-        var pitch = direction.y;
-        var roll = direction.z;
-        // var heading= this.degreesToRadians((heading * -1));
-        // var pitch = this.degreesToRadians(pitch);
-        // var roll = this.degreesToRadians(roll + 180);
-        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        // var heading = direction.x;
+        // var pitch = direction.y;
+        // var roll = direction.z;
+        // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        var hpr = this.setOrientation(direction);
         var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-
-        var yellowCylinder = this._cesiummanager.addEntity({
+        this._yellowCylinder = {
             name: 'Yellow cylinder with black outline',
             position: position,
             orientation: orientation,
@@ -55,10 +59,90 @@ export class TVector {
                 length: 400000.0,
                 topRadius: 20000.0,
                 bottomRadius: 20000.0,
-                material: Cesium.Color.YELLOW
+                alpha: 1.0,
+                material: this.setColour('YELLOW');
 
             }
-        });
+        };
+
+        // var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
+        //cartographicPosition.latitude -=200000;
+        //cartographicPosition.height += 200000;
+        //orientation.y += 200000;
+        //var position = Cesium.Ellipsoid.WGS84.fromDegrees(cartographicPosition);
+
+        // var heading = direction.x;
+        // var pitch = direction.y+200000;
+        // var roll = direction.z;
+        // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+
+        // position.z += 210000;
+        //  position.z *=3 ;
+        // position.x /= 1.009;
+        //  position.y /=1.002;
+        //position.x -=70000;
+        //  position.y -=12000;
+
+        this._redCone = {
+            name: 'Red cone',
+            position: position,
+            orientation: orientation,
+            cylinder: {
+                length: 200000.0,
+                topRadius: 0.0,
+                bottomRadius: 40000.0,
+                material: this.setColour('red');
+            }
+
+        };
+
+        this.addToGlobe();
+    }
+
+
+
+    addToGlobe() {
+        this._cesiummanager.addEntity(this._yellowCylinder);
+        this._cesiummanager.addEntity(this._redCone);
+        // var vectors = [this._yellowCylinder, this._redCone];
+        // setInterval(function () {
+        //   $scope.tickVector();
+        // }, 3000)
+        this.tickVector();
+
+    }
+
+    setColour(colorName) {
+        return Cesium.Color[colorName.toUpperCase()];
+    }
+
+    setOrientation(direction) {
+        var heading = direction.x;
+        var pitch = direction.y;
+        var roll = direction.z;
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+        return hpr;
+    }
+
+    tickVector() {
+
+        var timeInfo = {
+            time: parseFloat(this._time.toFixed(2)),
+            deltaTime: parseFloat(this._deltaTime.toFixed(2))
+        }
+
+        // name.setOrientation(this._Controller._orientation);
+        var direction = {
+            x: -0.08636587213546239,
+            y: -0.5736984357734006,
+            z: -0.8054249527482052,
+            w: -0.12125051097618404
+        }
+        this.setOrientation(direction);
+        // Wait for a while
+         setTimeout(() => { }, 3000);
     }
 
 
@@ -186,14 +270,17 @@ export class TVector {
     //               },
     //     cylinder : {
     //         length : 200000.0,
-    //         topRadius : 0.0,
+    //         t opRadius : 0.0,
     //         bottomRadius : 40000.0,
     //         material : Cesium.Color.BLUE
     //     }
     // });
     //     }
-    // degreesToRadians(degrees){
+    // degreesToRadi ans(degrees){
     //     return (degrees*Math.PI/180);
     // }
+
+
+
 
 }

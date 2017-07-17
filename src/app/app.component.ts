@@ -31,8 +31,8 @@ import { SimManager } from './simmanager';
 import { ForwardController } from './forwardController';
 import { UpController } from './upcontroller';
 import { CesiumManager } from '../traj/cesiummanager';
-import { TObject } from '../traj/TObject';
-import { TVector } from '../traj/TVector'
+import { TObject } from '../traj/tobject';
+import { TVector } from '../traj/tvector'
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
@@ -196,7 +196,7 @@ export class AppComponent {
 
         // Entity has to be added to the manager before position set 
         this._simManager.addEntity(appObject, false); // for test, dont add to backend
-        var position=Cesium.Cartesian3.fromDegrees(75.8577,22.7196,100);
+        var position=Cesium.Cartesian3.fromDegrees(75.8577,22.7196,200000.0);
           var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
        // var direction = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
          var direction=
@@ -205,7 +205,7 @@ export class AppComponent {
         z: -0.8548722660033764,
         w: -0.09662587677626809 }
 
-        var vector = new TVector(position,direction,this._cesiumManager);
+        var vector = new TVector(position,direction,this._cesiumManager,this._simManager);
        //vector.addVector(position,direction);
       }
 

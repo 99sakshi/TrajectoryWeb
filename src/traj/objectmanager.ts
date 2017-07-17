@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
 import { EntityService } from './entity.service';
-import { TObject } from './TObject';
+import { TObject } from './tobject';
 
 
 /**
