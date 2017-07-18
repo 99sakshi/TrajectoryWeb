@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Injectable } from '@angular/core';
 
 import { CesiumManager } from './cesiummanager';
-import { SimManager } from '../app/simmanager';
 
 
 declare var Cesium: any;
@@ -11,7 +10,7 @@ declare var Cesium: any;
     imports: [BrowserModule],
     declarations: [],
     bootstrap: [],
-    providers: [CesiumManager, SimManager]
+    providers: [CesiumManager]
 })
 
 export class TVector {
@@ -24,8 +23,7 @@ export class TVector {
 
     constructor(private _position,
         private _direction,
-        private _cesiummanager: CesiumManager,
-        private _simmanager: SimManager) {
+        private _cesiummanager: CesiumManager) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01;   // in seconds
        // setTimeout(() => {this.tickVector()}, 3000);
@@ -60,7 +58,7 @@ export class TVector {
                 topRadius: 20000.0,
                 bottomRadius: 20000.0,
                 alpha: 1.0,
-                material: this.setColour('YELLOW');
+                material: this.setColour('YELLOW')
 
             }
         };
@@ -92,7 +90,7 @@ export class TVector {
                 length: 200000.0,
                 topRadius: 0.0,
                 bottomRadius: 40000.0,
-                material: this.setColour('red');
+                material: this.setColour('red')
             }
 
         };
