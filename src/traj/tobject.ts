@@ -47,6 +47,8 @@ export class TObject implements TObjectInterface {
       _Controller;
       isPersistent;
 
+      dragable: Boolean; 
+
       /**
        * @ngdoc method
        * @name Constructor # initializes Variables
@@ -68,6 +70,7 @@ export class TObject implements TObjectInterface {
             this._CEntity = null;
             this._Controller = null;
             this.isPersistent=true;
+            this.dragable = true;
 
             //defining parameters of the current object
             this._para = {
@@ -157,6 +160,7 @@ export class TObject implements TObjectInterface {
        */
       setCEntity(entity:TObjectInterface) {
             this._CEntity = entity;
+            this._CEntity.TObject = this;
       }
 
 

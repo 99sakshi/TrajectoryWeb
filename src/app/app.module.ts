@@ -15,7 +15,7 @@
  *
  * This is an app module. It includes all the components for the functioning of the app.
  * It contains BrowserModule, HttpModule, JsonModule and TrajModule.
- * It's providers are SimManager, Missile and ForwardController.
+ * It's providers are SimManager
  *
  *
  **/

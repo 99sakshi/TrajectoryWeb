@@ -4,7 +4,7 @@
  * 
  * @requires Component
  * @requires SimManager
- * @requires ForwardController
+ * @requires DirectionController
  * @requires UpController
  * @requires CesiumManager
  * @requires TObject
@@ -28,11 +28,11 @@
 declare var Cesium: any;
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
-import { ForwardController } from './forwardController';
-import { UpController } from './upcontroller';
+import { DirectionController } from '../traj/directioncontroller';
 import { CesiumManager } from '../traj/cesiummanager';
 import { TObject } from '../traj/tobject';
 import { TVector } from '../traj/tvector'
+
 import { StartService } from '../traj/start.service';
 import { LoadConfig } from '../traj/loadconfig.service';
 import { EntityService } from '../traj/entity.service';
@@ -51,7 +51,7 @@ import { TObjectInterface } from '../traj/tobjectInterface';
       <button type="button" class="btn btn-default btn-xs" (click)="getData()">Get Data</button>
       <button type="button" class="btn btn-danger btn-xs" (click)="deleteEntity()">Delete Aircraft</button>
       <button type="button" class="btn btn-default btn-xs" [class.clicked]="play" (click)="game()">let's PLAY!</button>
-       <br> Extents - north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}  
+       Extents - north: {{ north  }}  east: {{east}}    west: {{west}}    south: {{south}}  
      </div>
 
      <div id="cesiumContainer">
@@ -160,22 +160,24 @@ export class AppComponent {
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
           var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
-          var fwdcontroller = new ForwardController;
-          fwdcontroller.setPosition( PosKolkatta );
+          var fwdcontroller = new DirectionController();
+          fwdcontroller.setPosition( PosMumbai );
+          fwdcontroller.setDirection( Cesium.Cartesian3.fromElements(1.0, 0.0, 0.0) );
 
-          var upcontroller = new UpController;
+          var upcontroller = new DirectionController();
+          upcontroller.setPosition( PosKolkatta );
+          upcontroller.setDirection( Cesium.Cartesian3.fromElements(0.0, 0.0, 1.0) );
 
-          upcontroller.setPosition( PosMumbai );
 
-        this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
-        this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
-        this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+          this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+       // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
+       // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
       }
 
     /**
      * @ngdoc method
      * @name addAppEntityToManager # adds AppEntity to SimManager
-     * This method creates object of AppEntity class and ForwardController class.
+     * This method creates object of AppEntity class and Direction Controller class.
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      * 
