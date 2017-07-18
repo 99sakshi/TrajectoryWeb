@@ -69,11 +69,11 @@ export class TVector {
         //orientation.y += 200000;
         //var position = Cesium.Ellipsoid.WGS84.fromDegrees(cartographicPosition);
 
-        // var heading = direction.x;
-        // var pitch = direction.y+200000;
-        // var roll = direction.z;
-        // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-        // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        var heading = 0;
+        var pitch = 0;
+        var roll = 0;
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
 
         // position.z += 210000;
         //  position.z *=3 ;
