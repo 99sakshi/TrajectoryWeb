@@ -24,6 +24,7 @@ import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
 import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
+import { DirectionController } from './directioncontroller';
 import { TObjectInterface } from './tobjectInterface';
 
 declare var Cesium: any;
@@ -97,7 +98,9 @@ export class TObject implements TObjectInterface {
                   this._modelUrl = asdf.TEntity._modelUrl;
                   this._id = asdf.TEntity._id;
                   this._orientation = asdf.TEntity._orientation;
-                  this._Controller = asdf.TEntity._Controller;
+                  var controller = new DirectionController();
+                  controller.setParameter(asdf.TEntity._Controller);
+                  this._Controller = controller;
                   this.isPersistent=false;
             }
 

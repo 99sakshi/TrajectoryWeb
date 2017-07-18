@@ -165,9 +165,9 @@ export class AppComponent {
           upcontroller.setPosition( PosKolkatta );
           upcontroller.setDirection( Cesium.Cartesian3.fromElements(0.0, 0.0, 1.0) );
 
-          this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
-       // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
-       // this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosKolkatta,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+          //this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
+          //this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
+          //this.addAppEntityToManager({_name:"ToomManDelhi",_position:PosDelhi,_modelUrl:modelToonMan,_Controller:null});
       }
 
     /**
@@ -192,7 +192,6 @@ export class AppComponent {
 
         // Entity has to be added to the manager before position set 
         this._simManager.addEntity(appObject, false); // for test, dont add to backend
-
       }
 
     /**

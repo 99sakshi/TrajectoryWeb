@@ -28,6 +28,14 @@ export class DirectionController {
         this._direction = Cesium.Cartesian3.fromElements(0,0,0);
     }
 
+    setParameter(asdf){
+        this._position = asdf._position;
+        this._positionLLA = asdf._positionLLA;
+        this._hpr = new Cesium.HeadingPitchRoll(this._hpr.heading, this._hpr.pitch, this._hpr.roll); 
+        this._direction = asdf._direction;
+        this._orientation = asdf._orientation;
+    }
+
 
     /**
      * @ngdoc method
