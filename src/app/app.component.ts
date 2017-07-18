@@ -4,7 +4,7 @@
  * 
  * @requires Component
  * @requires SimManager
- * @requires ForwardController
+ * @requires DirectionController
  * @requires UpController
  * @requires CesiumManager
  * @requires TObject
@@ -28,8 +28,7 @@
 declare var Cesium: any;
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
-import { ForwardController } from './forwardController';
-import { UpController } from './upcontroller';
+import { DirectionController } from '../traj/directioncontroller';
 import { CesiumManager } from '../traj/cesiummanager';
 import { TObject } from '../traj/tobject';
 import { StartService } from '../traj/start.service';
@@ -158,12 +157,13 @@ export class AppComponent {
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
           var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
-          var fwdcontroller = new ForwardController;
-          fwdcontroller.setPosition( PosKolkatta );
+          var fwdcontroller = new DirectionController();
+          fwdcontroller.setPosition( PosMumbai );
+          fwdcontroller.setDirection( Cesium.Cartesian3.fromElements(1.0, 0.0, 0.0) );
 
-          var upcontroller = new UpController;
-
-          upcontroller.setPosition( PosMumbai );
+          var upcontroller = new DirectionController();
+          upcontroller.setPosition( PosKolkatta );
+          upcontroller.setDirection( Cesium.Cartesian3.fromElements(0.0, 0.0, 1.0) );
 
           this.addAppEntityToManager({_name:"AircraftKolkata",_position:PosMumbai,_modelUrl:modelAircraft,_Controller:fwdcontroller});
        // this.addAppEntityToManager({_name:"BalloonMumbai",_position:PosKolkatta,_modelUrl:modelBalloon,_Controller:upcontroller});
@@ -173,7 +173,7 @@ export class AppComponent {
     /**
      * @ngdoc method
      * @name addAppEntityToManager # adds AppEntity to SimManager
-     * This method creates object of AppEntity class and ForwardController class.
+     * This method creates object of AppEntity class and Direction Controller class.
      * It sets AppEntity's name, position, model and controller.
      * It also adds an entity to sim manager.
      * 
