@@ -81,7 +81,12 @@ export class TVector {
         //  position.y /=1.002;
         //position.x -=70000;
         //  position.y -=12000;
-
+        //var position=(Math.sqrt(direction.x*direction.x)+(direction.y*direction.y)+(direction.z*direction.z))+200000+(Math.sqrt((position.x*position.x)+(position.y*position.y)+(position.z*position.z)));
+        // var position2={
+        //     x:direction.x+200000+position.x,
+        //     y:direction.y+200000+position.y,
+        //     z:direction.z+200000+position.z
+        // }
         this._redCone = {
             name: 'Red cone',
             position: position,
@@ -161,15 +166,31 @@ export class TVector {
         var x = (R00 * h) + (R01 * p) + (R02 * r),
             y = (R10 * h) + (R11 * p) + (R12 * r),
             z = (R20 * h) + (R21 * p) + (R22 * r);
-        var orientation = {
-            x: x,
-            y: y,
-            z: z
-        };
-        return orientation;
+        // var orientation = {
+        //     x: x,
+        //     y: y,
+        //     z: z
+        // };
+	var q;
+ var t0 = Math.cos(x * 0.5);
+var t1 = Math.sin(x* 0.5);
+var t2 = Math.cos(y * 0.5);
+	var t3 = Math.sin(y * 0.5);
+	var t4 = Math.cos(z * 0.5);
+	var t5 = Math.sin(z * 0.5);
 
-
+	var wq = t0 * t2 * t4 + t1 * t3 * t5;
+	var xq = t0 * t3 * t4 - t1 * t2 * t5;
+	var yq = t0 * t2 * t5 + t1 * t3 * t4;
+	var zq = t1 * t2 * t4 - t0 * t3 * t5;
+    q={
+        x:xq,
+        y:yq,
+        z:zq,
+        w:wq
     }
+	return q
+   }
 
 
 
