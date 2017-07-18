@@ -26,7 +26,7 @@ export class TVector {
         private _cesiummanager: CesiumManager) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01;   // in seconds
-       // setTimeout(() => {this.tickVector()}, 3000);
+        // setTimeout(() => {this.tickVector()}, 3000);
         this.addVector(this._position, this._direction);
 
     }
@@ -46,9 +46,9 @@ export class TVector {
         // var pitch = direction.y;
         // var roll = direction.z;
         // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-        // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-        var hpr = this.setOrientation(direction);
-        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        //  var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        //  var hpr = this.setOrientation(direction);
+        var orientation = this.computeHpr(position, direction);
         this._yellowCylinder = {
             name: 'Yellow cylinder with black outline',
             position: position,
@@ -69,11 +69,11 @@ export class TVector {
         //orientation.y += 200000;
         //var position = Cesium.Ellipsoid.WGS84.fromDegrees(cartographicPosition);
 
-        var heading = 0;
-        var pitch = 0;
-        var roll = 0;
-        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        // var heading = 0;
+        // var pitch = 0;
+        // var roll = 0;
+        // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
 
         // position.z += 210000;
         //  position.z *=3 ;
@@ -107,7 +107,7 @@ export class TVector {
         // setInterval(function () {
         //   $scope.tickVector();
         // }, 3000)
-        this.tickVector();
+        //   this.tickVector();
 
     }
 
@@ -140,7 +140,35 @@ export class TVector {
         }
         this.setOrientation(direction);
         // Wait for a while
-         setTimeout(() => { }, 3000);
+        setTimeout(() => { }, 3000);
+    }
+
+    computeHpr(position, direction) {
+        var h = 0 - position.x;
+        var p = (Math.atan2(direction.z, direction.x)) - position.y;
+        var r = (Math.atan2(direction.y, Math.sqrt((direction.x * direction.x) + (direction.z * direction.z)))) - position.z;
+        var phi = (position.x * Math.PI / 180);
+        var lambda = (position.y * Math.PI / 180);
+        var R00 = -(Math.sin(phi) * Math.cos(lambda)),
+            R01 = -(Math.sin(lambda)),
+            R02 = -(Math.cos(phi) * Math.cos(lambda)),
+            R10 = -(Math.sin(phi) * Math.sin(lambda)),
+            R11 = Math.cos(lambda),
+            R12 = -(Math.cos(phi) * Math.sin(lambda)),
+            R20 = Math.cos(phi),
+            R21 = 0,
+            R22 = -(Math.sin(phi));
+        var x = (R00 * h) + (R01 * p) + (R02 * r),
+            y = (R10 * h) + (R11 * p) + (R12 * r),
+            z = (R20 * h) + (R21 * p) + (R22 * r);
+        var orientation = {
+            x: x,
+            y: y,
+            z: z
+        };
+        return orientation;
+
+
     }
 
 
