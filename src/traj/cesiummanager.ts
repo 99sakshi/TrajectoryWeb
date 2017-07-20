@@ -14,6 +14,7 @@ export class CesiumManager{
       private _config;
       private _mouseEndCallback;
       extents;
+      level;
       extentcallback;
       getData;
 
@@ -39,7 +40,7 @@ export class CesiumManager{
 
            this._mouseEndCallback = function() {
                 //// get extents
-                this.extents = this._cesiumViewer.camera.computeViewRectangle()
+                this.extents = this._cesiumViewer.camera.computeViewRectangle();
                 console.log(this.extents);
                 // converting radians into degrees
                 // and using lat long values to one decimal place
@@ -72,6 +73,7 @@ export class CesiumManager{
                 // cap value between 0 - 10
                 var level = 10 - Math.max(Math.min(levelNumber, 10),0);
                 console.log("Level " + level);
+                this.level = level;
 
                 this.extentcallback();
 
@@ -145,7 +147,10 @@ export class CesiumManager{
         }
 
         viewer.camera.moveEnd.addEventListener(this._mouseEndCallback, this);
-        this._cesiumViewer =viewer; 
+        this._cesiumViewer = viewer; 
+
+        this.extents = this._cesiumViewer.camera.computeViewRectangle();
+        this.level = 0;
 
         this.enableDragDrop();
     }
