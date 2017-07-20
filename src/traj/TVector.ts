@@ -63,9 +63,9 @@ export class TVector {
 
         var dirmove = Cesium.Cartesian3.ZERO.clone(); 
 
-        Cesium.Matrix3.getRow(rotmatrix, 0, dirmove);
+        Cesium.Matrix3.getColumn(rotmatrix, 1, dirmove);
 
-        Cesium.Cartesian3.multiplyByScalar(dirmove,300000,dirmove);
+        Cesium.Cartesian3.multiplyByScalar(dirmove,200000,dirmove);
 
         var newPosition = Cesium.Cartesian3.ZERO.clone();
 
@@ -144,9 +144,9 @@ export class TVector {
         Cesium.Cartesian3.cross(right, direction, dirup);
 
         var rotmatrix = Cesium.Matrix3.ZERO.clone();
-        Cesium.Matrix3.setRow(rotmatrix, 0, direction, rotmatrix);
-        Cesium.Matrix3.setRow(rotmatrix, 1, right, rotmatrix);
-        Cesium.Matrix3.setRow(rotmatrix, 2, dirup, rotmatrix);
+        Cesium.Matrix3.setColumn(rotmatrix, 0, direction, rotmatrix);
+        Cesium.Matrix3.setColumn(rotmatrix, 1, right, rotmatrix);
+        Cesium.Matrix3.setColumn(rotmatrix, 2, dirup, rotmatrix);
 
         return rotmatrix;
    }
