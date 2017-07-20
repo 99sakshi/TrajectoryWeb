@@ -160,12 +160,7 @@ export class AppComponent {
     var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
     var position = Cesium.Cartesian3.fromDegrees(75.8577, 22.7196, 200000.0);
-    var direction =
-      {
-        x: 1,
-        y: 0,
-        z: 0
-      }
+    var direction = new Cesium.Cartesian3(1,0,0);
 
     var vector = new TVector(position, direction, this._cesiumManager);
     //var fwdcontroller = new ForwardController;
