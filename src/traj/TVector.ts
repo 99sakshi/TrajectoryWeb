@@ -42,13 +42,11 @@ export class TVector {
 
 
     vectorY(position, direction) {
-        // var heading = direction.x;
-        // var pitch = direction.y;
-        // var roll = direction.z;
-        // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-        //  var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-        //  var hpr = this.setOrientation(direction);
-        var orientation = this.computeHpr(position, direction);
+
+        var rotmatrix = this.computeOrientation(position, direction);
+
+        var orientation = Cesium.Quaternion.fromRotationMatrix(rotmatrix);
+
         this._yellowCylinder = {
             name: 'Yellow cylinder with black outline',
             position: position,
@@ -63,33 +61,19 @@ export class TVector {
             }
         };
 
-        // var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
-        //cartographicPosition.latitude -=200000;
-        //cartographicPosition.height += 200000;
-        //orientation.y += 200000;
-        //var position = Cesium.Ellipsoid.WGS84.fromDegrees(cartographicPosition);
+        var dirmove = Cesium.Cartesian3.ZERO.clone(); 
 
-        // var heading = 0;
-        // var pitch = 0;
-        // var roll = 0;
-        // var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-        // var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+        Cesium.Matrix3.getRow(rotmatrix, 0, dirmove);
 
-        // position.z += 210000;
-        //  position.z *=3 ;
-        // position.x /= 1.009;
-        //  position.y /=1.002;
-        //position.x -=70000;
-        //  position.y -=12000;
-        //var position=(Math.sqrt(direction.x*direction.x)+(direction.y*direction.y)+(direction.z*direction.z))+200000+(Math.sqrt((position.x*position.x)+(position.y*position.y)+(position.z*position.z)));
-        // var position2={
-        //     x:direction.x+200000+position.x,
-        //     y:direction.y+200000+position.y,
-        //     z:direction.z+200000+position.z
-        // }
+        Cesium.Cartesian3.multiplyByScalar(dirmove,300000,dirmove);
+
+        var newPosition = Cesium.Cartesian3.ZERO.clone();
+
+        Cesium.Cartesian3.add(position, dirmove, newPosition);
+
         this._redCone = {
             name: 'Red cone',
-            position: position,
+            position: newPosition,
             orientation: orientation,
             cylinder: {
                 length: 200000.0,
@@ -148,48 +132,23 @@ export class TVector {
         setTimeout(() => { }, 3000);
     }
 
-    computeHpr(position, direction) {
-        var h = 0 - position.x;
-        var p = (Math.atan2(direction.z, direction.x)) - position.y;
-        var r = (Math.atan2(direction.y, Math.sqrt((direction.x * direction.x) + (direction.z * direction.z)))) - position.z;
-        var phi = (position.x * Math.PI / 180);
-        var lambda = (position.y * Math.PI / 180);
-        var R00 = -(Math.sin(phi) * Math.cos(lambda)),
-            R01 = -(Math.sin(lambda)),
-            R02 = -(Math.cos(phi) * Math.cos(lambda)),
-            R10 = -(Math.sin(phi) * Math.sin(lambda)),
-            R11 = Math.cos(lambda),
-            R12 = -(Math.cos(phi) * Math.sin(lambda)),
-            R20 = Math.cos(phi),
-            R21 = 0,
-            R22 = -(Math.sin(phi));
-        var x = (R00 * h) + (R01 * p) + (R02 * r),
-            y = (R10 * h) + (R11 * p) + (R12 * r),
-            z = (R20 * h) + (R21 * p) + (R22 * r);
-        // var orientation = {
-        //     x: x,
-        //     y: y,
-        //     z: z
-        // };
-	var q;
- var t0 = Math.cos(x * 0.5);
-var t1 = Math.sin(x* 0.5);
-var t2 = Math.cos(y * 0.5);
-	var t3 = Math.sin(y * 0.5);
-	var t4 = Math.cos(z * 0.5);
-	var t5 = Math.sin(z * 0.5);
+    computeOrientation(position, direction) {
 
-	var wq = t0 * t2 * t4 + t1 * t3 * t5;
-	var xq = t0 * t3 * t4 - t1 * t2 * t5;
-	var yq = t0 * t2 * t5 + t1 * t3 * t4;
-	var zq = t1 * t2 * t4 - t0 * t3 * t5;
-    q={
-        x:xq,
-        y:yq,
-        z:zq,
-        w:wq
-    }
-	return q
+        var up = Cesium.Cartesian3.UNIT_Y.clone();
+        Cesium.Cartesian3.normalize(direction, direction);
+
+        var right = Cesium.Cartesian3.ZERO.clone();
+        Cesium.Cartesian3.cross(direction, up, right);
+
+        var dirup = Cesium.Cartesian3.ZERO.clone();
+        Cesium.Cartesian3.cross(right, direction, dirup);
+
+        var rotmatrix = Cesium.Matrix3.ZERO.clone();
+        Cesium.Matrix3.setRow(rotmatrix, 0, direction, rotmatrix);
+        Cesium.Matrix3.setRow(rotmatrix, 1, right, rotmatrix);
+        Cesium.Matrix3.setRow(rotmatrix, 2, dirup, rotmatrix);
+
+        return rotmatrix;
    }
 
 
