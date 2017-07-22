@@ -2,90 +2,91 @@ declare var Cesium: any;
 import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
 import { EntityService } from './entity.service';
-import { TObject } from './tobject'
+import { TObject } from './tobject';
+import { TController } from '../app/tcontroller'
 /**
 * @ngdoc method
 * @name CesiumManager # Injectable calls that manages all the operations of cesium
 */
 @Injectable()
-export class CesiumManager{ 
-      
-      private _cesiumViewer;
-      private _config;
-      private _mouseEndCallback;
-      extents;
-      level;
-      extentcallback;
-      getData;
+export class CesiumManager {
 
-      /**
-       * @ngdoc method
-       * @name Constructor# loads and set config file
-       *
-       * @param {loadConfig} event Private variable, receives injectable LoadConfig
-       * 
-       * It computes the view extents.
-       * It sends the computed view extents to be displayed on Browser.
-       * 
-       */
-      constructor ( private loadConfig: LoadConfig, private _entityservice:EntityService) {
+    _cesiumViewer;
+    private _config;
+    private _mouseEndCallback;
+    extents;
+    level;
+    extentcallback;
+    getData;
+    _height;
+    tcontrol: TController;
+    /**
+     * @ngdoc method
+     * @name Constructor# loads and set config file
+     *
+     * @param {loadConfig} event Private variable, receives injectable LoadConfig
+     * 
+     * It computes the view extents.
+     * It sends the computed view extents to be displayed on Browser.
+     * 
+     */
+    constructor(private loadConfig: LoadConfig, private _entityservice: EntityService) {
 
-           this.loadConfig.getConfig().subscribe(    config => {
-                                                            this._config = config; 
-                                                            this.init();  
-                                                });  
+        this.loadConfig.getConfig().subscribe(config => {
+            this._config = config;
+            this.init();
+        });
 
-           this.extentcallback = () => {};
-           this.getData=(data:TObject) => {};
+        this.extentcallback = () => { };
+        this.getData = (data: TObject) => { };
 
-           this._mouseEndCallback = function() {
-                //// get extents
-                this.extents = this._cesiumViewer.camera.computeViewRectangle();
-                console.log(this.extents);
-                // converting radians into degrees
-                // and using lat long values to one decimal place
-                let x1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.west) * 10)));
-                let y1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.south) * 10)));
-                let x2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.east) * 10)));
-                let y2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.north) * 10)));
-                console.log("Degrees :" ,x1,y1,x2,y2);
-            
-                //// compute level
-                var camera = this._cesiumViewer.camera;
-                
-                var position = camera.position;
-                console.log(position);
-                var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
-                console.log("camera position LLA " + cartographicPosition);
+        this._mouseEndCallback = function () {
+            //// get extents
+            this.extents = this._cesiumViewer.camera.computeViewRectangle();
+            console.log(this.extents);
+            // converting radians into degrees
+            // and using lat long values to one decimal place
+            let x1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.west) * 10)));
+            let y1 = Math.round(Number((Cesium.Math.toDegrees(this.extents.south) * 10)));
+            let x2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.east) * 10)));
+            let y2 = Math.round(Number((Cesium.Math.toDegrees(this.extents.north) * 10)));
+            console.log("Degrees :", x1, y1, x2, y2);
 
-                var distance = Number.MAX_VALUE;
-    
-                if(this._cesiumViewer.scene.mode == Cesium.SceneMode.SCENE3D)
-                {
-                    distance = cartographicPosition.height;
-                }else {
-                    distance = camera.getMagnitude();
+            //// compute level
+            var camera = this._cesiumViewer.camera;
+
+            var position = camera.position;
+            console.log(position);
+            var cartographicPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
+            console.log("camera position LLA " + cartographicPosition);
+
+            var distance = Number.MAX_VALUE;
+
+            if (this._cesiumViewer.scene.mode == Cesium.SceneMode.SCENE3D) {
+                distance = cartographicPosition.height;
+            } else {
+                distance = camera.getMagnitude();
+            }
+
+            //// level logic
+            var levelNumber = Math.round(Number(distance / 100000));
+
+            // cap value between 0 - 10
+            var level = 10 - Math.max(Math.min(levelNumber, 10), 0);
+            console.log("Level " + level);
+            this.level = level;
+
+            this.extentcallback();
+
+            if (level < 5)
+                return;
+
+            this._entityservice.getDataExtents(x1, x2, y1, y2).subscribe(data => {
+                if ((data._id) != null) {
+                    this.getData(data);
                 }
-
-                //// level logic
-                var levelNumber = Math.round(Number(distance/100000));
-                
-                // cap value between 0 - 10
-                var level = 10 - Math.max(Math.min(levelNumber, 10),0);
-                console.log("Level " + level);
-                this.level = level;
-
-                this.extentcallback();
-
-                if(level < 5)
-                    return ;
-
-                this._entityservice.getDataExtents(x1,x2,y1,y2).subscribe( data =>  { 
-                    if((data._id)!=null){
-                        this.getData(data);
-                    }
-                });
-           };
+            });
+        };
     }
 
 
@@ -106,11 +107,10 @@ export class CesiumManager{
         viewer.animation.container.innerHTML = "";
         viewer.timeline.container.innerHTML = "";
 
-        if(this._config.Showlogo)
-        {
+        if (this._config.Showlogo) {
             viewer.bottomContainer.innerHTML = "<img src=\"\\src\\traj\\oponop.png\">";
             // HACK: - shouldn't be called after each render
-            viewer.scene.postRender.addEventListener(function(scene, time)  { 
+            viewer.scene.postRender.addEventListener(function (scene, time) {
                 viewer.bottomContainer.style.left = "1px";
                 viewer.bottomContainer.style.bottom = "1px";
             });
@@ -134,20 +134,34 @@ export class CesiumManager{
                 url: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles'
             });
 
-           viewer.terrainProvider = terrainProvider;
-        }
+            viewer.terrainProvider = terrainProvider;
+        //     this._height = Cesium.sampleTerrain(viewer.terrainProvider, 11, rectangle);
+        //     Cesium.when(Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, this._height),
+        //         //this.tcontrol.setPosition(this._height);
+        //        console.log("HEIGHT IS- "+this._height)
+
+
+        // );
+    }
+
+        // this._height = Cesium.sampleTerrain(terrainProvider, 11, rectangle);
+        // Cesium.when(this._height, function (updatedPositions) {
+        //     this.tcontrol.setPosition(this._height);
+        //     alert(this._height);
+
+        // });
 
         if (this._config.ShowMoon) {
-            var scene =viewer.scene;
+            var scene = viewer.scene;
             scene.moon = new Cesium.Moon();
         }
 
         if (!this._config.ShowCesiumUi) {
-           viewer.homeButton.container.innerHTML = "";
+            viewer.homeButton.container.innerHTML = "";
         }
 
         viewer.camera.moveEnd.addEventListener(this._mouseEndCallback, this);
-        this._cesiumViewer = viewer; 
+        this._cesiumViewer = viewer;
 
         this.extents = this._cesiumViewer.camera.computeViewRectangle();
         this.level = 0;
@@ -163,7 +177,7 @@ export class CesiumManager{
      * 
      * @return {retEntity} retEntity cesium generated entity
      */
-    addEntity(entityParameters:Object) {
+    addEntity(entityParameters: Object) {
         var retEntity = this._cesiumViewer.entities.add(entityParameters);
         return retEntity;
     }
@@ -176,19 +190,18 @@ export class CesiumManager{
      * @param {entity} entity to be removed
      * Removes an entity
      */
-    removeEntity(entity:TObject) {
-       var retEntity= this._cesiumViewer.entities.remove(entity._CEntity);
-            return retEntity;
+    removeEntity(entity: TObject) {
+        var retEntity = this._cesiumViewer.entities.remove(entity._CEntity);
+        return retEntity;
     }
 
-    getEntity(hash:String){
+    getEntity(hash: String) {
 
     }
 
-    enableDragDrop()
-    {
+    enableDragDrop() {
         var mousePosition = new Cesium.Cartesian2();
-        var mousePositionProperty = new Cesium.CallbackProperty(function(time, result){
+        var mousePositionProperty = new Cesium.CallbackProperty(function (time, result) {
             var position = scene.camera.pickEllipsoid(mousePosition, undefined, result);
             var cartographic = Cesium.Ellipsoid.WGS84.cartesianToCartographic(position);
             cartographic.height = 300000.0;
@@ -202,11 +215,11 @@ export class CesiumManager{
 
         //click down
         handler.setInputAction(
-            function(click) {
+            function (click) {
                 var pickedObject = scene.pick(click.position);
-                if (Cesium.defined(pickedObject) ) {
+                if (Cesium.defined(pickedObject)) {
                     entity = pickedObject.id;
-                    if( entity.TObject.dragable === false)
+                    if (entity.TObject.dragable === false)
                         return;
 
                     dragging = true;
@@ -225,7 +238,7 @@ export class CesiumManager{
 
         // move
         handler.setInputAction(
-            function(movement) {
+            function (movement) {
                 if (dragging) {
                     Cesium.Cartesian2.clone(movement.endPosition, mousePosition);
                 }
@@ -235,8 +248,8 @@ export class CesiumManager{
 
         // click up
         handler.setInputAction(
-            function(click) {
-                if(dragging) {
+            function (click) {
+                if (dragging) {
                     dragging = false;
                     scene.screenSpaceCameraController.enableRotate = true;
                     entity.TObject._position = scene.camera.pickEllipsoid(click.position);
