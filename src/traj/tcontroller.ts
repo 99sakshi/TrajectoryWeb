@@ -1,5 +1,5 @@
 declare var Cesium: any;
-export class DirectionController {
+export class TController {
     _position;
     _orientation;
     _hpr;
