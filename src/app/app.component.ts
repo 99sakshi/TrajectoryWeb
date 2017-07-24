@@ -159,10 +159,12 @@ export class AppComponent {
     var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
     var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
-    var position = Cesium.Cartesian3.fromDegrees(75.8577, 22.7196, 200000.0);
-    var direction = new Cesium.Cartesian3(1,0,0);
+    var position = PosMumbai;
+    var direction = new Cesium.Cartesian3(0,0,0);
+    Cesium.Cartesian3.subtract(PosMumbai, PosDelhi, direction);
 
     var vector = new TVector(position, direction, this._cesiumManager);
+
     //var fwdcontroller = new ForwardController;
     //fwdcontroller.setPosition(PosKolkatta);
 
@@ -199,23 +201,6 @@ export class AppComponent {
 
     // Entity has to be added to the manager before position set 
     this._simManager.addEntity(appObject, false); // for test, dont add to backend
-   // var position = Cesium.Cartesian3.fromDegrees(75.8577, 22.7196, 200000.0);
-    //  var hpr = new Cesium.HeadingPitchRoll(0, 0, 0);
-    // var direction = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-    //    var direction=
-    // { x: -0.05725358280129918,
-    //   y: -0.5065361546937046,
-    //   z: -0.8548722660033764
-    // }
-    // // var direction =
-    // //   {
-    // //     x: 1,
-    // //     y: 0,
-    // //     z: 0
-    // //   }
-
-    // var vector = new TVector(position, direction, this._cesiumManager);
-    //vector.addVector(position,direction);
   }
 
   /**
