@@ -42,7 +42,7 @@ export class SimManager {
     constructor(private objectmanager: ObjectManager) {
         this._time = 0; // in seconds
         this._deltaTime = 0.01; // in seconds
-        this._entityMap=[];
+        this._entityMap = [];
         this._State = State.Stop;
     }
 
@@ -54,12 +54,11 @@ export class SimManager {
      * @param {entity} entity to be added
      */
 
-    addEntity(entity:TObject, shouldSave:Boolean) {
-       if(this._entityMap[entity._id]==null)
-       {
-        this._entityMap[entity._id] = entity;
-        entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
-       }
+    addEntity(entity: TObject, shouldSave: Boolean) {
+        if (this._entityMap[entity._id] == null) {
+            this._entityMap[entity._id] = entity;
+            entity.setCEntity(this.objectmanager.addEntity(entity, shouldSave));
+        }
     }
 
     /**
@@ -67,7 +66,7 @@ export class SimManager {
      * @name removeEntity # It removes the entity
      * from the database.
      */
-    removeEntity(entity:TObject) {
+    removeEntity(entity: TObject) {
         entity.setCEntity(this.objectmanager.removeEntity(entity));
         this._entityMap[entity._id] = entity;
     }
@@ -84,24 +83,24 @@ export class SimManager {
     }
 
 
-     /**
-     * @ngdoc method
-     * @name showAllEntity # It displays all entities.
-     */
-    showAllEntity(){
-        for (var _id in this._entityMap){
-           this._entityMap[_id].show();
+    /**
+    * @ngdoc method
+    * @name showAllEntity # It displays all entities.
+    */
+    showAllEntity() {
+        for (var _id in this._entityMap) {
+            this._entityMap[_id].show();
         }
     }
-    
 
-     /**
-     * @ngdoc method
-     * @name hideAllEntity # It removes all entities locally.
-     */
-    hideAllEntity(){
-        for (var _id in this._entityMap){
-           this._entityMap[_id].hide();
+
+    /**
+    * @ngdoc method
+    * @name hideAllEntity # It removes all entities locally.
+    */
+    hideAllEntity() {
+        for (var _id in this._entityMap) {
+            this._entityMap[_id].hide();
         }
     }
 
@@ -140,6 +139,8 @@ export class SimManager {
             setTimeout(() => { }, 0);
         }
     }
+
+
 
     /**
      * @ngdoc method

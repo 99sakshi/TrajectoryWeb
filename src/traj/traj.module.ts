@@ -30,6 +30,7 @@ import { StartService } from './start.service';
 import { EntityService } from './entity.service';
 import { TObject } from './tobject';
 
+
 @NgModule({
   imports: [BrowserModule, HttpModule, JsonpModule],
   declarations: [],

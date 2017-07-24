@@ -2,8 +2,9 @@
 	"Test": true,
 	"Showlogo": true,
 	"ShowMoon": true,
-	"UseLocalGeoserver": false,
+	"UseLocalGeoserver": true,
 	"ShowCesiumUi":true,
+	"Showlogo":true,
 	"Geoserver": {
 		"Url": "http://192.168.1.4:8181/geoserver/oponop/wms",
 		"Layers": [
