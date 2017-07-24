@@ -28,7 +28,8 @@
 declare var Cesium: any;
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
-import { DirectionController } from '../traj/directioncontroller';
+import { TController } from '../traj/tcontroller';
+import { SurfaceController } from './surfacecontroller';
 import { CesiumManager } from '../traj/cesiummanager';
 import { TObject } from '../traj/tobject';
 import { StartService } from '../traj/start.service';
@@ -157,11 +158,11 @@ export class AppComponent {
           var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
           var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
-          var fwdcontroller = new DirectionController();
+          var fwdcontroller = new TController();
           fwdcontroller.setPosition( PosMumbai );
           fwdcontroller.setDirection( Cesium.Cartesian3.fromElements(1.0, 0.0, 0.0) );
 
-          var upcontroller = new DirectionController();
+          var upcontroller = new TController();
           upcontroller.setPosition( PosKolkatta );
           upcontroller.setDirection( Cesium.Cartesian3.fromElements(0.0, 0.0, 1.0) );
 
