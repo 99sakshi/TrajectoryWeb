@@ -28,7 +28,8 @@
 declare var Cesium: any;
 import { Component } from '@angular/core';
 import { SimManager } from './simmanager';
-import { DirectionController } from '../traj/directioncontroller';
+import { TController } from '../traj/tcontroller';
+import { SurfaceController } from './surfacecontroller';
 import { CesiumManager } from '../traj/cesiummanager';
 import { TObject } from '../traj/tobject';
 import { TVector } from '../traj/tvector'
@@ -68,7 +69,6 @@ import { TObjectInterface } from '../traj/tobjectInterface';
     `
   ]
 })
-
 
 export class AppComponent {
 
@@ -125,6 +125,7 @@ export class AppComponent {
       var appObject = new TObject();
       appObject.setParameter(data);
       this._simManager.addEntity(appObject, false);
+
     }
   }
 
@@ -159,18 +160,18 @@ export class AppComponent {
     var modelAircraft = "../Models/CesiumAir/Cesium_Air.glb";
     var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
+    var fwdcontroller = new TController();
+	fwdcontroller.setPosition( PosMumbai );
+	fwdcontroller.setDirection( Cesium.Cartesian3.fromElements(1.0, 0.0, 0.0) );
+	
+	var upcontroller = new TController();
+	upcontroller.setPosition( PosKolkatta );
+	upcontroller.setDirection( Cesium.Cartesian3.fromElements(0.0, 0.0, 1.0) );
+
     var position = PosMumbai;
     var direction = new Cesium.Cartesian3(0,0,0);
     Cesium.Cartesian3.subtract(PosMumbai, PosDelhi, direction);
-
-    var vector = new TVector(position, direction, this._cesiumManager);
-
-    //var fwdcontroller = new ForwardController;
-    //fwdcontroller.setPosition(PosKolkatta);
-
-    //var upcontroller = new UpController;
-
-    // upcontroller.setPosition(PosMumbai);
+    TVector(position, direction, this._cesiumManager);
 
     //  this.addAppEntityToManager({ _name: "AircraftKolkata", _position: PosMumbai, _modelUrl: modelAircraft, _Controller: fwdcontroller });
     //  this.addAppEntityToManager({ _name: "BalloonMumbai", _position: PosKolkatta, _modelUrl: modelBalloon, _Controller: upcontroller });
@@ -188,7 +189,6 @@ export class AppComponent {
   addAppEntityToManager(tobject: TObjectInterface) {
 
     var appObject = new TObject();
-    //var tvector= new TVector(this._cesiumManager);
     appObject.setName(tobject._name);
     appObject.setModelUrl(tobject._modelUrl);
     appObject.setInitialPosition(tobject._position);

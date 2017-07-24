@@ -1,5 +1,5 @@
 declare var Cesium: any;
-export class DirectionController {
+export class TController {
     _position;
     _orientation;
     _hpr;
@@ -26,6 +26,14 @@ export class DirectionController {
         this._orientation = Cesium.Transforms.headingPitchRollQuaternion(this._position, this._hpr);
 
         this._direction = Cesium.Cartesian3.fromElements(0,0,0);
+    }
+
+    setParameter(asdf){
+        this._position = asdf._position;
+        this._positionLLA = asdf._positionLLA;
+        this._hpr = new Cesium.HeadingPitchRoll(this._hpr.heading, this._hpr.pitch, this._hpr.roll); 
+        this._direction = asdf._direction;
+        this._orientation = asdf._orientation;
     }
 
 

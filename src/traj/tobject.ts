@@ -24,6 +24,7 @@ import { LoadConfig } from './loadconfig.service';
 import { CesiumManager } from './cesiummanager';
 import { ObjectManager } from './objectmanager';
 import { StartService } from './start.service';
+import { TController } from './tcontroller';
 import { TObjectInterface } from './tobjectInterface';
 
 declare var Cesium: any;
@@ -46,8 +47,9 @@ export class TObject implements TObjectInterface {
       _CEntity;  // Cesium Entity
       _Controller;
       isPersistent;
+      _cesiumManager: CesiumManager
 
-      dragable: Boolean; 
+      dragable: Boolean;
 
       /**
        * @ngdoc method
@@ -69,7 +71,7 @@ export class TObject implements TObjectInterface {
             this._modelUrl = "../Models/CesiumBalloon/CesiumBalloon.glb";
             this._CEntity = null;
             this._Controller = null;
-            this.isPersistent=true;
+            this.isPersistent = true;
             this.dragable = true;
 
             //defining parameters of the current object
@@ -88,7 +90,7 @@ export class TObject implements TObjectInterface {
       }
 
       // this is temporary, Ideally we should use parameterized constructor
-      setParameter (asdf) {
+      setParameter(asdf) {
 
             if (asdf != null) {
                   this._name = asdf.TEntity._name;
@@ -97,8 +99,10 @@ export class TObject implements TObjectInterface {
                   this._modelUrl = asdf.TEntity._modelUrl;
                   this._id = asdf.TEntity._id;
                   this._orientation = asdf.TEntity._orientation;
-                  this._Controller = asdf.TEntity._Controller;
-                  this.isPersistent=false;
+                  var controller = new TController();
+                  controller.setParameter(asdf.TEntity._Controller);
+                  this._Controller = controller;
+                  this.isPersistent = false;
             }
 
             //defining parameters of the current object
@@ -124,7 +128,7 @@ export class TObject implements TObjectInterface {
        * sets the TObject name.
        *
        */
-      setName(name:String) {
+      setName(name: String) {
             this._name = name;
       }
 
@@ -158,7 +162,7 @@ export class TObject implements TObjectInterface {
        * It is called by sim manager
        *
        */
-      setCEntity(entity:TObjectInterface) {
+      setCEntity(entity: TObjectInterface) {
             this._CEntity = entity;
             this._CEntity.TObject = this;
       }
@@ -172,7 +176,7 @@ export class TObject implements TObjectInterface {
        * Updates the Controller of the AppEntity
        *
        */
-      setController(controller:Object) {
+      setController(controller: Object) {
             this._Controller = controller;
       }
 
@@ -185,21 +189,21 @@ export class TObject implements TObjectInterface {
        * Updates the model's Url of TObject
        *
        */
-      setModelUrl(url:String) {
+      setModelUrl(url: String) {
             this._modelUrl = url;
             this._para.model.uri = url;
       }
 
 
-       /**
-       * @ngdoc method
-       * @name setInitialPosition # sets Initial Position
-       *
-       * @param {position} position of entity
-       * Sets the initial position and id of TObject
-       *
-       */
-      setInitialPosition (position:Object) {
+      /**
+      * @ngdoc method
+      * @name setInitialPosition # sets Initial Position
+      *
+      * @param {position} position of entity
+      * Sets the initial position and id of TObject
+      *
+      */
+      setInitialPosition(position: Object) {
             this.setPosition(position);
             this.setId();
       }
@@ -212,7 +216,7 @@ export class TObject implements TObjectInterface {
        * Updates the position and cesium's position of AppEntity
        *
        */
-      setPosition(position:Object) {
+      setPosition(position: Object) {
             this._position = position;
             this._para.position = position;
             if (this._CEntity != null)
@@ -230,7 +234,7 @@ export class TObject implements TObjectInterface {
        * Updates the Heading Pitch Roll.
        *
        */
-      setHPR(hpr:Object) {
+      setHPR(hpr: Object) {
             this._hpr = hpr;
       }
 
@@ -243,7 +247,7 @@ export class TObject implements TObjectInterface {
        * Updates the orientation and cesium Entity's orientation 
        *
        */
-      setOrientation(orientation:Object) {
+      setOrientation(orientation: Object) {
             this._orientation = orientation;
             this._para.orientation = orientation;
             if (this._CEntity != null)
@@ -285,26 +289,26 @@ export class TObject implements TObjectInterface {
       }
 
 
-       /**
-       * @ngdoc method
-       * @name show# Displays entities
-       *
-       * It displays entities on the globe
-       * by turning show attribute of CEntity to true.
-       */
-      show(){
+      /**
+      * @ngdoc method
+      * @name show# Displays entities
+      *
+      * It displays entities on the globe
+      * by turning show attribute of CEntity to true.
+      */
+      show() {
             this._CEntity.show = true;
       }
 
 
-       /**
-       * @ngdoc method
-       * @name hide# Removes entities
-       *
-       * It removes entities from the globe locally
-       * by turning show attribute of CEntity to false.
-       */
-      hide(){
+      /**
+      * @ngdoc method
+      * @name hide# Removes entities
+      *
+      * It removes entities from the globe locally
+      * by turning show attribute of CEntity to false.
+      */
+      hide() {
             this._CEntity.show = false;
       }
 
