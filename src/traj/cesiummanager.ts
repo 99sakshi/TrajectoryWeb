@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core'
 import { LoadConfig } from './loadconfig.service';
 import { EntityService } from './entity.service';
 import { TObject } from './tobject';
-import { TController } from '../app/tcontroller'
 /**
 * @ngdoc method
 * @name CesiumManager # Injectable calls that manages all the operations of cesium
@@ -18,8 +17,6 @@ export class CesiumManager {
     level;
     extentcallback;
     getData;
-    _height;
-    tcontrol: TController;
     /**
      * @ngdoc method
      * @name Constructor# loads and set config file
@@ -135,21 +132,7 @@ export class CesiumManager {
             });
 
             viewer.terrainProvider = terrainProvider;
-        //     this._height = Cesium.sampleTerrain(viewer.terrainProvider, 11, rectangle);
-        //     Cesium.when(Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, this._height),
-        //         //this.tcontrol.setPosition(this._height);
-        //        console.log("HEIGHT IS- "+this._height)
-
-
-        // );
-    }
-
-        // this._height = Cesium.sampleTerrain(terrainProvider, 11, rectangle);
-        // Cesium.when(this._height, function (updatedPositions) {
-        //     this.tcontrol.setPosition(this._height);
-        //     alert(this._height);
-
-        // });
+        }
 
         if (this._config.ShowMoon) {
             var scene = viewer.scene;
