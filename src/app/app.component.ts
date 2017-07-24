@@ -161,18 +161,17 @@ export class AppComponent {
     var modelToonMan = "../Models/CesiumMan/Cesium_Man.glb";
 
     var fwdcontroller = new TController();
-	fwdcontroller.setPosition( PosMumbai );
-	fwdcontroller.setDirection( Cesium.Cartesian3.fromElements(1.0, 0.0, 0.0) );
+	  fwdcontroller.setPosition( PosMumbai );
+	  fwdcontroller.setDirection( Cesium.Cartesian3.fromElements(1.0, 0.0, 0.0) );
 	
-	var upcontroller = new TController();
-	upcontroller.setPosition( PosKolkatta );
-	upcontroller.setDirection( Cesium.Cartesian3.fromElements(0.0, 0.0, 1.0) );
+	  var upcontroller = new TController();
+	  upcontroller.setPosition( PosKolkatta );
+	  upcontroller.setDirection( Cesium.Cartesian3.fromElements(0.0, 0.0, 1.0) );
 
-    var position = PosMumbai;
+    var positionVec = PosMumbai;
     var direction = new Cesium.Cartesian3(0,0,0);
-    Cesium.Cartesian3.subtract(PosMumbai, PosDelhi, direction);
-    TVector(position, direction, this._cesiumManager);
-
+    Cesium.Cartesian3.subtract(positionVec, PosDelhi, direction);
+    //  var vec = new TVector(positionVec, direction, this._cesiumManager);
     //  this.addAppEntityToManager({ _name: "AircraftKolkata", _position: PosMumbai, _modelUrl: modelAircraft, _Controller: fwdcontroller });
     //  this.addAppEntityToManager({ _name: "BalloonMumbai", _position: PosKolkatta, _modelUrl: modelBalloon, _Controller: upcontroller });
     //  this.addAppEntityToManager({ _name: "AircraftKolkata", _position: PosKolkatta, _modelUrl: modelAircraft, _Controller: fwdcontroller });
