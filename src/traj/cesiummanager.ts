@@ -178,6 +178,11 @@ export class CesiumManager {
         return retEntity;
     }
 
+    removeLabel() {
+        var retEntity = this._cesiumViewer.entities.removeAll();
+        return retEntity;
+    }
+
     getEntity(hash: String) {
 
     }
