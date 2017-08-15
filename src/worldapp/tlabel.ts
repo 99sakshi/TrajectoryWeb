@@ -52,7 +52,7 @@ export class TLabel {
      * It also declares and initializes heading, pitch and roll variables. 
      *
      */
-    constructor(private _cesiumManager: CesiumManager) {
+    constructor() {
         //   this._position = new Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, 100);
         // this.label = {
         //     position: this._position2,//displays the desciption of the location
@@ -71,7 +71,7 @@ export class TLabel {
             }
 
         }
-        this._CEntity = null;
+         this._CEntity = null;
 
 
     }
@@ -79,6 +79,20 @@ export class TLabel {
     setText(desc) {
         this.desc = desc;
     }
+    // this is temporary, Ideally we should use parameterized constructor
+    //   setParameter(asdf) {
+
+    //         if (asdf != null) {
+
+    //               this._position = asdf.TEntity._position;
+    //         }
+
+    //         //defining parameters of the current object
+    //         this._para = {
+    //               name: name,
+    //               position: this._position
+    //         }
+    //   }
 
     /**
      * @ngdoc method
@@ -107,10 +121,7 @@ export class TLabel {
 
             }
         }
-        this._cesiumManager.addEntity(this.label);
-    }
-    removeLabel() {
-        return this._cesiumManager.removeLabel();
+       // this._cesiumManager.addEntity(this.label);
     }
 
 
@@ -170,8 +181,8 @@ export class TLabel {
      * Updates the position and cesium's position of AppEntity
      *
      */
-    setPosition(lat, long) {
-        this._position2 = Cesium.Cartesian3.fromDegrees(lat, long);
+    setPosition(lat,long) {
+     this._position2=Cesium.Cartesian3.fromDegrees(lat,long);
         //  this._para.position = position;
         if (this._CEntity != null)
             this._CEntity.position = this._position2;
