@@ -22,6 +22,7 @@
  * ### How to use
  *
  **/
+//testing
 
 declare var Cesium: any;
 import { Component } from '@angular/core';
