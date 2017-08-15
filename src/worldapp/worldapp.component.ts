@@ -22,7 +22,7 @@
  * ### How to use
  *
  **/
-
+//SmartGit
 declare var Cesium: any;
 import { Component } from '@angular/core';
 import { CesiumManager } from '../traj/cesiummanager';
